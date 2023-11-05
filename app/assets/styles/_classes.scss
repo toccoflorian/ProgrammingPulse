@@ -1,0 +1,8 @@
+@import "./variable";
+
+
+.word-with-big-first-and-shadow {
+    color: red($color: #000000);
+    text-shadow: 7px 3px 3px black;
+    font-size: 60px;
+}
