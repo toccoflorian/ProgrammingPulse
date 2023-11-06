@@ -6,13 +6,17 @@ body {
         position: fixed;
         width: 100%;
         box-shadow: 0px 1px 5px black;
+        height: 80px;
+
+
+
 
         .container {
             background: url("../assets/images/top-bar_background.jpg") center/cover no-repeat;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100px;
+            height: 80px;
             width: 100%;
             // opacity: 0.75;
 
@@ -25,8 +29,8 @@ body {
                 flex: 1;
                 background: url("../assets/images/output-onlinepngtools\ \(2\).png") center/cover no-repeat;
                 display: block;
-                height: 150px;
-                width: 150px;
+                height: 120px;
+                width: 120px;
             }
 
             .menu-container {
@@ -45,34 +49,41 @@ body {
                         padding: 7px 10px;
                         border-radius: 5px;
                         text-decoration: none;
-                    }
-                }
-            }
 
-            .contact-container {
-                flex: 1;
-
-                nav {
-                    ul {
-                        li {
-                            list-style-type: none;
-                            // background-color: lightgray;
-                            padding: 7px 10px;
-                            margin: 0 15px;
-                            border-radius: 5px;
-                            width: 80px;
-                            text-align: center;
+                        &:hover {
+                            background-color: var(--blue-primary);
                         }
                     }
                 }
             }
+
+            // .contact-container {
+            //     flex: 1;
+
+            //     nav {
+            //         ul {
+            //             li {
+            //                 list-style-type: none;
+            //                 // background-color: lightgray;
+            //                 padding: 7px 10px;
+            //                 margin: 0 15px;
+            //                 border-radius: 5px;
+            //                 width: 80px;
+            //                 text-align: center;
+            //             }
+            //         }
+            //     }
+            // }
         }
+
+
+
 
     }
 
 
     .content {
-        padding-top: 100px;
+        padding-top: 80px;
         margin-bottom: 500px;
 
         .background {
@@ -84,9 +95,17 @@ body {
             height: 100vh;
             width: 100%;
 
+            .span-icon-corner-1,
+            .span-icon-corner-2,
+            .span-icon-corner-3,
+            .span-icon-corner-4 {
+                opacity: .6;
+            }
+
             .span-icon-corner-1 {
                 position: fixed;
-                top: 102px;
+                rotate: -90deg;
+                left: 0;
                 background: url("../assets/icones/Electronic_printed_circuit_diagonal_lines.svg") center/contain no-repeat;
                 display: flex;
                 height: 100px;
@@ -95,6 +114,31 @@ body {
 
             .span-icon-corner-2 {
                 position: fixed;
+
+                right: 0;
+
+                background: url("../assets/icones/Electronic_printed_circuit_diagonal_lines.svg") center/contain no-repeat;
+                display: flex;
+                height: 100px;
+                width: 100px;
+            }
+
+            .span-icon-corner-3 {
+                position: fixed;
+                rotate: 180deg;
+
+                left: 0;
+                bottom: 0;
+                background: url("../assets/icones/Electronic_printed_circuit_diagonal_lines.svg") center/contain no-repeat;
+                display: flex;
+                height: 100px;
+                width: 100px;
+            }
+
+            .span-icon-corner-4 {
+                position: fixed;
+                rotate: 90deg;
+
                 right: 0;
                 bottom: 0;
                 background: url("../assets/icones/Electronic_printed_circuit_diagonal_lines.svg") center/contain no-repeat;
@@ -159,7 +203,10 @@ body {
 
             .container {
 
-                div {
+                .part-1 {
+                    display: flex;
+                    justify-content: center;
+
                     .span-texte {
                         h3 {
                             border-bottom: 5px solid white;
@@ -172,10 +219,45 @@ body {
 
                         p {
                             text-align: l;
+                            max-width: 700px;
                         }
+                    }
+
+                    .span-image {
+                        background: url("../assets/images/kisspng-car-auto-mechanic-clip-art-worker-5abafe5e79bd58.0445926915222042544987.png") center/contain no-repeat;
+                        height: 350px;
+                        width: 250px;
+                        display: block;
                     }
                 }
 
+                .part-2 {
+                    display: flex;
+                    justify-content: center;
+
+                    .span-texte {
+                        h3 {
+                            border-bottom: 5px solid white;
+                            // text-shadow: var(--text-shadow-white);
+                            font-size: 30px;
+                            letter-spacing: 5px;
+                            color: var(--blue-primary);
+                            width: fit-content;
+                        }
+
+                        p {
+                            text-align: l;
+                            max-width: 700px;
+                        }
+                    }
+
+                    .span-image {
+                        background: url("../assets/images/kisspng-construction-worker-architectural-engineering-cart-construction-worker-5ab8dd07578a65.6772059815220646473586.png") center/contain no-repeat;
+                        height: 350px;
+                        width: 250px;
+                        display: block;
+                    }
+                }
 
             }
         }

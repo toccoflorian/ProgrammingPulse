@@ -7,6 +7,7 @@ module.exports = {
     entry: {
         main: path.join(__dirname, "src/index.js"), // prend en entrée index.js et dependances pour creer le bundle 'main'
         commun: path.join(__dirname, "src/commun.js"),
+        topBar: path.join(__dirname, "assets/models/top-bar.js"),
     },
     output: {
         path: path.join(__dirname, "dist"),
@@ -42,7 +43,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             filename: 'index.html', // nom du fichier dans le dist
             template: path.join(__dirname, "./src/index.html"), // chemin du template (fichier html)
-            chunks: ["main", "commun"] // liste des scripts inserer dans les fichiers html
+            chunks: ["main", "commun", "topBar"] // liste des scripts inserer dans les fichiers html
         }),
 
 
