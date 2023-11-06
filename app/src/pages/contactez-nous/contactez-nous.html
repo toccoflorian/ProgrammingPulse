@@ -20,21 +20,90 @@
         </div>
         <div class="container">
             <h1 class="word-with-big-first-and-shadow">Formulaire de Contact</h1>
-            <p>Que ce soit pour une demande de devis ou une question sur votre projet, n'hésitez pas à me contacter en
-                remplissant le formulaire.</p>
+            <p>
+                Que ce soit pour une demande de devis ou une question sur votre projet, n'hésitez pas à me contacter en
+                remplissant le formulaire approprié.
+            </p>
 
-            <form action="/">
-                <input type="text" name="given-name" id="given-name" placeholder="Nom">
-                <input type="text" name="last-name" id="last-name" placeholder="Prénom">
-                <input type="text" name="society" id="society" placeholder="Nom de votre société">
-                <br><br>
-                <input type="tel" name="tel" id="tel" placeholder="Téléphone">
-                <input type="mail" name="mail" id="mail" placeholder="E-mail">
-                <br><br>
-                <textarea name="message" id="message" placeholder="Message"></textarea>
-                <br><br>
-                <button type="submit" id="submit-button">Envoyer</button>
-            </form>
+            <div class="forms-container">
+
+                <!-- form message -->
+                <div class="form-message">
+                    <h2>Contactez nous</h2>
+                    <p>
+                        Vous avez une question concernant un devis, votre projet ou autres, n'hésitez pas à me contacter
+                        en
+                        remplissant ce formulaire.
+                        <br><br>
+                        Pour une demande de devis merci de créer un compte. 👉
+                    </p>
+                    <form action="/">
+                        <input type="text" name="given-name" id="given-name" placeholder="Nom">
+                        <input type="text" name="last-name" id="last-name" placeholder="Prénom">
+                        <br><br>
+                        <input type="text" name="society" id="society" placeholder="Nom de votre société">
+                        <br><br>
+                        <input type="tel" name="tel" id="tel" placeholder="Téléphone">
+                        <input type="mail" name="mail" id="mail" placeholder="E-mail">
+                        <br><br>
+                        <textarea name="message" id="message" placeholder="Message"></textarea>
+                        <br><br>
+                        <button type="submit" id="submit-button">Envoyer</button>
+                    </form>
+
+                </div>
+
+                <!-- form inscription -->
+                <div class="form-inscription">
+                    <h2>Créer un compte</h2>
+
+                    <form action="">
+                        <input type="text" name="identifiant" id="identifiant" placeholder="Email">
+                        <input type="password" name="password" id="password" placeholder="Mot de passe">
+                        <br><br>
+                        <button type="button" name="logup-button" id="logup-button">Connexion</button>
+                    </form>
+
+                    <span class="span-texte">
+                        <h3>Créez Votre Compte en Toute Confiance</h3>
+                        <p>
+                            Rejoignez notre communauté en toute sérénité. La création de votre compte est une démarche
+                            simple et sécurisée :
+                        </p>
+                        <ul>
+                            <li>
+                                <b><span class="blue-word">Sécurité Maximale 🔒 :</span></b>
+                                <br>
+                                Nous utilisons les protocoles de cryptage les plus avancés pour garantir que vos
+                                informations personnelles sont protégées et à l'abri des regards indiscrets.
+                            </li>
+
+                            <li>
+                                <b><span class="blue-word">Confidentialité Respectée 🤐 :</span></b>
+                                <br>
+                                Votre vie privée nous est précieuse. Aucune de vos données personnelles n'est vendue,
+                                partagée ou divulguée à des tiers.
+                            </li>
+
+                            <li>
+                                <b><span class="blue-word">Contrôle Total sur vos Données 🛠️ :</span> </b>
+                                <br>
+                                Vous avez à tout moment la possibilité de modifier, exporter ou supprimer vos
+                                informations de notre base de données.
+                            </li>
+                        </ul>
+
+                        <p>
+                            Nous nous engageons à maintenir un espace sûr et transparent pour tous nos utilisateurs.
+                            Votre confiance est notre priorité.
+                        </p>
+                    </span>
+
+
+                </div>
+
+            </div>
+
         </div>
     </div>
 

@@ -6,3 +6,28 @@
     text-shadow: 7px 3px 3px black;
     font-size: 60px;
 }
+
+.blue-word {
+    color: var(--blue-primary);
+    font-size: 20px;
+}
+
+:root {
+    h2 {
+        border-bottom: 5px solid var(--blue-primary);
+        text-shadow: var(--text-shadow-blue);
+        font-size: 80px;
+        letter-spacing: 5px;
+        color: white;
+        width: fit-content;
+    }
+
+    h3 {
+        border-bottom: 5px solid var(--blue-primary);
+        text-shadow: var(--text-shadow-black);
+        font-size: 20px;
+        letter-spacing: 3px;
+        color: white;
+        width: fit-content;
+    }
+}
