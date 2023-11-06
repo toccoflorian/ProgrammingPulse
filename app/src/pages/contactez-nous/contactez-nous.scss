@@ -1,0 +1,23 @@
+.content {
+    background-color: y;
+    height: 500px;
+    width: 100%;
+
+    .container {
+        color: white;
+        text-align: center;
+
+        h1 {
+            color: var(--blue-primary);
+            border-bottom: 5px solid white;
+            width: max-content;
+            margin: 120px auto 0 auto;
+        }
+
+        p {
+            font-size: 25px;
+            max-width: 70%;
+            margin: 60px auto 0 auto;
+        }
+    }
+}

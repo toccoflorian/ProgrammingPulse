@@ -2,7 +2,7 @@
 
 
 .word-with-big-first-and-shadow {
-    color: red($color: #000000);
+    // donner cette class à une span sur la première lettre
     text-shadow: 7px 3px 3px black;
     font-size: 60px;
 }

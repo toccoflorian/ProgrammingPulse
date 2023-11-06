@@ -1,99 +1,14 @@
 body {
-    margin: 0;
-
-    header {
-        z-index: 0;
-        position: fixed;
-        width: 100%;
-        box-shadow: 0px 1px 5px black;
-        height: 80px;
 
 
 
-
-        .container {
-            background: url("../assets/images/top-bar_background.jpg") center/cover no-repeat;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 80px;
-            width: 100%;
-            // opacity: 0.75;
-
-            * {
-                opacity: 1;
-                color: white;
-            }
-
-            .span-image {
-                flex: 1;
-                background: url("../assets/images/output-onlinepngtools\ \(2\).png") center/cover no-repeat;
-                display: block;
-                height: 120px;
-                width: 120px;
-            }
-
-            .menu-container {
-                flex: 8;
-                height: 100%;
-
-                nav {
-                    // background-color: aqua;
-                    height: 100%;
-                    display: flex;
-                    justify-content: space-evenly;
-                    align-items: flex-end;
-
-                    a {
-                        // background-color: lightgray;
-                        padding: 7px 10px;
-                        border-radius: 5px;
-                        text-decoration: none;
-
-                        &:hover {
-                            background-color: var(--blue-primary);
-                        }
-                    }
-                }
-            }
-
-            // .contact-container {
-            //     flex: 1;
-
-            //     nav {
-            //         ul {
-            //             li {
-            //                 list-style-type: none;
-            //                 // background-color: lightgray;
-            //                 padding: 7px 10px;
-            //                 margin: 0 15px;
-            //                 border-radius: 5px;
-            //                 width: 80px;
-            //                 text-align: center;
-            //             }
-            //         }
-            //     }
-            // }
-        }
-
-
-
-
-    }
 
 
     .content {
-        padding-top: 80px;
-        margin-bottom: 500px;
+
 
         .background {
-            background: var(--blue-gradient-primary);
-            z-index: -1;
-            position: fixed;
-            display: flex;
-            // background: url("../assets/images/mandala-5970032_1280.jpg") center/cover no-repeat;
-            height: 100vh;
-            width: 100%;
+
 
             .span-icon-corner-1,
             .span-icon-corner-2,
@@ -154,7 +69,7 @@ body {
             background-color: rgba(255, 255, 255, 0.8);
             border-radius: 25px;
             width: 80%;
-            margin: 75px auto 0 auto;
+            margin: 130px auto 0 auto;
             box-shadow: 2px 2px 20px 4px var(--blue-primary);
             display: flex;
 
@@ -203,7 +118,7 @@ body {
 
             .container {
 
-                .part-1 {
+                .parts {
                     display: flex;
                     justify-content: center;
 
@@ -224,41 +139,76 @@ body {
                     }
 
                     .span-image {
-                        background: url("../assets/images/kisspng-car-auto-mechanic-clip-art-worker-5abafe5e79bd58.0445926915222042544987.png") center/contain no-repeat;
                         height: 350px;
                         width: 250px;
                         display: block;
+                    }
+                }
+
+                .part-1 {
+                    .span-image {
+                        background: url("../assets/images/kisspng-car-auto-mechanic-clip-art-worker-5abafe5e79bd58.0445926915222042544987.png") center/contain no-repeat;
                     }
                 }
 
                 .part-2 {
-                    display: flex;
-                    justify-content: center;
-
-                    .span-texte {
-                        h3 {
-                            border-bottom: 5px solid white;
-                            // text-shadow: var(--text-shadow-white);
-                            font-size: 30px;
-                            letter-spacing: 5px;
-                            color: var(--blue-primary);
-                            width: fit-content;
-                        }
-
-                        p {
-                            text-align: l;
-                            max-width: 700px;
-                        }
-                    }
 
                     .span-image {
                         background: url("../assets/images/kisspng-construction-worker-architectural-engineering-cart-construction-worker-5ab8dd07578a65.6772059815220646473586.png") center/contain no-repeat;
-                        height: 350px;
-                        width: 250px;
-                        display: block;
                     }
                 }
 
+                .part-3 {
+                    .span-image {
+                        background: url("../assets/images/garantie.webp") center/contain no-repeat;
+
+                    }
+                }
+
+                .part-4 {
+                    .span-image {
+                        background: url("../assets/images/kisspng-clip-art-clothing-accessories-cartoon-product-desi-script-materi-edukasi-untuk-pebisnis-online-kaly-5c635672c8e170.4320553915500140668228.png") center/contain no-repeat;
+
+                    }
+                }
+
+                .part-5 {
+                    .span-image {
+                        background: url("../assets/images/kisspng-internet-world-wide-web-email-world-wide-web-png-pic-5a77bcc49b8983.2780346715177965486371.png") center/contain no-repeat;
+
+                    }
+                }
+
+                .part-6 {
+                    .span-image {
+                        background: url("../assets/images/kisspng-royalty-free-superhero-handyman-worker-vector-5ad15983bafa03.5698646015236693797659.png") center/contain no-repeat;
+
+                    }
+                }
+
+                .phrase-finale {
+                    text-align: center;
+                    font-size: 2rem;
+                }
+            }
+
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .button-1,
+            .button-2 {
+                cursor: pointer;
+                background-color: var(--blue-primary);
+                border-radius: 5px;
+                padding: 10px 15px;
+            }
+
+            .separator {
+                color: white;
             }
         }
 

@@ -16,11 +16,12 @@ class TopBar extends HTMLElement {
 
                                 <div class="menu-container">
                                     <nav>
-                                        <a href="">Accueil</a>
-                                        <a href="">Les services</a>
-                                        <a href="">Les projets</a>
-                                        <a href="">En savoir plus</a>
-                                        <a href="">contact</a>
+                                        <a href="/">Accueil</a>
+                                        <a href="">Services</a>
+                                        <a href="">Porftfolio et Témoignages</a>
+                                        <a href="">Tarifs</>
+                                        <a href="">A propos</a>
+                                        <a href="./contactez-nous.html">Contact</a>
                                     </nav>
                                 </div>`;
 
