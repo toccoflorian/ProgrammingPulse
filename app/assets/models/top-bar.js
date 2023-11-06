@@ -16,7 +16,7 @@ class TopBar extends HTMLElement {
 
                                 <div class="menu-container">
                                     <nav>
-                                        <a href="/">Accueil</a>
+                                        <a href="index.html">Accueil</a>
                                         <a href="">Services</a>
                                         <a href="">Porftfolio et Témoignages</a>
                                         <a href="">Tarifs</>
