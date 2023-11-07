@@ -18,9 +18,10 @@ class TopBar extends HTMLElement {
                                     <nav>
                                         <a href="index.html">Accueil</a>
                                         <a href="">Services</a>
-                                        <a href="">Porftfolio et Témoignages</a>
+                                        <a href="./portfolio-et-temoignage.html">Porftfolio et Témoignages</a>
                                         <a href="">Tarifs</>
                                         <a href="">A propos</a>
+                                        <a href="./espace-client.html">Espace client</a>
                                         <a href="./contactez-nous.html">Contact</a>
                                     </nav>
                                 </div>`;

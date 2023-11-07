@@ -6,9 +6,12 @@ const cleanWebpackPlugin = require("clean-webpack-plugin");
 module.exports = {
     entry: {
         main: path.join(__dirname, "src/index.js"), // prend en entrée index.js et dependances pour creer le bundle 'main'
-        commun: path.join(__dirname, "src/commun.js"),
         topBar: path.join(__dirname, "assets/models/top-bar.js"),
+        commun: path.join(__dirname, "src/commun.js"),
         contact: path.join(__dirname, "src/pages/contactez-nous/contactez-nous.js"),
+        espaceClient: path.join(__dirname, "src/pages/espace-client/espace-client.js"),
+        portfolioEtTemoignage: path.join(__dirname, "src/pages/portfolio-et-temoignage/portfolio-et-temoignage.js"),
+
     },
     output: {
         path: path.join(__dirname, "dist"),
@@ -44,15 +47,23 @@ module.exports = {
         new HtmlWebpackPlugin({
             filename: 'index.html', // nom du fichier dans le dist
             template: path.join(__dirname, "./src/index.html"), // chemin du template (fichier html)
-            chunks: ["main", "commun", "topBar"] // liste des scripts inserer dans les fichiers html
+            chunks: ["main", "topBar", "commun"] // liste des scripts inserer dans les fichiers html
         }),
         new HtmlWebpackPlugin({
-            filename: 'contactez-nous.html', // nom du fichier dans le dist
-            template: path.join(__dirname, "./src/pages/contactez-nous/contactez-nous.html"), // chemin du template (fichier html)
-            chunks: ["contact", "commun", "topBar"] // liste des scripts inserer dans les fichiers html
+            filename: 'contactez-nous.html',
+            template: path.join(__dirname, "./src/pages/contactez-nous/contactez-nous.html"),
+            chunks: ["contact", "topBar", "commun"]
         }),
-
-
+        new HtmlWebpackPlugin({
+            filename: 'espace-client.html',
+            template: path.join(__dirname, "./src/pages/espace-client/espace-client.html"),
+            chunks: ["espaceClient", "topBar", "commun"]
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'portfolio-et-temoignage.html',
+            template: path.join(__dirname, "./src/pages/portfolio-et-temoignage/portfolio-et-temoignage.html"),
+            chunks: ["portfolioEtTemoignage", "topBar", "commun"]
+        }),
 
 
     ],

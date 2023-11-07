@@ -12,6 +12,22 @@
     font-size: 20px;
 }
 
+.button {
+    cursor: pointer;
+    background-color: var(--blue-primary);
+    padding: 15px 25px;
+    border-radius: 5px;
+    box-shadow: var(--text-shadow-black);
+    transition: ease-out 0.25s;
+
+    &:hover {
+        background-color: white;
+        text-shadow: var(--text-shadow-black);
+        scale: 1.05;
+        box-shadow: 1px 1px 1px 1px;
+    }
+}
+
 :root {
     h2 {
         border-bottom: 5px solid var(--blue-primary);
