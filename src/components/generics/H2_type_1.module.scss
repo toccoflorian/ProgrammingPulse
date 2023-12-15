@@ -1,0 +1,15 @@
+.H2_type_1 {
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+
+    h2 {
+        text-align: center;
+        border-bottom: 5px solid var(--blue-primary);
+        padding-bottom: 15px;
+        text-shadow: var(--text-shadow-blue);
+        color: white;
+        font-size: 50px;
+    }
+
+}
