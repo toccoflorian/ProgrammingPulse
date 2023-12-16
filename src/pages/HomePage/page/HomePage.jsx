@@ -1,8 +1,7 @@
 import HomePageH1Container from "../HomePageH1Container";
 import { Section_1_type_1, Section_1_type_2 } from "../Section_1";
-import H2_type_1 from "../../../components/generics/H2_type_1";
-// import Header from "../../../components/header/Header";
-import "./HomePage.module.scss"
+import { H1Primary, H2Primary, H3Primary } from "../../../components/Titres";
+import "./HomePage.module.scss";
 
 export default function HomePage() {
 
@@ -12,7 +11,11 @@ export default function HomePage() {
 
         <HomePageH1Container />
 
-        <H2_type_1 />
+        <H1Primary textContent="H1Primary" />
+
+        <H2Primary textContent="H2Primary" />
+
+        <H3Primary textContent="H3Primary" />
 
         <div className={`d-flex flex-column jusitify-center align-center`}>
 

@@ -1,7 +1,9 @@
 import Header from "./layouts/header/Header";
-import HomePage from "./pages/HomePage/layout/HomePage";
+import HomePage from "./pages/HomePage/page/HomePage";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import styles from "./App.module.scss";
+import AProposPage from "./pages/AProposPage/AProposPage";
+import ContactPage from "./pages/ContactPage/page/ContactPage";
 
 
 
@@ -28,13 +30,13 @@ function App() {
             <Route path="/TarifsPage" Component={() => <h1>tarifs</h1>} />
 
             {/* A PROPOS */}
-            <Route path="/AProposPage" Component={() => <h1>aPropos</h1>} />
+            <Route path="/AProposPage" Component={AProposPage} />
 
             {/* ESPACE CLIENT */}
             <Route path="/EspaceClientPage" Component={() => <h1>espaceClient</h1>} />
 
             {/* CONTACT */}
-            <Route path="/ContactPage" Component={() => <h1>contact</h1>} />
+            <Route path="/ContactPage" Component={ContactPage} />
 
           </Routes>
         </div>

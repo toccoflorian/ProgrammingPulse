@@ -1,0 +1,29 @@
+.H1Primary {
+    text-align: center;
+    border-bottom: 5px solid white;
+    padding-bottom: 15px;
+    text-shadow: var(--text-shadow-black);
+    color: var(--blue-tertiary);
+    font-size: 60px;
+    width: fit-content;
+}
+
+.H2Primary {
+    text-align: center;
+    border-bottom: 5px solid var(--blue-primary);
+    padding-bottom: 15px;
+    text-shadow: var(--text-shadow-blue);
+    color: white;
+    font-size: 40px;
+    width: fit-content;
+}
+
+.H3Primary {
+    text-align: center;
+    border-bottom: 5px solid var(--blue-tertiary);
+    padding-bottom: 15px;
+    text-shadow: var(--text-shadow-black);
+    color: white;
+    font-size: 30px;
+    width: fit-content;
+}

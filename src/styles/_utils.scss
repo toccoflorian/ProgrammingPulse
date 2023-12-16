@@ -1,35 +1,35 @@
-// margin: 25px
+// margins
 .m25 {
     margin: 25px;
 }
 
-// margin-bottom: 60px
 .mb60 {
     margin-bottom: 60px;
 }
 
-// margin-right: auto
 .mr-auto {
     margin-right: auto;
 }
 
-// margin-left: auto
 .ml-auto {
     margin-left: auto;
 }
 
-// margin right & left: auto
 .mrl-auto {
     margin-right: auto;
     margin-left: auto;
 }
 
-// padding: 25px
+// paddings
+.p10 {
+    padding: 10px;
+}
+
 .p25 {
     padding: 25px;
 }
 
-//  border-radius 15px
+//  border-radius 
 .br-medium {
     border-radius: 15px;
 }
@@ -41,4 +41,9 @@
 // texts
 .text-center {
     text-align: center;
+}
+
+// widths
+.width100 {
+    width: 100%;
 }

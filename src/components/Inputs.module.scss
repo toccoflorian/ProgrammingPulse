@@ -1,0 +1,15 @@
+.inputContainer {
+    width: max-content;
+    padding: 8px 12px;
+
+    * {
+        font-weight: 800;
+        padding: 6px 10px;
+        width: 250px;
+    }
+}
+
+.InputTextPrimary {
+    border: 4px solid var(--blue-primary);
+    border-radius: 7px;
+}

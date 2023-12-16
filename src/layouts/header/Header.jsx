@@ -30,15 +30,3 @@ export default function Header() {
     </>)
 }
 
-{/* <ul>
-    <li>ACCEUIL</li>
-    <li>SERVICES</li>
-    <li>PORTFOLIO ET TEMOIGNAGES</li>
-    <li>TARIFS</li>
-    <li>A PROPOS</li>
-    <li>ESPACE CLIENT</li>
-    <li>CONTACT</li>
-</ul>
-
-const Navigation = () => (
-); */}
