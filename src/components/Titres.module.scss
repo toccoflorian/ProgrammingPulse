@@ -1,6 +1,7 @@
 .H1Primary {
     text-align: center;
     border-bottom: 5px solid white;
+    border-radius: 9px;
     padding-bottom: 15px;
     text-shadow: var(--text-shadow-black);
     color: var(--blue-tertiary);
@@ -11,6 +12,7 @@
 .H2Primary {
     text-align: center;
     border-bottom: 5px solid var(--blue-primary);
+    border-radius: 5px;
     padding-bottom: 15px;
     text-shadow: var(--text-shadow-blue);
     color: white;
@@ -21,6 +23,7 @@
 .H3Primary {
     text-align: center;
     border-bottom: 5px solid var(--blue-tertiary);
+    border-radius: 7px;
     padding-bottom: 15px;
     text-shadow: var(--text-shadow-black);
     color: white;

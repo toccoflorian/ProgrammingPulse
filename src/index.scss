@@ -4,6 +4,7 @@
 @import "./styles/utils";
 @import "./styles/variables";
 @import "./styles/debug";
+@import "./styles/classes";
 
 
 :root {
@@ -22,5 +23,9 @@ body {
   min-height: 100vh;
   background: var(--blue-gradient-primary);
 
-
+  ul {
+    li {
+      list-style: none;
+    }
+  }
 }

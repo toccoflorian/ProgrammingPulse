@@ -1,4 +1,4 @@
-import { ButtonNoPrimary, ButtonYesPrimary, ButtonYesSecondary } from "../../components/Buttons";
+import { ButtonNoPrimary, ButtonYesPrimary, SubmitButton } from "../../components/Buttons";
 import { InputTextPrimary } from "../../components/Inputs";
 import { H1Primary, H2Primary, H3Primary } from "../../components/Titres";
 
@@ -9,13 +9,13 @@ export default function AProposPage() {
 
         <h1>Buttons</h1>
         <p>ButtonYesPrimary</p>
-        <ButtonYesPrimary buttonTextContent={`Valider`} />
+        <ButtonYesPrimary textContent={`Valider`} />
 
-        <p>ButtonYesSecondary</p>
-        <ButtonYesSecondary buttonTextContent={`Envoyer`} />
+        <p>SubmitButton</p>
+        <SubmitButton textContent={`Envoyer`} />
 
         <p>ButtonNoPrimary</p>
-        <ButtonNoPrimary buttonTextContent={`Annuler`} />
+        <ButtonNoPrimary textContent={`Annuler`} />
 
         <h1>Inputs</h1>
 
