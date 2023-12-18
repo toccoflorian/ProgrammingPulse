@@ -12,10 +12,16 @@ export default function FormulaireContact() {
     const [telContact, setTelContact] = useState('');
     const [mailContact, setMailContact] = useState('');
     const [message, setMessage] = useState('');
+    const [response, setResponse] = useState('False')
+
+
 
     const { fetchData, fetchResponse } = useContext(APIContext)          // contexct
 
-    useEffect(() => { console.log('data', fetchResponse); }, [fetchResponse])        // effect
+    useEffect(() => {
+        console.log('data', fetchResponse);
+        setResponse(fetchResponse)
+    }, [fetchResponse])        // effect
 
     function handleClick(e) {           // au submit du formulaire
         e.preventDefault()
@@ -27,8 +33,9 @@ export default function FormulaireContact() {
             mail: mailContact,
             message,
         }
-        console.log(inputsValues);
+        // console.log(inputsValues);
         fetchData("/send_contact_form", JSON.stringify(inputsValues))       // fetch les datas
+
     }
 
     return (<>
@@ -74,12 +81,12 @@ export default function FormulaireContact() {
                     autoComplete={`tel`}
                 />
                 <InputTextPrimary
-                    type={`e-mail`}            // téléphone
+                    type={`email`}            // téléphone
                     name={`mailContact`}
                     id={`mailContact`}
                     onChange={(e) => { setMailContact(e.target.value) }}
                     placeholder={`E-mail`}
-                    autoComplete={`e-mail`}
+                    autoComplete={`email`}
                 />
             </div>
 
@@ -91,6 +98,7 @@ export default function FormulaireContact() {
             />
 
             <SubmitButton textContent={`Envoyer`} />
+            {fetchResponse[0] ? <p className={`debugGreen`}>{fetchResponse[1]}</p> : <p className={`debugRed`}>{fetchResponse[1]}</p>}
         </form>
     </>)
 }

@@ -6,7 +6,7 @@ export const APIContext = createContext();
 
 export function DataProvider({ children }) {
 
-    const [fetchResponse, setFetchResponse] = useState(["Bienvenue."]);
+    const [fetchResponse, setFetchResponse] = useState(null);
 
     async function fetchData(endpoint = null, content, returnContentType = null) {
 
@@ -22,7 +22,7 @@ export function DataProvider({ children }) {
             body: JSON.stringify(content),
         })
 
-        setFetchResponse([await response.json()]);
+        setFetchResponse(await response.json());
     }
 
 
