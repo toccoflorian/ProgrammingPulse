@@ -1,0 +1,31 @@
+@import "./styles/flex";
+@import "./styles/mixins";
+@import "./styles/theme";
+@import "./styles/utils";
+@import "./styles/variables";
+@import "./styles/debug";
+@import "./styles/classes";
+
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+body {
+  cursor: default;
+  margin: 0;
+  min-height: 100vh;
+  background: var(--blue-gradient-primary);
+
+  ul {
+    li {
+      list-style: none;
+    }
+  }
+}

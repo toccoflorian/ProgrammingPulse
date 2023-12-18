@@ -1,0 +1,39 @@
+//  Variables
+:root {
+    // colors
+    --blue-gradient-primary:
+        linear-gradient(-35deg,
+            rgba(0, 0, 0, 0.8),
+            #4b4b4b,
+            rgba(0, 0, 0, 0.8),
+            #4b4b4b,
+            rgba(0, 0, 0, 0.8),
+            #4b4b4b,
+            rgba(0, 0, 0, 0.8));
+    // sombres
+    --sombre-primary: #20201C;
+    --sombre-secondary: #4b4b4b;
+    // light
+    --green-primary: #10ac84;
+    --green-secondary: #1dd1a1;
+    --green-tertiary: #10ac84;
+
+    --blue-primary: #0abde3;
+    --blue-secondary: #48dbfb;
+    --blue-tertiary: #217AAC;
+
+    --red-primary: #f54646;
+    --red-secondary: #ff4c79;
+
+    // --green-primary: ;
+    // --green-secondary: ;
+
+    // text shadows
+    --text-shadow-black: 3px 3px 3px black;
+    --text-shadow-blue: 2px 2px #217AAC;
+    --text-shadow-white: 2px 2px 3px white;
+
+    // border radius
+    --br-small: 5px;
+    --br-medium: 15px;
+}
