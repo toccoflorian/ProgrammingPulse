@@ -12,7 +12,6 @@ export default function FormulaireContact() {
     const [telContact, setTelContact] = useState('');
     const [mailContact, setMailContact] = useState('');
     const [message, setMessage] = useState('');
-    const [response, setResponse] = useState('False')
 
 
 
@@ -20,7 +19,6 @@ export default function FormulaireContact() {
 
     useEffect(() => {
         console.log('data', fetchResponse);
-        setResponse(fetchResponse)
     }, [fetchResponse])        // effect
 
     function handleClick(e) {           // au submit du formulaire
@@ -98,7 +96,8 @@ export default function FormulaireContact() {
             />
 
             <SubmitButton textContent={`Envoyer`} />
-            {fetchResponse[0] ? <p className={`debugGreen`}>{fetchResponse[1]}</p> : <p className={`debugRed`}>{fetchResponse[1]}</p>}
+            {
+                fetchResponse[0] ? <p className={`debugGreen`}>{fetchResponse[1]}</p> : <p className={`debugRed`}>{fetchResponse[1]}</p>}
         </form>
     </>)
 }

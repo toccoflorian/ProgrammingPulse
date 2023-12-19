@@ -1,10 +1,12 @@
-import database.connection as connection
+import sql_connection_manager as connection
 from datetime import datetime
+import bcrypt
 
 
 
 class Database():
     __CONTACT_TABLE = "`programmingpulsestudio`.`contact_form_table`"
+    __USER_TABLE = "`programmingpulsestudio`.`users`"
 
 
     def __init__(self) -> None:
@@ -31,6 +33,15 @@ class Database():
         except Exception as e:
             print(e.args)
 
+        
+    def INSERT_INTO(self, sql_request, *args) -> None:          
+        # exécution de la requête SQL
+        connection, cursor = self.open_connection()     # ouverture connexion
+        cursor.execute(sql_request, args)
+        result = connection.commit()
+        print(result)
+        self.close_connection()         # fermeture connexion
+
 
     # enregistré un formulaire de contact sur la base de données
     def save_contact_form(self, family_name, given_name, organization, tel, mail, message):
@@ -40,17 +51,32 @@ class Database():
         # création de la requête SQL
         sql_request = f"""          
             INSERT INTO {self.__CONTACT_TABLE} (
-            `creation_date`, `state`, `family-name`, `given-name`, `organization`, `tel`, `mail`, `message`
+            `creation_date`, `state`, `family_name`, `given_name`, `organization`, `tel`, `mail`, `message`
             ) VALUES (
-            %s, %s, %s, %s, %s, %s, %s, %s
+                         %s,      %s,            %s,           %s,             %s,    %s,     %s,       %s
+            )"""
+                
+        # exécution de la requête SQL
+        self.INSERT_INTO(sql_request, creation_date, state, family_name, given_name, organization, tel, mail, message)
+        
+        
+
+
+    # créer un nouveau user
+    def create_user(self, family_name, given_name, organization, tel, mail, password):
+        # création de la requête SQL
+        sql_request = f"""          
+            INSERT INTO {self.__USER_TABLE} (
+            `family_name`, `given_name`, `organization`, `tel`, `mail`, `password`
+            ) VALUES (
+                       %s,           %s,             %s,    %s,     %s,        %s
             )"""
         
+        # hash le password
+        hashed_password = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
+        
         # exécution de la requête SQL
-        connection, cursor = self.open_connection()     # ouverture connexion
-        cursor.execute(sql_request, (creation_date, state, family_name, given_name, organization, tel, mail, message))
-        result = connection.commit()
-        print(result)
-        self.close_connection()         # fermeture connexion
+        self.INSERT_INTO(sql_request, family_name, given_name, organization, tel, mail, hashed_password)
 
     
     # obtenir les formulaires de contact
@@ -65,10 +91,14 @@ class Database():
         for form_data in forms_datas:
             forms.append(Contact_Form_Table(*form_data[1:]))
         return forms
+    
+    
+
+    # créer un nouveau compte 
 
 
 
-class Contact_Form_Table(Database):
+class Contact_Form_Table():
     def __init__(self, creation_date, state, family_name, given_name, organization, tel, mail, message, response_date, response) -> None:
         super().__init__()
         self.creation_date = creation_date
@@ -90,7 +120,6 @@ class Contact_Form_Table(Database):
         
     
 
+DB = Database()
 
-# t = Database()
-# # print(t.__TABLE)
-# print(t.get_contact_forms())
+DB.create_user("TOCCO", "Florian", "Programming Pulse Studio", "0554757588", "admin@admin.com", "12345")
