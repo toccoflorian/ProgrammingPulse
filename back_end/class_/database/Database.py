@@ -1,4 +1,4 @@
-import sql_connection_manager as connection
+import class_.database.sql_connection_manager as connection
 from datetime import datetime
 import bcrypt
 
@@ -16,7 +16,10 @@ class Database():
     # établir la connexion à la base de données
     def open_connection(self) -> None:
         try:
-            self.__connection = connection.connection_callback()
+            result = connection.connection_callback()
+            if not result[0]:
+                return result[1]
+            self.__connection = result[1]
             self.__cursor = self.__connection.cursor()
             return self.__connection, self.__cursor
     
@@ -31,16 +34,24 @@ class Database():
             self.__cursor, self.__connection = None, None
 
         except Exception as e:
-            print(e.args)
+            print(e.with_traceback(None))
 
         
-    def INSERT_INTO(self, sql_request, *args) -> None:          
-        # exécution de la requête SQL
-        connection, cursor = self.open_connection()     # ouverture connexion
-        cursor.execute(sql_request, args)
-        result = connection.commit()
-        print(result)
-        self.close_connection()         # fermeture connexion
+    def INSERT_INTO(self, sql_request, *args) -> None:    
+        try:      
+            # exécution de la requête SQL
+            connection, cursor = self.open_connection()     # ouverture connexion
+            cursor.execute(sql_request, args)
+            result = connection.commit()
+            print(result)
+            self.close_connection()         # fermeture connexion
+            return (True, "La requête SQL s'est bien passée")
+        except Exception as e:
+            print(e.with_traceback(None))
+            if e.errno == 1062:
+                return (False, f"'{e.msg.split(chr(39))[1]}' existe déjà dans la base de données.")
+            elif e.errno == 0: pass
+            return (False, e.msg)
 
 
     # enregistré un formulaire de contact sur la base de données
@@ -64,19 +75,21 @@ class Database():
 
     # créer un nouveau user
     def create_user(self, family_name, given_name, organization, tel, mail, password):
+        creation_date = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
         # création de la requête SQL
         sql_request = f"""          
             INSERT INTO {self.__USER_TABLE} (
-            `family_name`, `given_name`, `organization`, `tel`, `mail`, `password`
+            `creation_date`, `family_name`, `given_name`, `organization`, `tel`, `mail`, `password`
             ) VALUES (
-                       %s,           %s,             %s,    %s,     %s,        %s
+                         %s,            %s,           %s,             %s,    %s,     %s,        %s
             )"""
         
         # hash le password
         hashed_password = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
         
         # exécution de la requête SQL
-        self.INSERT_INTO(sql_request, family_name, given_name, organization, tel, mail, hashed_password)
+        response = self.INSERT_INTO(sql_request, creation_date, family_name, given_name, organization, tel, mail, hashed_password)
+        return response
 
     
     # obtenir les formulaires de contact
@@ -120,6 +133,6 @@ class Contact_Form_Table():
         
     
 
-DB = Database()
+# DB = Database()
 
-DB.create_user("TOCCO", "Florian", "Programming Pulse Studio", "0554757588", "admin@admin.com", "12345")
+# DB.create_user("TOCCO", "Florian", "Programming Pulse Studio", "0554757588", "admin@admin.com", "12345")

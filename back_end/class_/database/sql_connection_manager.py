@@ -12,9 +12,9 @@ def connect_DB(host, db_name, user_name, password) -> object:
         'raise_on_warnings': True
         }
     try:
-        return connector.connect(**config)
-    except connector.Error as e:
-        print(e.args)
+        return (True, connector.connect(**config))
+    except connector.IntegrityError as e:
+        return (False, e.with_traceback(None))
 
 # callback pour déclencher la connexion à la base de données
 def connection_callback(): 

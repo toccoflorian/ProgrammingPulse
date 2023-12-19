@@ -15,13 +15,13 @@ export default function FormulaireContact() {
 
 
 
-    const { fetchData, fetchResponse } = useContext(APIContext)          // contexct
+    const { fetchData, contactResponse } = useContext(APIContext)          // contexct
 
     useEffect(() => {
-        console.log('data', fetchResponse);
-    }, [fetchResponse])        // effect
+        console.log('data', contactResponse);
+    }, [contactResponse])        // effect
 
-    function handleClick(e) {           // au submit du formulaire
+    function handleSubmit(e) {           // au submit du formulaire
         e.preventDefault()
         const inputsValues = {                  // recuperation des valeurs des inputs
             familyname: familyNameContact,
@@ -32,12 +32,12 @@ export default function FormulaireContact() {
             message,
         }
         // console.log(inputsValues);
-        fetchData("/send_contact_form", JSON.stringify(inputsValues))       // fetch les datas
+        fetchData("/send_contact_form", JSON.stringify(inputsValues), "contact")       // fetch les datas
 
     }
 
     return (<>
-        <form onSubmit={handleClick} className={`${styles.formulaire} d-flex flex-column justify-center align-center width100 br-small p10`}>
+        <form onSubmit={handleSubmit} className={`${styles.formulaire} d-flex flex-column justify-center align-center width100 br-small p10`}>
 
             <div className={` d-flex`}>
 
@@ -70,14 +70,6 @@ export default function FormulaireContact() {
             />
 
             <div className={` d-flex`}>
-                <InputTextPrimary         // telephone
-                    type={`tel`}
-                    name={`telContact`}
-                    id={`telContact`}
-                    onChange={(e) => { setTelContact(e.target.value) }}
-                    placeholder={`Téléphone`}
-                    autoComplete={`tel`}
-                />
                 <InputTextPrimary
                     type={`email`}            // téléphone
                     name={`mailContact`}
@@ -86,18 +78,26 @@ export default function FormulaireContact() {
                     placeholder={`E-mail`}
                     autoComplete={`email`}
                 />
+                <InputTextPrimary         // telephone
+                    type={`tel`}
+                    name={`telContact`}
+                    id={`telContact`}
+                    onChange={(e) => { setTelContact(e.target.value) }}
+                    placeholder={`Téléphone`}
+                    autoComplete={`tel`}
+                />
             </div>
 
             <TextArea
                 name={`message`}            // message
                 id={`message`}
                 onChange={(e) => { setMessage(e.target.value) }}
-                placeholder={fetchResponse}
+                placeholder={contactResponse}
             />
 
             <SubmitButton textContent={`Envoyer`} />
             {
-                fetchResponse[0] ? <p className={`debugGreen`}>{fetchResponse[1]}</p> : <p className={`debugRed`}>{fetchResponse[1]}</p>}
+                contactResponse[0] ? <p className={`debugGreen`}>{contactResponse[1]}</p> : <p className={`debugRed`}>{contactResponse[1]}</p>}
         </form>
     </>)
 }

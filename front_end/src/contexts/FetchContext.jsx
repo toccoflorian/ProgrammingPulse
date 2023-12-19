@@ -1,14 +1,15 @@
 import { createContext, useState } from "react";
-
+import propTypes from "prop-types";
 
 export const APIContext = createContext();
 
 
 export function DataProvider({ children }) {
 
-    const [fetchResponse, setFetchResponse] = useState(false);
+    const [contactResponse, setContactResponse] = useState(false);
+    const [inscriptionResponse, setInscriptionResponse] = useState(false);
 
-    async function fetchData(endpoint = null, content, returnContentType = null) {
+    async function fetchData(endpoint = null, content, target) {
 
 
 
@@ -22,15 +23,37 @@ export function DataProvider({ children }) {
             body: JSON.stringify(content),
         })
 
-        setFetchResponse(await response.json());
+        switch (target) {
+            case "contact":
+                setContactResponse(await response.json());
+                setTimeout(() => {
+                    setContactResponse(false);
+                }, 1000 * 10)
+                break;
+
+            case "inscription":
+                setInscriptionResponse(await response.json());
+                setTimeout(() => {
+                    setInscriptionResponse(false);
+                }, 1000 * 10)
+                break;
+
+            default:
+                break;
+        }
+
     }
 
 
     return (<>
-        <APIContext.Provider value={{ fetchData, fetchResponse }}>
+        <APIContext.Provider value={{ fetchData, contactResponse, inscriptionResponse }}>
             {children}
         </APIContext.Provider>
     </>)
 }
 
 
+
+DataProvider.propTypes = {
+    children: propTypes.any
+}
