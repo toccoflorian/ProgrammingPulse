@@ -75,8 +75,9 @@ class Database():
     #         return (False, e.msg)
         
 
+
+    # supprimer un champ de la base de données
     def DELETE_FROM(self, sql_request):
-        
         try:      
             # exécution de la requête SQL
             connection, cursor = self.open_connection()     # ouverture connexion
@@ -86,7 +87,7 @@ class Database():
             self.close_connection()         # fermeture connexion
             return (True, "La requête SQL s'est bien passée")
         except Exception as e:
-            print(e.with_traceback(None))
+            print(e.with_traceback(None))       # erreur
             return (False, e.msg)
 
 
