@@ -1,26 +1,46 @@
+import { useContext, useEffect, useState } from "react";
 import { SubmitButton } from "../../../components/Buttons";
 import { InputTextPrimary } from "../../../components/Inputs";
 import styles from "./FormulaireConnexion.module.scss";
+import { FetchContext } from "../../../contexts/FetchContext";
 
 
 export default function FormulaireAccount() {
 
-    function handleIdentifiantChange() {
-        console.log("handleIdentifiantChange");
+    const [emailConnection, setEmailConnetion] = useState("");
+    const [passwordConnection, setPasswordConnetion] = useState("");
+
+    const { fetchData, connectionResponse } = useContext(FetchContext)
+
+    useEffect(() => {
+        console.log("connectionResponse", connectionResponse);
+        connectionResponse.status &&
+            setSessionCookies()
+    }, [connectionResponse])
+
+    function setSessionCookies() {
+        document.cookie = `user_id= ${connectionResponse.content.user_id}`;
+        document.cookie = `cookie_id= ${connectionResponse.content.cookie_id}`;
+        document.cookie = `signature= ${connectionResponse.content.signature}`;
     }
 
-    function handlePasswordConnexion() {
-        console.log("handlePasswordConnexion");
+    function handleSubmit(e) {
+        e.preventDefault();
+        const inpusValues = {
+            mail: emailConnection,
+            currentpassword: passwordConnection
+        }
+        fetchData("/get_user_session_token", JSON.stringify(inpusValues), "connection")
     }
 
     return (<>
-        <form action="" className={`${styles.formulaire} br-small`}>
+        <form onSubmit={handleSubmit} className={`${styles.formulaire} br-small`}>
             <div className={`d-flex justify-center`}>
                 <InputTextPrimary       // identifiant connexion
                     type={`email`}
                     name={`identifiantConnexion`}
                     id={`identifiantConnexion`}
-                    onChange={handleIdentifiantChange}
+                    onChange={(e) => { setEmailConnetion(e.target.value) }}
                     placeholder={`identifiant`}
                     autoComplete={`email`}
                 />
@@ -29,7 +49,7 @@ export default function FormulaireAccount() {
                     type={`password`}
                     name={`passwordConnexion`}
                     id={`passwordConnexion`}
-                    onChange={handlePasswordConnexion}
+                    onChange={(e) => { setPasswordConnetion(e.target.value) }}
                     placeholder={`Mot de passe`}
                     autoComplete={`current-password`}
                 />
@@ -39,6 +59,9 @@ export default function FormulaireAccount() {
 
                 <SubmitButton textContent={`Connexion`} />
             </div>
+            {!connectionResponse.status &&
+                connectionResponse.content}
+            {/* {connectionResponse["state"] ? <p className={`debugGreen`}>{connectionResponse["content"]}</p> : <p className={`debugRed`}>{connectionResponse["content"]}</p>} */}
 
         </form>
     </>)

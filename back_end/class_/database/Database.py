@@ -1,12 +1,15 @@
 import class_.database.sql_connection_manager as connection
+from class_.User import User
 from datetime import datetime
 import bcrypt
 
 
 
+
 class Database():
     __CONTACT_TABLE = "`programmingpulsestudio`.`contact_form_table`"
-    __USER_TABLE = "`programmingpulsestudio`.`users`"
+    __USERS_TABLE = "`programmingpulsestudio`.`users`"
+
 
 
     def __init__(self) -> None:
@@ -36,8 +39,11 @@ class Database():
         except Exception as e:
             print(e.with_traceback(None))
 
+
+    
+
         
-    def INSERT_INTO(self, sql_request, *args) -> None:    
+    def INSERT_INTO(self, sql_request, *args):    
         try:      
             # exécution de la requête SQL
             connection, cursor = self.open_connection()     # ouverture connexion
@@ -52,6 +58,36 @@ class Database():
                 return (False, f"'{e.msg.split(chr(39))[1]}' existe déjà dans la base de données.")
             elif e.errno == 0: pass
             return (False, e.msg)
+        
+    
+    # def fetch(self, table, column="*", where= ""):
+    #     sql_request = f"SELECT {column} FROM {self.__USERS_TABLE}"
+    #     try:      
+    #         # exécution de la requête SQL
+    #         connection, cursor = self.open_connection()     # ouverture connexion
+    #         cursor.execute(sql_request, args)
+    #         result = connection.commit()
+    #         print(result)
+    #         self.close_connection()         # fermeture connexion
+    #         return (True, "La requête SQL s'est bien passée")
+    #     except Exception as e:
+    #         print(e.with_traceback(None))
+    #         return (False, e.msg)
+        
+
+    def DELETE_FROM(self, sql_request):
+        
+        try:      
+            # exécution de la requête SQL
+            connection, cursor = self.open_connection()     # ouverture connexion
+            cursor.execute(sql_request)
+            result = connection.commit()
+            print(result)
+            self.close_connection()         # fermeture connexion
+            return (True, "La requête SQL s'est bien passée")
+        except Exception as e:
+            print(e.with_traceback(None))
+            return (False, e.msg)
 
 
     # enregistré un formulaire de contact sur la base de données
@@ -62,9 +98,9 @@ class Database():
         # création de la requête SQL
         sql_request = f"""          
             INSERT INTO {self.__CONTACT_TABLE} (
-            `creation_date`, `state`, `family_name`, `given_name`, `organization`, `tel`, `mail`, `message`
+                `creation_date`, `state`, `family_name`, `given_name`, `organization`, `tel`, `mail`, `message`
             ) VALUES (
-                         %s,      %s,            %s,           %s,             %s,    %s,     %s,       %s
+                 %s,              %s,      %s,            %s,           %s,             %s,    %s,     %s
             )"""
                 
         # exécution de la requête SQL
@@ -78,10 +114,10 @@ class Database():
         creation_date = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
         # création de la requête SQL
         sql_request = f"""          
-            INSERT INTO {self.__USER_TABLE} (
-            `creation_date`, `family_name`, `given_name`, `organization`, `tel`, `mail`, `password`
+            INSERT INTO {self.__USERS_TABLE} (
+                `creation_date`, `family_name`, `given_name`, `organization`, `tel`, `mail`, `password`
             ) VALUES (
-                         %s,            %s,           %s,             %s,    %s,     %s,        %s
+                 %s,              %s,            %s,           %s,             %s,    %s,     %s
             )"""
         
         # hash le password
@@ -102,16 +138,32 @@ class Database():
         self.close_connection()
         forms = []
         for form_data in forms_datas:
-            forms.append(Contact_Form_Table(*form_data[1:]))
+            forms.append(Contact_form(*form_data[1:]))
         return forms
     
+
+
+    def check_user_exist_and_check_password(self, user, password):
+        if not len(user) or not bcrypt.checkpw(password.encode("utf-8"), user[0][7].encode("utf-8")):       # vérif que user existe et vérif mot de passe
+            return False, ""
+        return True, user
     
 
-    # créer un nouveau compte 
+
+    def get_user(self, credentials):
+        user_mail, user_password = credentials["mail"], credentials["currentpassword"]
+        sql_request = f""" SELECT * FROM {self.__USERS_TABLE} WHERE mail='{user_mail}' """
+        connection, cursor = self.open_connection()
+        cursor.execute(sql_request)
+        check, user = self.check_user_exist_and_check_password(cursor.fetchall(), user_password)
+        self.close_connection() 
+        if not check:
+            return "L'identifiant ou le mot de passe ne correspond pas"
+        print(*user[0])
+        return User(*user[0], Database())
 
 
-
-class Contact_Form_Table():
+class Contact_form():
     def __init__(self, creation_date, state, family_name, given_name, organization, tel, mail, message, response_date, response) -> None:
         super().__init__()
         self.creation_date = creation_date

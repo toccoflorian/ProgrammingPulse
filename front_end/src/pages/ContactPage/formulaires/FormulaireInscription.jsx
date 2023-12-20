@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { SubmitButton } from "../../../components/Buttons";
 import { InputTextPrimary } from "../../../components/Inputs";
 import styles from './FormulaireInscription.module.scss'
-import { APIContext } from "../../../contexts/FetchContext";
+import { FetchContext } from "../../../contexts/FetchContext";
 
 
 export default function FormulaireInscription() {       // INSCRIPTION
@@ -17,10 +17,10 @@ export default function FormulaireInscription() {       // INSCRIPTION
 
 
 
-    const { fetchData, inscriptionResponse } = useContext(APIContext)          // contexct
+    const { fetchData, inscriptionResponse } = useContext(FetchContext)          // contexct
 
     useEffect(() => {
-        console.log('data', inscriptionResponse);
+        // console.log('data', inscriptionResponse);
     }, [inscriptionResponse])        // effect
 
     function handleSubmit(e) {           // au submit du formulaire
@@ -121,8 +121,7 @@ export default function FormulaireInscription() {       // INSCRIPTION
 
                 <SubmitButton textContent={`Créer un compte`} />
             </div>
-            {
-                inscriptionResponse[0] ? <p className={`debugGreen`}>{inscriptionResponse[1]}</p> : <p className={`debugRed`}>{inscriptionResponse[1]}</p>}
+            {inscriptionResponse[0] ? <p className={`debugGreen`}>{inscriptionResponse[1]}</p> : <p className={`debugRed`}>{inscriptionResponse[1]}</p>}
         </form>
     </>)
 }
