@@ -38,13 +38,13 @@ def sanitise_data(data):
             clean_data[key] = value
 
 
-        elif key in {"familyname", "givenname" } and len(value) < 3:
+        elif key in {"familyname", "givenname" } and 3 > len(value) > 45:
             return False, f"Le champ {key} doit contenir 3 caractères au minimum."
 
 
         elif isinstance(value, str):            # sanitise chaînes de caractères
 
-            if not len(value) < 45:
+            if not len(value) < 45 and key != "message":
                 return False, f"Le longueur du champ '{key}' est trop grande."
             clean_data[key] = bleach.clean(value)
         

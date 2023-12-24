@@ -5,10 +5,13 @@ import styles from "./App.module.scss";
 import AProposPage from "./pages/AProposPage/AProposPage";
 import ContactPage from "./pages/ContactPage/page/ContactPage";
 import { DataProvider } from "./contexts/FetchContext";
+import EspaceClientPage from "./pages/EspaceClientPage/page/EspaceClientPage";
 
 
 
 function App() {
+
+
 
   return (
     <>
@@ -35,7 +38,10 @@ function App() {
               <Route path="/AProposPage" Component={AProposPage} />
 
               {/* ESPACE CLIENT */}
-              <Route path="/EspaceClientPage" Component={() => <h1>espaceClient</h1>} />
+              {true ?
+                <Route path="/EspaceClientPage" Component={EspaceClientPage} />
+                :
+                <Route path="/EspaceClientPage" Component={() => <h1>espaceClient</h1>} />}
 
               {/* CONTACT */}
               <Route path="/ContactPage" Component={ContactPage} />
