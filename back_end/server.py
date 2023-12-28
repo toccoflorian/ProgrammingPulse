@@ -1,5 +1,5 @@
 import json
-from flask import Flask, request, jsonify, redirect, make_response
+from flask import Flask, request, jsonify, g
 from flask_cors import CORS
 
 import functions
@@ -12,6 +12,8 @@ CORS(app, supports_credentials=True)
 
 @app.before_request
 def verify_auth_token():
+    private_routes = ["get_user"]
+    
     cookies = request.cookies
     user_id_received = cookies.get("user_id")
     cookie_received = cookies.get("cookie")
@@ -21,23 +23,36 @@ def verify_auth_token():
     print(request.endpoint)
     print()
     if user_id_received:
-        token = Database().get_user_session(user_id_received)
+        DB = Database()
+        token = DB.get_user_session(user_id_received)
         if not token:
             print()
-            print("before end")
-            print()
+            return {"status": False}
         else:
             print("cookie_received == cookie:", cookie_received == token["cookie"])
             print("signature_received == signature:", signature_received == token["signature"])
-    print()
-    print("before end")
-    print()
+            if not cookie_received == token["cookie"] and signature_received == token["signature"]:
+                return {"status": False}
+            g.user = DB.get_user(user_id=user_id_received)      # définition de l'attribut 'user' à l'objet global Flask 'g' avec un objet 'User'
+            print("user:", g.user)
+            print("before end cookie ok !!")
+            print()
+            
+    else:
+        print("before end no cookie")
+        print()
+        if request.endpoint in private_routes:          # si la route est privée et les cookies non-validés, retoune "status": False
+            return {"status": False}
 
 
-@app.route("/is_loged", methods=["POST"])
-def verify_token():
-
-    return jsonify(True)
+@app.route("/get_user", methods=["POST"])
+def get_user():
+    print("zzzzzzzzzzzzzzz")
+    print("zzzzzzzzzzzzzzz")
+    print("zzzzzzzzzzzzzzz")
+    print("zzzzzzzzzzzzzzz")
+    print("zzzzzzzzzzzzzzz")
+    return jsonify({"status": True, "content": functions.serialyse_User(g.user)})
 
 
 # obtenir un token d'authentification
@@ -45,17 +60,18 @@ def verify_token():
 def login() -> any:
     # recuperer le body de la requête
     data = json.loads(request.get_json())
-    succes, result = functions.sanitise_data(
-        data)           # nettoyer les données
+    succes, result = functions.sanitise_data(data)           # nettoyer les données, retourne un bool et un dict en cas de succès sinon bool str
     if not succes:
         # réponse d'erreur de nettoyage
         return jsonify({"status": False, "content": result})
     clean_data = result
     DB = Database()
-    current_User = DB.get_user(clean_data)
+    current_User = DB.get_user(user_mail=clean_data["mail"])
     if type(current_User) == str:
-        return json.dumps({"state": False, "content": current_User})
-    return jsonify(current_User.create_token())
+        return json.dumps({"status": False, "content": current_User})
+    if not current_User.check_password(clean_data["currentpassword"]):
+        return json.dumps({"status": False, "content": "Mauvais mot de passe"})
+    return jsonify(current_User.login())
 
 
 # reception formulaire inscription

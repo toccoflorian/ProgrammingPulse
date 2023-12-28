@@ -14,16 +14,15 @@ class User():
         self.organization = organization
         self.__password = password
         self.__DB = DB
-        self.__token = session
 
-    def check_auth_token(self, user_id_received, cookie_received, signature_received) -> bool:
-        if not self.__token or user_id_received != self.id:
+
+    def check_password(self, password):
+        if not bcrypt.checkpw(password.encode("utf-8"), self.__password.encode("utf-8")):
             return False
         return True
 
     # création d'un token de session permettant à l'utilisateur d'être connecté
-
-    def create_token(self) -> dict:
+    def login(self) -> dict:
 
         cookie = bcrypt.hashpw(            # création d'un cookie pour cétifié la session
             self.__password.encode("utf-8"), bcrypt.gensalt())

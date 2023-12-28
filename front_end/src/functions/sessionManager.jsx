@@ -39,3 +39,11 @@ export async function sessionConnection(fetchData, inpusValues) {
 }
 
 
+export async function get_user(fetchData) {
+    const result = await fetchData("get_user", "content", "get_user");
+    if (result.status) {
+        return JSON.parse(result.content);
+    } else {
+        window.location = "/ContactPage";
+    }
+}

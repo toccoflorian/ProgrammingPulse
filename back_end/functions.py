@@ -1,6 +1,19 @@
 import json
 import bleach
 import re
+from datetime import datetime
+
+
+def serialyse_User(user):
+    return json.dumps({
+        "id": user.id,
+        "creation_date": datetime.strftime(user.creation_date, "%d/%m/%YT%H:%M"),
+        "family_name": user.family_name,
+        "given_name": user.given_name,
+        "mail": user.mail,
+        "tel": user.tel,
+        "organization": user.organization,
+    })
 
 def confirm_password(passwords):
     print('passwords[0] == passwords[1]', passwords[0] == passwords[1])
@@ -8,7 +21,7 @@ def confirm_password(passwords):
         return True
     return False
 
-def sanitise_data(data):
+def sanitise_data(data) -> any:
     clean_data = {}
 
     for key, value in data.items():

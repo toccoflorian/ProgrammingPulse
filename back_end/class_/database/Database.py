@@ -110,24 +110,25 @@ class Database():
 
 
 
-    def check_user_exist_and_check_password(self, user, password):
-        # vérif que user existe et vérif mot de passe
-        if not len(user) or not bcrypt.checkpw(password.encode("utf-8"), user[0][7].encode("utf-8")):
+    def check_user_exist(self, user):
+        # vérif que user existe
+        if not len(user):
             return False, ""
         return True, user
     
 
 
-    def get_user(self, credentials):
-        user_mail, user_password = credentials["mail"], credentials["currentpassword"]
-        sql_request = f""" SELECT * FROM {self.__USERS_TABLE} WHERE mail='{user_mail}' """
+    def get_user(self, user_mail=None, user_id=None):
+        if user_mail:
+            sql_request = f""" SELECT * FROM {self.__USERS_TABLE} WHERE mail='{user_mail}' """
+        elif id:
+            sql_request = f""" SELECT * FROM {self.__USERS_TABLE} WHERE id='{user_id}' """
         connection, cursor = self.open_connection()
         cursor.execute(sql_request)
-        check, user = self.check_user_exist_and_check_password(
-            cursor.fetchall(), user_password)
+        check, user = self.check_user_exist(cursor.fetchall())
         self.close_connection()
         if not check:
-            return "L'identifiant ou le mot de passe ne correspond pas"
+            return "L'identifiant ne correspond à aucun utilisateur."
         print(*user[0])
         return User(*user[0], Database())
     

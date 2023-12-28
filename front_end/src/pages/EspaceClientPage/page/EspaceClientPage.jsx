@@ -1,5 +1,7 @@
-import { useContext } from "react"
+import { useContext, useEffect, useState, Redirect } from "react"
 import { FetchContext } from "../../../contexts/FetchContext"
+import { get_user } from "../../../functions/sessionManager";
+import H1Container from "../H1Container";
 
 
 
@@ -7,18 +9,20 @@ import { FetchContext } from "../../../contexts/FetchContext"
 
 export default function EspaceClientPage() {
 
+    const [currentUser, setCurrentUser] = useState(true);
     const { fetchData } = useContext(FetchContext);
 
-    async function handleClick() {
-        // const isLoged = await fetchData("is_loged", "content", "is_loged");
-        // console.log("isLoged:", isLoged);
-        // fetchData("is_loged", "content", "is_loged")
-    }
+    useEffect(() => {
+        async function callGetUser() {      // fonction intermediaire
+            setCurrentUser(await get_user(fetchData))       // obtenir les informations de l'utilisateur
+        }
+        callGetUser()
+
+    }, [])
+
+
 
     return (<>
-        <h1>is log</h1>
-        <button onClick={handleClick}>
-            fetchData
-        </button>
+        <H1Container currentUser={currentUser} />
     </>)
 }

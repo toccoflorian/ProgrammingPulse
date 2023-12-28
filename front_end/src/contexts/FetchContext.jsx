@@ -36,6 +36,8 @@ export function DataProvider({ children }) {
             case "login":
                 return await response.json();
 
+            case "get_user":
+                return await response.json();
 
         }
     }

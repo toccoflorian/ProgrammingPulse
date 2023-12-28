@@ -5,7 +5,6 @@ import styles from "./FormulaireConnexion.module.scss";
 import { FetchContext } from "../../../contexts/FetchContext";
 import { sessionConnection } from "../../../functions/sessionManager"
 
-// let connectionResponse = { status: true, content: '' };
 
 export default function FormulaireAccount() {
 
@@ -23,7 +22,6 @@ export default function FormulaireAccount() {
             currentpassword: passwordConnection
         }
         const response = await sessionConnection(fetchData, inpusValues);
-        // connectionResponse = response;
         setConnectionResponse(response)
         console.log(connectionResponse);
     }
