@@ -1,32 +1,27 @@
 import { useContext, useEffect, useState } from "react";
-import { SubmitButton } from "../../../components/Buttons";
-import { InputTextPrimary } from "../../../components/Inputs";
+import { SubmitButton } from "../Buttons";
+import { InputTextPrimary } from "../Inputs";
 import styles from "./FormulaireConnexion.module.scss";
-import { FetchContext } from "../../../contexts/FetchContext";
-import { sessionConnection } from "../../../functions/sessionManager"
+import { FetchContext } from "../../contexts/FetchContext";
 
 
-export default function FormulaireAccount() {
+export default function FormulaireConnexion() {
 
     const [emailConnection, setEmailConnetion] = useState("");
     const [passwordConnection, setPasswordConnetion] = useState("");
-    const [connectionResponse, setConnectionResponse] = useState({ status: true });
 
-    const { fetchData } = useContext(FetchContext);
+
+    const { fetchData, connectionResponse } = useContext(FetchContext);
 
 
     async function handleSubmit(e) {
         e.preventDefault();
-        const inpusValues = {
-            mail: emailConnection,
-            currentpassword: passwordConnection
-        }
-        const response = await sessionConnection(fetchData, inpusValues);
-        setConnectionResponse(response)
-        console.log(connectionResponse);
+        fetchData.get(`/login?mail=${emailConnection}&currentpassword=${passwordConnection}`, "login")
     }
 
-    useEffect(() => { }, [connectionResponse])
+    useEffect(() => {
+        console.log(connectionResponse);
+    }, [connectionResponse])
 
     return (<>
         <form onSubmit={handleSubmit} className={`${styles.formulaire} br-small`}>
@@ -60,7 +55,6 @@ export default function FormulaireAccount() {
                 :
                 "Connected"
             }
-            {/* {connectionResponse["state"] ? <p className={`debugGreen`}>{connectionResponse["content"]}</p> : <p className={`debugRed`}>{connectionResponse["content"]}</p>} */}
 
         </form>
     </>)

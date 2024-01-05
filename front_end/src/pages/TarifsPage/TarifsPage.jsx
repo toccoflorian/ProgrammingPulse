@@ -1,12 +1,9 @@
 import { ButtonNoPrimary, ButtonYesPrimary, SubmitButton } from "../../components/Buttons";
 import { InputTextPrimary } from "../../components/Inputs";
-import { H1Primary, H2Primary, H3Primary } from "../../components/Titres";
+import { H1Primary, H1Secondary, H2Primary, H2Secondary, H3Primary } from "../../components/Titres";
 
-
-export default function AProposPage() {
-
+export default function TarifsPage() {
     return (<>
-
         <h1>Buttons</h1>
         <p>ButtonYesPrimary</p>
         <ButtonYesPrimary textContent={`Valider`} />
@@ -24,7 +21,10 @@ export default function AProposPage() {
 
         <h1>Titres</h1>
         <H1Primary textContent="H1Primary" />
+        <H1Secondary textContent={`H1Secondary`} />
+
         <H2Primary textContent="H2Primary" />
+        <H2Secondary textContent={`H2Secondary`} />
 
         <H3Primary textContent="H3Primary" />
     </>)

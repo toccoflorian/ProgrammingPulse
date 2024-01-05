@@ -6,11 +6,11 @@ export function Section_1_type_1(props) {
 
     return (<>
         <div className={`${styles.sections} d-flex`}>
-
             <div className={``}>
                 <h3>{props.titre}</h3>
                 <p>{props.contenu}</p>
             </div>
+
             <img className={``} src={props.imagePath} alt="Image décorative" />
         </div>
     </>)

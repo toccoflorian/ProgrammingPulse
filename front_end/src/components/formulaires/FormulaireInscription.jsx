@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
-import { SubmitButton } from "../../../components/Buttons";
-import { InputTextPrimary } from "../../../components/Inputs";
+import { SubmitButton } from "../Buttons";
+import { InputTextPrimary } from "../Inputs";
 import styles from './FormulaireInscription.module.scss'
-import { FetchContext } from "../../../contexts/FetchContext";
+import { FetchContext } from "../../contexts/FetchContext";
 
 
 export default function FormulaireInscription() {       // INSCRIPTION
@@ -34,7 +34,7 @@ export default function FormulaireInscription() {       // INSCRIPTION
             passwords: [password, confirmPassword],
         }
         // console.log(inputsValues);
-        fetchData("/create_new_user", JSON.stringify(inputsValues), "inscription")       // fetch les datas
+        fetchData.post("/create_new_user", JSON.stringify(inputsValues), "inscription")       // fetch les datas
 
     }
 

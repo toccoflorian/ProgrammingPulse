@@ -9,6 +9,17 @@
     width: fit-content;
 }
 
+.H1Secondary {
+    text-align: center;
+    border-bottom: 5px solid white;
+    border-radius: 9px;
+    padding-bottom: 15px;
+    text-shadow: var(--text-shadow-black);
+    color: var(--blue-primary);
+    font-size: 60px;
+    width: fit-content;
+}
+
 .H2Primary {
     text-align: center;
     border-bottom: 5px solid var(--blue-primary);
@@ -16,6 +27,17 @@
     padding-bottom: 15px;
     text-shadow: var(--text-shadow-blue);
     color: white;
+    font-size: 40px;
+    width: fit-content;
+}
+
+.H2Secondary {
+    text-align: center;
+    border-bottom: 5px solid var(--blue-primary);
+    border-radius: 5px;
+    padding-bottom: 15px;
+    text-shadow: var(--text-shadow-black);
+    color: var(--blue-tertiary);
     font-size: 40px;
     width: fit-content;
 }

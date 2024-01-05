@@ -1,33 +1,18 @@
 
 
-// export function getCookies() {
-//     const cookies = document.cookie.split(";");
-
-//     return cookies.reduce((acc, element) => {
-//         const key = element.split("=")[0].trim();
-//         const value = element.split("=")[1].trim();
-//         acc[key] = value;
-//         return acc
-//     }, {});
-// }
-
 function setCookie(name, value, days) {
     var expires = "";
     if (days) {
         var date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));        // convertir le nombre de jours en milisecondes
         expires = "; expires=" + date.toUTCString();
     }
     document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
 
 
-export async function sessionConnection(fetchData, inpusValues) {
-    const response = await fetchData(
-        "/login",
-        JSON.stringify(inpusValues),
-        "login"
-    )
+export async function sessionConnection(response) {
+    // const response = await fetchData.get(`/login?mail=${inputsValues.mail}&currentpassword=${inputsValues.currentpassword}`)
     // console.log(response);
     if (!response.status) {
         return response
@@ -38,12 +23,3 @@ export async function sessionConnection(fetchData, inpusValues) {
     return response;
 }
 
-
-export async function get_user(fetchData) {
-    const result = await fetchData("get_user", "content", "get_user");
-    if (result.status) {
-        return JSON.parse(result.content);
-    } else {
-        window.location = "/ContactPage";
-    }
-}

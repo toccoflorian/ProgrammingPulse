@@ -1,8 +1,8 @@
-import { InputTextPrimary, TextArea } from "../../../components/Inputs";
-import { SubmitButton } from "../../../components/Buttons";
+import { InputTextPrimary, TextArea } from "../Inputs";
+import { SubmitButton } from "../Buttons";
 import styles from "./FormulaireContact.module.scss";
 import { useContext, useEffect, useState } from "react";
-import { FetchContext } from "../../../contexts/FetchContext";
+import { FetchContext } from "../../contexts/FetchContext";
 
 export default function FormulaireContact() {
 
@@ -18,7 +18,7 @@ export default function FormulaireContact() {
     const { fetchData, contactResponse } = useContext(FetchContext)          // contexct
 
     useEffect(() => {
-        // console.log('data', contactResponse);
+        console.log('data', contactResponse);
     }, [contactResponse])        // effect
 
     function handleSubmit(e) {           // au submit du formulaire
@@ -32,7 +32,7 @@ export default function FormulaireContact() {
             message,
         }
         // console.log(inputsValues);
-        fetchData("/send_contact_form", JSON.stringify(inputsValues), "contact")       // fetch les datas
+        fetchData.post("/send_contact_form", JSON.stringify(inputsValues), "contact")       // fetch les datas
 
     }
 

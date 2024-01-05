@@ -1,9 +1,9 @@
 import { H1Primary, H3Primary } from "../../../components/Titres";
-import FormulaireAccount from "../formulaires/FormulaireConnexion";
-import FormulaireContact from "../formulaires/FormulaireContact";
+import FormulaireConnexion from "../../../components/formulaires/FormulaireConnexion"
+import FormulaireContact from "../../../components/formulaires/FormulaireContact";
 import { H2Primary } from "../../../components/Titres";
 import styles from "./ContactPage.module.scss";
-import FormulaireInscription from "../formulaires/FormulaireInscription";
+import FormulaireInscription from "../../../components/formulaires/FormulaireInscription";
 
 
 export default function ContactPage() {
@@ -44,7 +44,7 @@ export default function ContactPage() {
 
                 <div className={`d-flex flex-column justify-center align-center`}>
                     <H2Primary textContent={`Connexion`} />
-                    <FormulaireAccount />
+                    <FormulaireConnexion />
                 </div>
 
                 <div className="separatorVerticalPrimary"></div>

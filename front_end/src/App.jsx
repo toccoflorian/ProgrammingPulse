@@ -1,11 +1,12 @@
 import Header from "./layouts/header/Header";
-import HomePage from "./pages/HomePage/page/HomePage";
+import HomePage from "./pages/HomePage/layout/HomePage";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import styles from "./App.module.scss";
-import AProposPage from "./pages/AProposPage/AProposPage";
-import ContactPage from "./pages/ContactPage/page/ContactPage";
+import AProposPage from "./pages/AProposPage/layout/AProposPage";
+import ContactPage from "./pages/ContactPage/layout/ContactPage";
 import { DataProvider } from "./contexts/FetchContext";
-import EspaceClientPage from "./pages/EspaceClientPage/page/EspaceClientPage";
+import EspaceClientPage from "./pages/EspaceClientPage/layout/EspaceClientPage";
+import TarifsPage from "./pages/TarifsPage/TarifsPage";
 
 
 
@@ -32,7 +33,7 @@ function App() {
               <Route path="/PortfolioTemoignagePage" Component={() => <h1>portfolioTemoignage</h1>} />
 
               {/* TARIFS */}
-              <Route path="/TarifsPage" Component={() => <h1>tarifs</h1>} />
+              <Route path="/TarifsPage" Component={TarifsPage} />
 
               {/* A PROPOS */}
               <Route path="/AProposPage" Component={AProposPage} />

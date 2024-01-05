@@ -11,12 +11,6 @@ export default function HomePage() {
 
         <HomePageH1Container />
 
-        <H1Primary textContent="H1Primary" />
-
-        <H2Primary textContent="H2Primary" />
-
-        <H3Primary textContent="H3Primary" />
-
         <div className={`d-flex flex-column jusitify-center align-center`}>
 
             <Section_1_type_1
