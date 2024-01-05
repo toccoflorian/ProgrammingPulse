@@ -1,6 +1,7 @@
 import time
-import class_.database.sql_connection_manager as connection
-from class_.User import User
+import security.sql_connection_manager as connection
+from models.User import User
+from models.Project import Project
 from datetime import datetime
 import bcrypt
 
@@ -9,6 +10,7 @@ class Database():
     __CONTACT_TABLE = "`programmingpulsestudio`.`contact_form_table`"
     __USERS_TABLE = "`programmingpulsestudio`.`users`"
     __SESSIONS_TABLE = "`programmingpulsestudio`.`sessions`"
+    __PROJECTS_TABLE = "`programmingpulsestudio`.`projects`"
 
     def __init__(self) -> None:
         self.__connection = None
@@ -132,6 +134,20 @@ class Database():
         print(*user[0])
         return User(*user[0], Database())
     
+
+    def get_user_projects(self, user_id):
+        sql_request = f""" SELECT * FROM {self.__PROJECTS_TABLE} WHERE user_id='{user_id}' """
+        connection, cursor = self.open_connection()
+        cursor.execute(sql_request)
+        projects = cursor.fetchall()
+        self.close_connection()
+        if not len(projects):
+            return "Aucun projet pour cette utilisateur."
+        projects_set = []
+        for project in projects:
+            projects_set.append(Project(*project))
+            print("projects:", projects_set)
+        return projects_set
 
 
     def get_user_session(self, user_id) -> dict:

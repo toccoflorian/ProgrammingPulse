@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify, g
 from flask_cors import CORS
 
 import functions
-from class_.database.Database import Database
+from models.Database import Database
 
 
 app = Flask(__name__)
@@ -22,44 +22,47 @@ def verify_auth_token():
     print("before start")
     print(request.endpoint)
     print()
-    if user_id_received:
-        DB = Database()
-        token = DB.get_user_session(user_id_received)
-        if not token:
-            print()
-            return {"status": False}
+    if request.endpoint in private_routes:          # si la route est privée
+        if user_id_received:            # si un id d'user est reçu
+            DB = Database()
+            token = DB.get_user_session(user_id_received)
+            if not token:
+                print()
+                return {"statis": False, "content": "pas de session enregistrée avec cette id."}
+            else:
+                print("cookie_received == cookie:", cookie_received == token["cookie"])
+                print("signature_received == signature:", signature_received == token["signature"])
+                if not cookie_received == token["cookie"] and signature_received == token["signature"]:
+                    return {"status": False, "content": "le cookie et/ou la signature ne correspondent pas."}
+                g.user = DB.get_user(user_id=user_id_received)      # définition de l'attribut 'user' à l'objet global Flask 'g' avec un objet 'User'
+                print("user:", g)
+                print("before end cookie ok !!")
+                print()
         else:
-            print("cookie_received == cookie:", cookie_received == token["cookie"])
-            print("signature_received == signature:", signature_received == token["signature"])
-            if not cookie_received == token["cookie"] and signature_received == token["signature"]:
-                return {"status": False}
-            g.user = DB.get_user(user_id=user_id_received)      # définition de l'attribut 'user' à l'objet global Flask 'g' avec un objet 'User'
-            print("user:", g.user)
-            print("before end cookie ok !!")
-            print()
+            return {"status": False, "content": "aucun id reçu"}
             
     else:
         print("before end no cookie")
         print()
-        if request.endpoint in private_routes:          # si la route est privée et les cookies non-validés, retoune "status": False
-            return {"status": False}
+        
 
 
-@app.route("/get_user", methods=["POST"])
+@app.route("/get_user", methods=["GET"]) #, methods=["GET"])
 def get_user():
     print("zzzzzzzzzzzzzzz")
     print("zzzzzzzzzzzzzzz")
-    print("zzzzzzzzzzzzzzz")
-    print("zzzzzzzzzzzzzzz")
-    print("zzzzzzzzzzzzzzz")
-    return jsonify({"status": True, "content": functions.serialyse_User(g.user)})
+    return jsonify({"status": True, "content": g.user.get_json()})   # 'serialyse_User(g.user)' retourne l'User courant (stocké dans 'g') rendu serialisable 
 
 
 # obtenir un token d'authentification
-@app.route("/login", methods=["POST"])
+@app.route("/login", methods=["get"]) #, methods=["GET"])
 def login() -> any:
     # recuperer le body de la requête
-    data = json.loads(request.get_json())
+    data = {
+        "mail": request.args.get("mail"), 
+        "currentpassword": request.args.get("currentpassword")
+        }
+    print("data zzzzzxxxxxxx", data)
     succes, result = functions.sanitise_data(data)           # nettoyer les données, retourne un bool et un dict en cas de succès sinon bool str
     if not succes:
         # réponse d'erreur de nettoyage

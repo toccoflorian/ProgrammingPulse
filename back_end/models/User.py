@@ -1,11 +1,13 @@
-
+from datetime import datetime
+import json
 import bcrypt
 
 
 class User():
 
-    def __init__(self, id, creation_date, family_name, given_name, mail, tel, organization, password, session, DB) -> None:
+    def __init__(self, id, creation_date, family_name, given_name, mail, tel, organization, password, session, is_admin, DB) -> None:
         self.id = id
+        self.is_admin = is_admin
         self.creation_date = creation_date
         self.family_name = family_name
         self.given_name = given_name
@@ -14,7 +16,23 @@ class User():
         self.organization = organization
         self.__password = password
         self.__DB = DB
+        self.projects = DB.get_user_projects(self.id)
 
+    def get_json(self):
+        projects = []
+        for project in self.projects:
+            projects.append(project.get_json())
+
+        return json.dumps({
+        'id': self.id,
+        "creation_date": datetime.strftime(self.creation_date, "%d/%m/%YT%H:%M"),
+        "family_name": self.family_name,
+        "given_name": self.given_name,
+        "mail": self.mail,
+        "tel": self.tel,
+        "organization": self.organization,
+        "projects": projects
+    })
 
     def check_password(self, password):
         if not bcrypt.checkpw(password.encode("utf-8"), self.__password.encode("utf-8")):
@@ -42,16 +60,3 @@ class User():
                 "user_id": self.id,
             }}
 
-    # # obtenir le token de session utilisateur
-    # def get_user_session_token(self, identifiant, password):
-    #     sql_request = f"SELECT * FROM {self.__USERS_TABLE} WHERE mail='{identifiant}'"       # requête SQL
-    #     connection, cursor = self.open_connection()     # ouverture connexion
-    #     cursor.execute(sql_request)
-    #     user = cursor.fetchall()
-    #     status, response = self.check_user(user, password)
-    #     if not status:
-    #         self.close_connection()         # fermeture connexion
-    #         return (False, response)
-    #     response = self.create_token(user[0])
-    #     self.close_connection()         # fermeture connexion
-    #     return response
