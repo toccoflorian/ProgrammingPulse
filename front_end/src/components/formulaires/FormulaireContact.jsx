@@ -1,8 +1,8 @@
 import { InputTextPrimary, TextArea } from "../Inputs";
-import { SubmitButton } from "../Buttons";
 import styles from "./FormulaireContact.module.scss";
 import { useContext, useEffect, useState } from "react";
 import { FetchContext } from "../../contexts/FetchContext";
+import { ButtonPrimary } from "../Buttons";
 
 export default function FormulaireContact() {
 
@@ -95,7 +95,7 @@ export default function FormulaireContact() {
                 placeholder={contactResponse}
             />
 
-            <SubmitButton textContent={`Envoyer`} />
+            <ButtonPrimary textContent={`Envoyer`} />
             {
                 contactResponse[0] ? <p className={`debugGreen`}>{contactResponse[1]}</p> : <p className={`debugRed`}>{contactResponse[1]}</p>}
         </form>

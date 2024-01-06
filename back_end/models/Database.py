@@ -2,6 +2,7 @@ import time
 import security.sql_connection_manager as connection
 from models.User import User
 from models.Project import Project
+from models.Comment import Comment
 from datetime import datetime
 import bcrypt
 
@@ -11,10 +12,12 @@ class Database():
     __USERS_TABLE = "`programmingpulsestudio`.`users`"
     __SESSIONS_TABLE = "`programmingpulsestudio`.`sessions`"
     __PROJECTS_TABLE = "`programmingpulsestudio`.`projects`"
+    __COMMENTS_TABLE = "`programmingpulsestudio`.`comments`"
 
     def __init__(self) -> None:
         self.__connection = None
         self.__cursor = None
+
 
     # établir la connexion à la base de données
     def open_connection(self) -> None:
@@ -29,8 +32,8 @@ class Database():
         except Exception as e:
             print(e.with_traceback(None))
 
-    # fermer la connexion à la base de données
 
+    # fermer la connexion à la base de données
     def close_connection(self):
         try:
             self.__cursor.close(), self.__connection.close()
@@ -38,6 +41,7 @@ class Database():
 
         except Exception as e:
             print(e.with_traceback(None))
+
 
     def INSERT_INTO(self, sql_request, *args):
         try:
@@ -56,21 +60,7 @@ class Database():
             #     pass
             return (False, e.with_traceback(None))
 
-    # def fetch(self, table, column="*", where= ""):
-    #     sql_request = f"SELECT {column} FROM {self.__USERS_TABLE}"
-    #     try:
-    #         # exécution de la requête SQL
-    #         connection, cursor = self.open_connection()     # ouverture connexion
-    #         cursor.execute(sql_request, args)
-    #         result = connection.commit()
-    #         print(result)
-    #         self.close_connection()         # fermeture connexion
-    #         return (True, "La requête SQL s'est bien passée")
-    #     except Exception as e:
-    #         print(e.with_traceback(None))
-    #         return (False, e.msg)
 
-    # supprimer un champ de la base de données
 
     def DELETE_FROM(self, sql_request):
         try:
@@ -84,9 +74,6 @@ class Database():
         except Exception as e:
             print(e.with_traceback(None))       # erreur
             return (False, e.msg)
-
-
-
 
 
 
@@ -132,7 +119,7 @@ class Database():
         if not check:
             return "L'identifiant ne correspond à aucun utilisateur."
         print(*user[0])
-        return User(*user[0], Database())
+        return User(Database(), *user[0])
     
 
     def get_user_projects(self, user_id):
@@ -143,11 +130,48 @@ class Database():
         self.close_connection()
         if not len(projects):
             return "Aucun projet pour cette utilisateur."
-        projects_set = []
+        projects_list = []
         for project in projects:
-            projects_set.append(Project(*project))
-            print("projects:", projects_set)
-        return projects_set
+            projects_list.append(Project(Database(), *project))
+            # print("projects:", projects_list)
+        return projects_list
+    
+
+    def get_all_projects(self):
+        sql_request = f"SELECT * FROM {self.__PROJECTS_TABLE}"
+        connection, cursor = self.open_connection()
+        cursor.execute(sql_request)
+        projects = cursor.fetchall()
+        self.close_connection()
+        if not len(projects):
+            return "Aucun projet."
+        projects_list = []
+        for project in projects:
+            projects_list.append(Project(Database(), *project).get_json())
+        print("projects:", projects_list)
+        return projects_list
+    
+
+    def get_project_comment(self, project_id, user_id) -> object:
+        sql_request = f"SELECT * FROM {self.__COMMENTS_TABLE} WHERE project_id='{project_id}' AND user_id='{user_id}'"
+        connection, cursor = self.open_connection()
+        cursor.execute(sql_request)
+        comment = cursor.fetchall()
+        self.close_connection()
+        if not len(comment):
+            return None
+        return Comment(*comment[0])
+    
+
+    def save_project_note_and_comment(self, user_id, project_id, note, comment):
+        date = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
+        request1 = f"INSERT INTO {self.__COMMENTS_TABLE} (user_id, project_id, text, date) VALUE (%s, %s, %s, %s)"
+        connection, cursor = self.open_connection()
+        self.INSERT_INTO(request1, user_id, project_id, comment, date)        # INSERT_INTO ferme la connexion sql
+
+        request2 = f"UPDATE {self.__PROJECTS_TABLE} SET note=%s WHERE id='{project_id}'"
+        self.INSERT_INTO(request2, note)        # INSERT_INTO ferme la connexion sql
+        print('save note')
 
 
     def get_user_session(self, user_id) -> dict:

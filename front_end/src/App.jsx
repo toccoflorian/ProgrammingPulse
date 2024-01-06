@@ -7,6 +7,8 @@ import ContactPage from "./pages/ContactPage/layout/ContactPage";
 import { DataProvider } from "./contexts/FetchContext";
 import EspaceClientPage from "./pages/EspaceClientPage/layout/EspaceClientPage";
 import TarifsPage from "./pages/TarifsPage/TarifsPage";
+import PortfolioTemoignagePage from "./pages/PortfolioTemoignagePage/layout/PortfolioTemoignagePage";
+import { ModalEditNote } from "./components/Modals";
 
 
 
@@ -18,6 +20,9 @@ function App() {
     <>
       <DataProvider>
         <Router>
+
+
+
           <Header />
 
           <div className={`${styles.content}`}>
@@ -30,7 +35,7 @@ function App() {
               <Route path="/ServicesPage" Component={() => <h1>services</h1>} />
 
               {/* PORTFOLIO ET TEMOIGNAGES */}
-              <Route path="/PortfolioTemoignagePage" Component={() => <h1>portfolioTemoignage</h1>} />
+              <Route path="/PortfolioTemoignagePage" Component={PortfolioTemoignagePage} />
 
               {/* TARIFS */}
               <Route path="/TarifsPage" Component={TarifsPage} />
@@ -39,10 +44,7 @@ function App() {
               <Route path="/AProposPage" Component={AProposPage} />
 
               {/* ESPACE CLIENT */}
-              {true ?
-                <Route path="/EspaceClientPage" Component={EspaceClientPage} />
-                :
-                <Route path="/EspaceClientPage" Component={() => <h1>espaceClient</h1>} />}
+              <Route path="/EspaceClientPage" Component={EspaceClientPage} />
 
               {/* CONTACT */}
               <Route path="/ContactPage" Component={ContactPage} />

@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
-import { SubmitButton } from "../Buttons";
 import { InputTextPrimary } from "../Inputs";
 import styles from "./FormulaireConnexion.module.scss";
 import { FetchContext } from "../../contexts/FetchContext";
+import { ButtonPrimary } from "../Buttons";
 
 
 export default function FormulaireConnexion() {
@@ -48,7 +48,7 @@ export default function FormulaireConnexion() {
 
             <div className={`d-flex justify-center`}>
 
-                <SubmitButton textContent={`Connexion`} />
+                <ButtonPrimary textContent={`Connexion`} />
             </div>
             {!connectionResponse.status ?
                 connectionResponse.content

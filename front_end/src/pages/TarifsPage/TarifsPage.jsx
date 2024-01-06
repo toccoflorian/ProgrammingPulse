@@ -1,4 +1,4 @@
-import { ButtonNoPrimary, ButtonYesPrimary, SubmitButton } from "../../components/Buttons";
+import { ButtonNoPrimary, ButtonPrimary, ButtonYesPrimary } from "../../components/Buttons";
 import { InputTextPrimary } from "../../components/Inputs";
 import { H1Primary, H1Secondary, H2Primary, H2Secondary, H3Primary } from "../../components/Titres";
 
@@ -6,10 +6,10 @@ export default function TarifsPage() {
     return (<>
         <h1>Buttons</h1>
         <p>ButtonYesPrimary</p>
-        <ButtonYesPrimary textContent={`Valider`} />
+        <ButtonPrimary textContent={`button primary`} />
 
-        <p>SubmitButton</p>
-        <SubmitButton textContent={`Envoyer`} />
+        <p>ButtonYesPrimary</p>
+        <ButtonYesPrimary textContent={`Valider`} />
 
         <p>ButtonNoPrimary</p>
         <ButtonNoPrimary textContent={`Annuler`} />

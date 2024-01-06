@@ -11,6 +11,7 @@ export function DataProvider({ children }) {
     const [inscriptionResponse, setInscriptionResponse] = useState(false);
     const [connectionResponse, setConnectionResponse] = useState({ status: false });
     const [currentUser, setCurrentUser] = useState(false);
+    const [projects, setProjects] = useState(false);
 
     const fetchData = {
 
@@ -25,6 +26,7 @@ export function DataProvider({ children }) {
 
             let jsonUser;
             let user;
+            let allProjects;
 
             switch (target) {
                 case "user":
@@ -36,6 +38,11 @@ export function DataProvider({ children }) {
 
                 case "login":
                     setConnectionResponse(await sessionConnection(await response.json()))
+                    break;
+
+                case "projects":
+                    allProjects = await response.json();
+                    setProjects(allProjects.map(project => JSON.parse(project)));
             }
         },
 
@@ -64,7 +71,7 @@ export function DataProvider({ children }) {
 
 
     return (<>
-        <FetchContext.Provider value={{ fetchData, contactResponse, inscriptionResponse, currentUser, connectionResponse }}>
+        <FetchContext.Provider value={{ fetchData, contactResponse, inscriptionResponse, currentUser, connectionResponse, projects }}>
             {children}
         </FetchContext.Provider>
     </>)

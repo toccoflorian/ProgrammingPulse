@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
-import { SubmitButton } from "../Buttons";
 import { InputTextPrimary } from "../Inputs";
 import styles from './FormulaireInscription.module.scss'
 import { FetchContext } from "../../contexts/FetchContext";
+import { ButtonPrimary } from "../Buttons";
 
 
 export default function FormulaireInscription() {       // INSCRIPTION
@@ -119,7 +119,7 @@ export default function FormulaireInscription() {       // INSCRIPTION
 
             <div className={`d-flex justify-center`}>
 
-                <SubmitButton textContent={`Créer un compte`} />
+                <ButtonPrimary textContent={`Créer un compte`} />
             </div>
             {inscriptionResponse[0] ? <p className={`debugGreen`}>{inscriptionResponse[1]}</p> : <p className={`debugRed`}>{inscriptionResponse[1]}</p>}
         </form>

@@ -12,7 +12,7 @@ CORS(app, supports_credentials=True)
 
 @app.before_request
 def verify_auth_token():
-    private_routes = ["get_user"]
+    private_routes = ["get_user", "edit_note_and_comment"]
     
     cookies = request.cookies
     user_id_received = cookies.get("user_id")
@@ -46,18 +46,25 @@ def verify_auth_token():
         print()
         
 
+@app.route("/edit_note_and_comment", methods=["POST"]) 
+def edit_note_and_comment():
+    data = json.loads(request.get_json())
+    print("data" , data)
+    clean_data = functions.sanitise_data(data)
+    DB = Database()
+    DB.save_project_note_and_comment(g.user.id, data["project_id"], data["note"], data["comment"])
+    return json.dumps("note et comment ok")
+
 
 @app.route("/get_user", methods=["GET"]) #, methods=["GET"])
 def get_user():
-    print("zzzzzzzzzzzzzzz")
-    print("zzzzzzzzzzzzzzz")
     return jsonify({"status": True, "content": g.user.get_json()})   # 'serialyse_User(g.user)' retourne l'User courant (stocké dans 'g') rendu serialisable 
 
 
 # obtenir un token d'authentification
 @app.route("/login", methods=["get"]) #, methods=["GET"])
 def login() -> any:
-    # recuperer le body de la requête
+    # recuperer le body de la requête 
     data = {
         "mail": request.args.get("mail"), 
         "currentpassword": request.args.get("currentpassword")
@@ -112,6 +119,15 @@ def create_new_user():
         print(e.with_traceback(None))
         # réponse erreur serveur
         return json.dumps((False, "erreur serveur"))
+
+
+@app.route("/get_projects", methods=["GET"])
+def get_projects():
+    DB = Database()
+    projects = DB.get_all_projects()
+    for i in projects:
+        print("iiiiiiii", i)
+    return json.dumps(projects)
 
 
 # reception et enregistrement

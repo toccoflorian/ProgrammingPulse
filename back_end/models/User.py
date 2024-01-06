@@ -5,7 +5,8 @@ import bcrypt
 
 class User():
 
-    def __init__(self, id, creation_date, family_name, given_name, mail, tel, organization, password, session, is_admin, DB) -> None:
+    def __init__(self, DB, id, creation_date, family_name, given_name, mail, tel, organization, password, session, is_admin) -> None:
+        self.__DB = DB
         self.id = id
         self.is_admin = is_admin
         self.creation_date = creation_date
@@ -15,7 +16,6 @@ class User():
         self.tel = tel
         self.organization = organization
         self.__password = password
-        self.__DB = DB
         self.projects = DB.get_user_projects(self.id)
 
     def get_json(self):
