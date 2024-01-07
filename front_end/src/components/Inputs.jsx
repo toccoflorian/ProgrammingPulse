@@ -1,5 +1,5 @@
 
-import { PropTypes } from "prop-types";
+import PropTypes from "prop-types";
 import styles from "./Inputs.module.scss";
 
 export function InputTextPrimary(props) {
@@ -12,11 +12,6 @@ export function InputTextPrimary(props) {
             onChange={props.onChange}
             placeholder={props.placeholder}
             autoComplete={props.autoComplete}
-            className={`
-                    ${styles.InputTextPrimary} 
-                    d-flex 
-                    justify-center 
-                    align-center`}
         />
     </>)
 }
@@ -30,6 +25,22 @@ export function TextArea(props) {
             placeholder={props.placeholder}
             className={`${styles.TextArea}`}
         />
+    </>)
+}
+
+export function InputFilePrimary(props) {
+    return (<>
+        <div className={`${styles.InputFilePrimary} d-flex flex-column`}>
+            <label htmlFor={props.name}>{props.label}</label>
+            <input
+                type="file"
+                name={props.name}
+                id={props.id}
+                onClick={props.onClick}
+                onChange={props.onChange}
+            ></input>
+        </div>
+
     </>)
 }
 
@@ -48,4 +59,11 @@ TextArea.propTypes = {
     id: PropTypes.string,
     onChange: PropTypes.func,
     placeholder: PropTypes.string,
+}
+InputFilePrimary.propTypes = {
+    label: PropTypes.string,
+    name: PropTypes.string,
+    id: PropTypes.string,
+    onClick: PropTypes.func,
+    onChange: PropTypes.func,
 }

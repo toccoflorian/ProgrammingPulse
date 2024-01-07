@@ -1,9 +1,14 @@
+import { useState } from "react";
 import { ButtonNoPrimary, ButtonPrimary, ButtonYesPrimary } from "../../components/Buttons";
 import { InputTextPrimary } from "../../components/Inputs";
 import { H1Primary, H1Secondary, H2Primary, H2Secondary, H3Primary } from "../../components/Titres";
 
 export default function TarifsPage() {
+
+
     return (<>
+
+
         <h1>Buttons</h1>
         <p>ButtonYesPrimary</p>
         <ButtonPrimary textContent={`button primary`} />

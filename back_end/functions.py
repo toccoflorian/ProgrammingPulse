@@ -3,9 +3,8 @@ import bleach
 import re
 
 
-
 def sanitise_data(data) -> any:
-    def confirm_password(passwords) -> bool:
+    def password_and_confirm_password_are_similar(passwords) -> bool:
         print('passwords[0] == passwords[1]', passwords[0] == passwords[1])
         if passwords[0] == passwords[1]:
             return True
@@ -18,10 +17,9 @@ def sanitise_data(data) -> any:
             print("value", value)
             if len(value[0]) < 4 or len(value[1]) < 4:
                 return False, "Le mot de passe et la confirmation doivent contenir entre 4 et 45 caractères."
-            if not confirm_password(value):
+            if not password_and_confirm_password_are_similar(value):
                 return False, "Le mot de passe et la confirmation ne sont pas identiques."
             clean_data["password"] = value[0]
-
 
         elif key == "mail":           # sanitise e-mail
             if not re.match(r"[^@]+@[^@]+\.[^@]+", value) and len(value) <= 45:
@@ -33,12 +31,15 @@ def sanitise_data(data) -> any:
                 return False, "Numéro de téléphone incorrect."
             clean_data[key] = value
 
-        elif key in {"familyname", "givenname" } and 3 > len(value) > 45:
+        elif key in {"familyname", "givenname"} and 3 > len(value) > 45:
             return False, f"Le champ {key} doit contenir 3 caractères au minimum."
+
+        elif key == "comment":
+            clean_data[key] = bleach.clean(value)
 
         elif isinstance(value, str):            # sanitise chaînes de caractères
             if not len(value) < 45 and key != "message":
                 return False, f"Le longueur du champ '{key}' est trop grande."
             clean_data[key] = bleach.clean(value)
-        
+
     return True, clean_data

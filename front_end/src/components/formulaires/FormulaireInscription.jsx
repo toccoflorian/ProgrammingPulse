@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { InputTextPrimary } from "../Inputs";
+import { InputFilePrimary, InputTextPrimary } from "../Inputs";
 import styles from './FormulaireInscription.module.scss'
 import { FetchContext } from "../../contexts/FetchContext";
 import { ButtonPrimary } from "../Buttons";
@@ -32,18 +32,25 @@ export default function FormulaireInscription() {       // INSCRIPTION
             tel: telInscription,
             mail: mailInscription,
             passwords: [password, confirmPassword],
+
         }
-        // console.log(inputsValues);
-        fetchData.post("/create_new_user", JSON.stringify(inputsValues), "inscription")       // fetch les datas
+
+        console.log(inputsValues);
+        fetchData.post("/create_new_user", inputsValues, "inscription")       // fetch les datas
 
     }
 
-    return (<>
 
+    return (<>
+        <img className={styles.test} id="test" src="" alt="" />
+        <img className={styles.test} id="test2" src="" alt="" />
         {/* FORMULAIRE */}
         <form onSubmit={handleSubmit} className={`${styles.formulaire} br-small`}>
 
             <div className={`d-flex justify-center`}>
+
+                {/* <button onClick={handlePhoto}>test</button> */}
+
                 <InputTextPrimary       // Nom
                     type={`text`}
                     name={`nameInscription`}
@@ -64,16 +71,29 @@ export default function FormulaireInscription() {       // INSCRIPTION
 
             </div>
 
+
+            {/* <InputFilePrimary       // image de l'utilisateur
+                label={`Photo de profil:`}
+                type={`file`}
+                name={`userImage`}
+                id={`userImage`}
+                onClick={(e) => { e.stopPropagation() }}
+                onChange={(e) => { setUserImage(e.target.files[0]) }}
+            /> */}
+
             <div className={`d-flex justify-center`}>
                 <InputTextPrimary       // société
                     type={`text`}
-                    name={`companyNameInscription`}
-                    id={`companyNameInscription`}
+                    name={`organizationNameInscription`}
+                    id={`organizationNameInscription`}
                     onChange={(e) => { setOrganizationInscription(e.target.value) }}
                     placeholder={`Nom de votre société`}
-                    autoComplete={`given-name`}
+                    autoComplete={`organization`}
                 />
             </div>
+
+
+
 
 
             <div className={`d-flex justify-center`}>
@@ -121,7 +141,11 @@ export default function FormulaireInscription() {       // INSCRIPTION
 
                 <ButtonPrimary textContent={`Créer un compte`} />
             </div>
-            {inscriptionResponse[0] ? <p className={`debugGreen`}>{inscriptionResponse[1]}</p> : <p className={`debugRed`}>{inscriptionResponse[1]}</p>}
+            {inscriptionResponse[0] ?
+                <p className={`debugGreen`}>{inscriptionResponse[1]}</p>
+                :
+                <p className={`debugRed`}>{inscriptionResponse[1]}</p>}
         </form>
+
     </>)
 }

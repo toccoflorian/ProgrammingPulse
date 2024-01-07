@@ -13,7 +13,7 @@ CORS(app, supports_credentials=True)
 @app.before_request
 def verify_auth_token():
     private_routes = ["get_user", "edit_note_and_comment"]
-    
+
     cookies = request.cookies
     user_id_received = cookies.get("user_id")
     cookie_received = cookies.get("cookie")
@@ -30,47 +30,57 @@ def verify_auth_token():
                 print()
                 return {"statis": False, "content": "pas de session enregistrée avec cette id."}
             else:
-                print("cookie_received == cookie:", cookie_received == token["cookie"])
-                print("signature_received == signature:", signature_received == token["signature"])
+                print("cookie_received == cookie:",
+                      cookie_received == token["cookie"])
+                print("signature_received == signature:",
+                      signature_received == token["signature"])
                 if not cookie_received == token["cookie"] and signature_received == token["signature"]:
                     return {"status": False, "content": "le cookie et/ou la signature ne correspondent pas."}
-                g.user = DB.get_user(user_id=user_id_received)      # définition de l'attribut 'user' à l'objet global Flask 'g' avec un objet 'User'
+                # définition de l'attribut 'user' à l'objet global Flask 'g' avec un objet 'User'
+                g.user = DB.get_user(user_id=user_id_received)
                 print("user:", g)
                 print("before end cookie ok !!")
                 print()
         else:
             return {"status": False, "content": "aucun id reçu"}
-            
+
     else:
         print("before end no cookie")
         print()
-        
 
-@app.route("/edit_note_and_comment", methods=["POST"]) 
+
+@app.route("/edit_note_and_comment", methods=["POST"])
 def edit_note_and_comment():
     data = json.loads(request.get_json())
-    print("data" , data)
-    clean_data = functions.sanitise_data(data)
-    DB = Database()
-    DB.save_project_note_and_comment(g.user.id, data["project_id"], data["note"], data["comment"])
-    return json.dumps("note et comment ok")
+    print("data", data)
+    succes, clean_comment = functions.sanitise_data(
+        {"comment": data["comment"]})
+    if succes:
+        DB = Database()
+        DB.save_project_note_and_comment(
+            g.user.id, data["project_id"], data["note"], clean_comment["comment"])
+        return json.dumps("note et comment ok")
+    message_error = clean_comment
+    return message_error
 
 
-@app.route("/get_user", methods=["GET"]) #, methods=["GET"])
+@app.route("/get_user", methods=["GET"])
 def get_user():
-    return jsonify({"status": True, "content": g.user.get_json()})   # 'serialyse_User(g.user)' retourne l'User courant (stocké dans 'g') rendu serialisable 
+    # 'serialyse_User(g.user)' retourne l'User courant (stocké dans 'g') rendu serialisable
+    return jsonify({"status": True, "content": g.user.get_json()})
 
 
 # obtenir un token d'authentification
-@app.route("/login", methods=["get"]) #, methods=["GET"])
+@app.route("/login", methods=["get"])
 def login() -> any:
-    # recuperer le body de la requête 
+    # recuperer le body de la requête
     data = {
-        "mail": request.args.get("mail"), 
+        "mail": request.args.get("mail"),
         "currentpassword": request.args.get("currentpassword")
-        }
+    }
     print("data zzzzzxxxxxxx", data)
-    succes, result = functions.sanitise_data(data)           # nettoyer les données, retourne un bool et un dict en cas de succès sinon bool str
+    # nettoyer les données, retourne un bool et un dict en cas de succès sinon bool str
+    succes, result = functions.sanitise_data(data)
     if not succes:
         # réponse d'erreur de nettoyage
         return jsonify({"status": False, "content": result})
@@ -90,7 +100,7 @@ def login() -> any:
 def create_new_user():
     try:
         # recuperer le body de la requête
-        data = json.loads(request.get_json())
+        data = request.get_json()
         succes, result = functions.sanitise_data(
             data)           # nettoyer les données
 
@@ -116,7 +126,7 @@ def create_new_user():
             return json.dumps((response[0], response[1]))
 
     except Exception as e:
-        print(e.with_traceback(None))
+        print(e.with_traceback(None), "create_new_user route error")
         # réponse erreur serveur
         return json.dumps((False, "erreur serveur"))
 
@@ -136,7 +146,8 @@ def get_projects():
 def send_contact_form():
     # recuperer le body de la requête
     data = json.loads(request.get_json())
-    succes, result = functions.sanitise_data(data)           # nettoyer les données
+    succes, result = functions.sanitise_data(
+        data)           # nettoyer les données
     if succes:           # si nettoyage ok
         clean_data = result
         print(clean_data)
