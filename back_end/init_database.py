@@ -46,14 +46,17 @@ print()
 for table_name in tables:
     print()
     print("création de la table " + table_name)
-    sql_request = f"CREATE TABLE {table_name} (id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY (id))"
-    cursor.execute(str(sql_request))
+    try:
+        sql_request = f"CREATE TABLE {table_name} (id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY (id))"
+        cursor.execute(str(sql_request))
+    except:
+        pass
     print(table_name, "créer !")
     print()
 
     for column in tables[table_name]:
         print("création de la colonne " + column[0] + "-" + column[1])
-        sql_request = f"ALTER TABLE users ADD {column[0]} {column[1]}"
+        sql_request = f"ALTER TABLE {table_name} ADD {column[0]} {column[1]}"
         print("colonne " + column[0] + " créer !")
         print()
         cursor.execute(str(sql_request))
