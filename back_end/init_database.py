@@ -9,7 +9,7 @@ connexion, cursor = DB.open_connection()
 
 # users TABLE
 columns = [
-    # ("id", "INT NOT NULL AUTO_INCREMENT, PRIMARY KEY (id)"),
+    ("id", "INT NOT NULL AUTO_INCREMENT, PRIMARY KEY (id)"),
     ("creation_date", "DATETIME"),
     ("family_name", "VARCHAR(45)"),
     ("given_name", "VARCHAR(45)"),
@@ -25,10 +25,9 @@ print()
 for i, column in enumerate(columns):
     print()
     if i == 0:
-        sql_request = f"ALTER TABLE users ADD {column[0]} {column[1]})"
-        
+        sql_request = f"CREATE TABLE users ({column[0]} {column[1]} )"
     else:
-        sql_request = f"ALTER TABLE users ADD {column[0]} {column[1]})"
+        sql_request = f"ALTER TABLE users ADD {column[0]} {column[1]}"
     print(sql_request)
     cursor.execute(str(sql_request))
 # sql_request = f"ALTER TABLE `programmingpulsestudio`.`users` PRIMARY KEY (id);"
