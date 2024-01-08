@@ -62,6 +62,8 @@ for table_name in tables:
     print("Table " + table_name + " terminée !\n")
     
 
+print("Script terminé avec succès !! \n")
+
 # sql_request = f"ALTER TABLE `programmingpulsestudio`.`users` PRIMARY KEY (id);"
 
 
