@@ -21,8 +21,10 @@ columns = [
     ("is_admin", "TINYINT"),
 ]
 
-
+print()
 for i, column in enumerate(columns):
+    print()
+    print(column)
     if i == 0:
         sql_request = f"""CREATE TABLE users ({column[0]} {column[1]});"""
     else:
