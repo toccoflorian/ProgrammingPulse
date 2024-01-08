@@ -9,7 +9,7 @@ connexion, cursor = DB.open_connection()
 
 # users TABLE
 columns = [
-    ("id", "INT NOT NULL AUTO_INCREMENT, PRIMARY KEY (id)"),
+    # ("id", "INT NOT NULL AUTO_INCREMENT, PRIMARY KEY (id)"),
     ("creation_date", "DATETIME"),
     ("family_name", "VARCHAR(45)"),
     ("given_name", "VARCHAR(45)"),
