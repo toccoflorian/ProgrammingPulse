@@ -21,8 +21,9 @@ columns = [
     ("is_admin", "TINYINT"),
 ]
 for column in columns:
-    sql_request = f"""ALTER TABLE `programmingpulsestudio`.`users` ADD {column[0]} {column[1]}, PRIMARY KEY (id)"""
+    sql_request = f"""ALTER TABLE `programmingpulsestudio`.`users` ADD {column[0]} {column[1]});"""
     cursor.execute(sql_request)
+sql_request = f"ALTER TABLE `programmingpulsestudio`.`users` PRIMARY KEY (id);"
 
 
 
