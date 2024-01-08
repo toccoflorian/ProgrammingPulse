@@ -20,7 +20,8 @@ columns = [
     ("session_id", "INT"),
     ("is_admin", "TINYINT"),
 ]
-cursor.execute(sql_request)
+
+
 for i, column in enumerate(columns):
     if i == 0:
         sql_request = f"""CREATE TABLE `programmingpulsestudio`.`users` ({column[0]} {column[1]});"""
