@@ -7,29 +7,60 @@ DB = Database()
 
 connexion, cursor = DB.open_connection()
 
+# ("id", "INT NOT NULL AUTO_INCREMENT, PRIMARY KEY (id)"),
+
 # users TABLE
-columns = [
-    ("id", "INT NOT NULL AUTO_INCREMENT, PRIMARY KEY (id)"),
-    ("creation_date", "DATETIME"),
-    ("family_name", "VARCHAR(45)"),
-    ("given_name", "VARCHAR(45)"),
-    ("mail", "DATETIME"),
-    ("tel", "DATETIME"),
-    ("organization", "VARCHAR(45)"),
-    ("password", "VARCHAR(100)"),
-    ("session_id", "INT"),
-    ("is_admin", "TINYINT"),
-]
+tables = {
+    "users": {
+        ("creation_date", "DATETIME"),
+        ("family_name", "VARCHAR(45)"),
+        ("given_name", "VARCHAR(45)"),
+        ("mail", "DATETIME"),
+        ("tel", "DATETIME"),
+        ("organization", "VARCHAR(45)"),
+        ("password", "VARCHAR(100)"),
+        ("session_id", "INT"),
+        ("is_admin", "TINYINT"),
+    },
+    "contact_forms": {
+        ("creation_date", "DATETIME"), 
+         ("state", "VARCHAR(45)"),
+         ("family_name", "VARCHAR(45)"),
+         ("given_name", "VARCHAR(45)"),
+         ("organization", "VARCHAR(45)"),
+         ("tel", "VARCHAR(45)"),
+         ("mail", "VARCHAR(45)"),
+         ("message", "MEDIUMTEXT"),
+    },
+    "devis": {
+        ("edition_date", "DATETIME"),
+        ("state", "VARCHAR(45)"),
+        ("signature_date", "DATETIME"),
+        ("cloturation_date", "DATETIME"),
+        ("project_id", "INT"),
+    },
+}
+
 
 print()
-for i, column in enumerate(columns):
+for table_name in tables:
     print()
-    if i == 0:
-        sql_request = f"CREATE TABLE users ({column[0]} {column[1]} )"
-    else:
-        sql_request = f"ALTER TABLE users ADD {column[0]} {column[1]}"
-    print(sql_request)
+    print("création de la table " + table_name)
+    sql_request = f"CREATE TABLE users (id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY (id))"
     cursor.execute(str(sql_request))
+    print(table_name, "créer !")
+    print()
+
+    for column in tables[table_name]:
+        print("création de la colonne " + column[0] + "-" + column[1])
+        sql_request = f"ALTER TABLE users ADD {column[0]} {column[1]}"
+        print("colonne " + column[0] + " créer !")
+        print()
+        cursor.execute(str(sql_request))
+    
+
+    print("Terminer")
+    
 # sql_request = f"ALTER TABLE `programmingpulsestudio`.`users` PRIMARY KEY (id);"
 
 
