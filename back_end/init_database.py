@@ -20,10 +20,12 @@ columns = [
     ("session_id", "INT"),
     ("is_admin", "TINYINT"),
 ]
-sql_request = f"""CREATE TABLE `programmingpulsestudio`.`users`;"""
 cursor.execute(sql_request)
-for column in columns:
-    sql_request = f"""ALTER TABLE `programmingpulsestudio`.`users` ADD {column[0]} {column[1]});"""
+for i, column in enumerate(columns):
+    if i == 0:
+        sql_request = f"""CREATE TABLE `programmingpulsestudio`.`users` ({column[0]} {column[1]});"""
+    else:
+        sql_request = f"""ALTER TABLE `programmingpulsestudio`.`users` ADD {column[0]} {column[1]});"""
     cursor.execute(sql_request)
 sql_request = f"ALTER TABLE `programmingpulsestudio`.`users` PRIMARY KEY (id);"
 
