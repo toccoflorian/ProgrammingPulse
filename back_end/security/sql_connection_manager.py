@@ -14,6 +14,7 @@ def connect_DB(host, db_name, user_name, password) -> object:
     try:
         return (True, connector.connect(**config))
     except connector.IntegrityError as e:
+        print(e.with_traceback(None))
         return (False, e.with_traceback(None))
 
 # callback pour déclencher la connexion à la base de données
