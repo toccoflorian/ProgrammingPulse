@@ -44,15 +44,13 @@ tables = {
 
 print()
 for table_name in tables:
-    print()
-    print("création de la table " + table_name)
+    print("\ncréation de la table " + table_name)
     try:
         sql_request = f"CREATE TABLE {table_name} (id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY (id))"
         cursor.execute(str(sql_request))
     except:
         pass
-    print(table_name, "créer !")
-    print()
+    print(table_name, "créer !\n")
 
     for column in tables[table_name]:
         print("création de la colonne " + column[0] + "-" + column[1])
@@ -61,9 +59,9 @@ for table_name in tables:
         print()
         cursor.execute(str(sql_request))
     
-
-    print("Table " + table_name + " terminée !")
+    print("Table " + table_name + " terminée !\n")
     
+
 # sql_request = f"ALTER TABLE `programmingpulsestudio`.`users` PRIMARY KEY (id);"
 
 
