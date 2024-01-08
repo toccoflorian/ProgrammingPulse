@@ -12,12 +12,19 @@ CORS(app, supports_credentials=True)
 
 @app.before_request
 def verify_auth_token():
-    private_routes = ["get_user", "edit_note_and_comment"]
-
+    private_routes = [
+        "get_user",
+        "edit_note_and_comment",
+        "save_user_image",
+    ]
     cookies = request.cookies
     user_id_received = cookies.get("user_id")
     cookie_received = cookies.get("cookie")
     signature_received = cookies.get("signature")
+    if not user_id_received:
+        user_id_received = request.args.get("user_id")
+        cookie_received = request.args.get("cookie")
+        signature_received = request.args.get("signature")
     print()
     print("before start")
     print(request.endpoint)
@@ -42,11 +49,37 @@ def verify_auth_token():
                 print("before end cookie ok !!")
                 print()
         else:
+            print("no user id")
             return {"status": False, "content": "aucun id reçu"}
 
     else:
         print("before end no cookie")
         print()
+
+
+@app.route("/save_user_image", methods=["POST"])
+def save_user_image():
+    from PIL import Image
+    from io import BytesIO
+    user_id = request.args.get("user_id")
+    image_of = request.args.get("image_of")
+    image_data = request.get_data()
+
+    # Créer un objet Image à partir des données de la requête
+    image = Image.open(BytesIO(image_data))
+
+    # Redimensionner l'image en conservant le ratio d'aspect
+    max_size = 300, 300
+    image.thumbnail(max_size, Image.Resampling.LANCZOS)
+
+    # Définir le chemin du fichier
+    file_name = f"{image_of}_image_{str(user_id)}.webp"
+    file_path = f"./front_end/public/{image_of}_images/{file_name}"
+
+    # Enregistrer l'image au format WebP
+    image.save(file_path, format='webp')
+
+    return json.dumps("Image chargée avec succès.")
 
 
 @app.route("/edit_note_and_comment", methods=["POST"])

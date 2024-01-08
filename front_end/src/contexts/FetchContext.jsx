@@ -66,6 +66,26 @@ export function DataProvider({ children }) {
                     setInscriptionResponse(await response.json());
                     break;
             }
+        },
+
+        upload: async function (file, image_of) {
+            const cookies = document.cookie.split(";");
+            const obj_cookies = {};
+            cookies.map(cookie => {
+                obj_cookies[cookie.split("=")[0].trim()] = cookie.split("=")[1].trim()
+            })
+            console.log(obj_cookies);
+            const url = `http://127.0.0.1:10000/save_user_image?image_of=${image_of}&user_id=${String(currentUser.id)}&cookie=${obj_cookies.cookie}&signature=${obj_cookies.signature}`
+            const response = await fetch(url, {
+                headers: {
+                    "Content-Type": String(file.type),
+                },
+                method: "POST",
+                body: file,
+                credentials: "include",
+            })
+
+            return await response.json();
         }
     }
 
