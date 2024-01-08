@@ -59,7 +59,7 @@ for table_name in tables:
         cursor.execute(str(sql_request))
     
 
-    print("Terminer")
+    print("Table " + table_name + " terminée !")
     
 # sql_request = f"ALTER TABLE `programmingpulsestudio`.`users` PRIMARY KEY (id);"
 
