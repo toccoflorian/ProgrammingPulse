@@ -46,7 +46,7 @@ print()
 for table_name in tables:
     print()
     print("création de la table " + table_name)
-    sql_request = f"CREATE TABLE users (id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY (id))"
+    sql_request = f"CREATE TABLE {table_name} (id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY (id))"
     cursor.execute(str(sql_request))
     print(table_name, "créer !")
     print()
