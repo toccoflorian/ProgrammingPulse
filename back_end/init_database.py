@@ -24,9 +24,9 @@ columns = [
 print()
 for i, column in enumerate(columns):
     print()
-    print(column)
     if i == 0:
         sql_request = f"CREATE TABLE users {column[0]} ({column[1]});"
+        print(sql_request)
     else:
         sql_request = f"ALTER TABLE users ADD {column[0]} {column[1]});"
     cursor.execute(sql_request)
