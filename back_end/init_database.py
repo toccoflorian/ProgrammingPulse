@@ -9,7 +9,7 @@ connexion, cursor = DB.open_connection()
 
 # users TABLE
 columns = [
-    ("id", "INT NOT NULL AUTO_INCREMENT"),
+    ("id", "INT NOT NULL AUTO_INCREMENT, PRIMARY KEY (id)"),
     ("creation_date", "DATETIME"),
     ("family_name", "VARCHAR(45)"),
     ("given_name", "VARCHAR(45)"),
@@ -20,6 +20,8 @@ columns = [
     ("session_id", "INT"),
     ("is_admin", "TINYINT"),
 ]
+sql_request = f"""CREATE TABLE `programmingpulsestudio`.`users`;"""
+cursor.execute(sql_request)
 for column in columns:
     sql_request = f"""ALTER TABLE `programmingpulsestudio`.`users` ADD {column[0]} {column[1]});"""
     cursor.execute(sql_request)
