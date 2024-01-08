@@ -1,6 +1,6 @@
 
 
-from back_end.models.Database import Database
+from models.Database import Database
 
 
 DB = Database()
