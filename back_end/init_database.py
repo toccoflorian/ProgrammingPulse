@@ -29,7 +29,7 @@ for i, column in enumerate(columns):
         print(sql_request)
     else:
         sql_request = f"ALTER TABLE users ADD {column[0]} {column[1]});"
-    cursor.execute(sql_request)
+    cursor.execute(str(sql_request))
 # sql_request = f"ALTER TABLE `programmingpulsestudio`.`users` PRIMARY KEY (id);"
 
 
