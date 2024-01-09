@@ -41,29 +41,29 @@ export default function FormulaireInscription() {       // INSCRIPTION
 
     function inputsCheck() {
         if (familyName.length < 3 || familyName > 45) {
-            setFamilyNameError("familyNameError")
+            setFamilyNameError("Le nom de famille doit contenir entre 3 et 45 caractères.")
             return false;
         }
         if (givenName.length < 3 || givenName > 45) {
-            setGivenNameError("given name error")
+            setGivenNameError("Le prénom doit contenir entre 3 et 45 caractères.")
             return false;
         }
         // expression régulière pour adresse mail
         // eslint-disable-next-line no-useless-escape
         if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(mail.toLowerCase())) {
-            setMailError("mail error")
+            setMailError("Merci de renseigner une adresse mail valide.")
             return false;
         }
         // expresssion régulière pour les numéros de téléphone
         if (!/^((\+33\s?)|0)[1-9](\s?\d{2}){4}$/.test(tel)) {
-            setTelError("tel error")
+            setTelError("Merci de renseigner un numéro de téléphone valide.")
             return false;
         }
         if (password.length < 4 || password.length > 45) {
-            setPasswordError("password error")
+            setPasswordError("Le mot de passe doit contenir entre 6 et 45 caractères.")
             return false;
         } else if (password !== confirmPassword) {
-            setConfirmPasswordError("confirmPassword error")
+            setConfirmPasswordError("Merci de confirmer avec un mot de passe identique.")
             return false;
         }
 
