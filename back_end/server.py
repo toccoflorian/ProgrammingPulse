@@ -74,7 +74,7 @@ def save_user_image():
 
     # Définir le chemin du fichier
     file_name = f"{image_of}_image_{str(user_id)}.webp"
-    file_path = f"./front_end/public/{image_of}_images/{file_name}"
+    file_path = f"../front_end/public/{image_of}_images/{file_name}"
 
     # Enregistrer l'image au format WebP
     image.save(file_path, format='webp')
@@ -134,8 +134,7 @@ def create_new_user():
     try:
         # recuperer le body de la requête
         data = request.get_json()
-        succes, result = functions.sanitise_data(
-            data)           # nettoyer les données
+        succes, result = functions.sanitise_data(data)           # nettoyer les données
 
         if not succes:           # si nettoyage échoué
             # réponse d'erreur de nettoyage

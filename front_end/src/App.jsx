@@ -8,7 +8,7 @@ import { DataProvider } from "./contexts/FetchContext";
 import EspaceClientPage from "./pages/EspaceClientPage/layout/EspaceClientPage";
 import TarifsPage from "./pages/TarifsPage/TarifsPage";
 import PortfolioTemoignagePage from "./pages/PortfolioTemoignagePage/layout/PortfolioTemoignagePage";
-import { ModalEditNote } from "./components/Modals";
+import ServicesPage from "./pages/ServicesPage/ServicesPage";
 
 
 
@@ -32,7 +32,7 @@ function App() {
               <Route path="/" Component={HomePage} />
 
               {/* Services */}
-              <Route path="/ServicesPage" Component={() => <h1>services</h1>} />
+              <Route path="/ServicesPage" Component={ServicesPage} />
 
               {/* PORTFOLIO ET TEMOIGNAGES */}
               <Route path="/PortfolioTemoignagePage" Component={PortfolioTemoignagePage} />

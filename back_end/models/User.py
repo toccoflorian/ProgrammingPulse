@@ -20,8 +20,9 @@ class User():
 
     def get_json(self):
         projects = []
-        for project in self.projects:
-            projects.append(project.get_json())
+        if type(self.projects) != str:
+            for project in self.projects:
+                projects.append(project.get_json())
 
         return json.dumps({
         'id': self.id,

@@ -1,5 +1,4 @@
 import { ButtonNoPrimary, ButtonPrimary, ButtonYesPrimary } from "../../components/Buttons";
-import { InputTextPrimary } from "../../components/Inputs";
 import { H1Primary, H1Secondary, H2Primary, H2Secondary, H3Primary } from "../../components/Titres";
 
 export default function TarifsPage() {
@@ -20,7 +19,7 @@ export default function TarifsPage() {
         <h1>Inputs</h1>
 
         <p>InputTextPrimary</p>
-        <InputTextPrimary />
+        <input type="text" className="inputPrimary" />
 
         <h1>Titres</h1>
         <H1Primary textContent="H1Primary" />

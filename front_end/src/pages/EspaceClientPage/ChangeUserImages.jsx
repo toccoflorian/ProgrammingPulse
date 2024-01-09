@@ -1,4 +1,3 @@
-import { InputFilePrimary } from "../../components/Inputs";
 import { ButtonNoPrimary, ButtonYesPrimary } from "../../components/Buttons";
 
 export default function ChangeUserImages(props) {
@@ -6,11 +5,13 @@ export default function ChangeUserImages(props) {
         <div>
             {props.changeUserImage &&
                 <>
-                    <InputFilePrimary
-                        label={`Choisissez votre image de profil`}
+                    <label htmlFor="userImage">Choisissez votre image de profil</label>
+                    <input
+                        type="file"
                         id={"userImage"}
                         name={`userImage`}
                         onChange={(e) => { props.setUserImageFile(e.target.files[0]) }}
+                        className={`inputPrimary`}
                     />
                     <div className={`d-flex`}>
                         <ButtonNoPrimary
@@ -31,11 +32,14 @@ export default function ChangeUserImages(props) {
 
             {props.changeOrganizationImage &&
                 <>
-                    <InputFilePrimary
+                    <label htmlFor="userOrganizationImage">Choisissez l'image de votre entreprise</label>
+                    <input
+                        type="file"
                         label={`Choisissez l'image de votre entreprise`}
-                        id={"userImage"}
-                        name={`userImage`}
+                        id={"userOrganizationImage"}
+                        name={`userOrganizationImage`}
                         onChange={(e) => { props.setOrganizationImage(e.target.files[0]) }}
+                        className={`inputPrimary`}
                     />
                     <div className={`d-flex`}>
                         <ButtonNoPrimary

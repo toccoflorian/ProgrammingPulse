@@ -1,4 +1,3 @@
-import { InputTextPrimary, TextArea } from "../Inputs";
 import styles from "./FormulaireContact.module.scss";
 import { useContext, useEffect, useState } from "react";
 import { FetchContext } from "../../contexts/FetchContext";
@@ -41,58 +40,64 @@ export default function FormulaireContact() {
 
             <div className={` d-flex`}>
 
-                <InputTextPrimary       // nom
+                <input       // nom
                     type={`text`}
                     name={`familyNameContact`}
                     id={`familyNameContact`}
                     onChange={(e) => { setFamilyNameContact(e.target.value) }}
                     placeholder={`Nom`}
                     autoComplete={`family-name`}
+                    className={`inputPrimary`}
                 />
 
-                <InputTextPrimary        // prénom
+                <input        // prénom
                     type={`text`}
                     name={`givenNameContact`}
                     id={`givenNameContact`}
                     onChange={(e) => { setGivenNameContact(e.target.value) }}
                     placeholder={`Prénom`}
                     autoComplete={`given-name`}
+                    className={`inputPrimary`}
                 />
             </div>
 
-            <InputTextPrimary         // société
+            <input         // société
                 type={`text`}
                 name={`organizationContact`}
                 id={`organizationContact`}
                 onChange={(e) => { setOrganizationContact(e.target.value) }}
                 placeholder={`Société`}
                 autoComplete={`organization`}
+                className={`inputPrimary`}
             />
 
             <div className={` d-flex`}>
-                <InputTextPrimary
+                <input
                     type={`email`}            // téléphone
                     name={`mailContact`}
                     id={`mailContact`}
                     onChange={(e) => { setMailContact(e.target.value) }}
                     placeholder={`E-mail`}
                     autoComplete={`email`}
+                    className={`inputPrimary`}
                 />
-                <InputTextPrimary         // telephone
+                <input         // telephone
                     type={`tel`}
                     name={`telContact`}
                     id={`telContact`}
                     onChange={(e) => { setTelContact(e.target.value) }}
                     placeholder={`Téléphone`}
                     autoComplete={`tel`}
+                    className={`inputPrimary`}
                 />
             </div>
 
-            <TextArea
+            <textarea
                 name={`message`}            // message
                 id={`message`}
                 onChange={(e) => { setMessage(e.target.value) }}
                 placeholder={contactResponse}
+                className={`textAreaPrimary`}
             />
 
             <ButtonPrimary textContent={`Envoyer`} />

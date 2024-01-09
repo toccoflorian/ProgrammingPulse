@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-import { InputTextPrimary } from "../Inputs";
 import styles from "./FormulaireConnexion.module.scss";
 import { FetchContext } from "../../contexts/FetchContext";
 import { ButtonPrimary } from "../Buttons";
@@ -13,36 +12,39 @@ export default function FormulaireConnexion() {
 
     const { fetchData, connectionResponse } = useContext(FetchContext);
 
+    useEffect(() => {
+        console.log(connectionResponse);
+    }, [connectionResponse])
 
     async function handleSubmit(e) {
         e.preventDefault();
         fetchData.get(`/login?mail=${emailConnection}&currentpassword=${passwordConnection}`, "login")
     }
 
-    useEffect(() => {
-        console.log(connectionResponse);
-    }, [connectionResponse])
+
 
     return (<>
         <form onSubmit={handleSubmit} className={`${styles.formulaire} br-small`}>
             <div className={`d-flex justify-center`}>
 
-                <InputTextPrimary       // identifiant connexion
+                <input       // identifiant connexion
                     type={`email`}
                     name={`identifiantConnexion`}
                     id={`identifiantConnexion`}
                     onChange={(e) => { setEmailConnetion(e.target.value) }}
                     placeholder={`identifiant`}
                     autoComplete={`email`}
+                    className={`inputPrimary`}
                 />
 
-                <InputTextPrimary       // mot de passe connexion
+                <input       // mot de passe connexion
                     type={`password`}
                     name={`passwordConnexion`}
                     id={`passwordConnexion`}
                     onChange={(e) => { setPasswordConnetion(e.target.value) }}
                     placeholder={`Mot de passe`}
                     autoComplete={`current-password`}
+                    className={`inputPrimary`}
                 />
             </div>
 
@@ -53,7 +55,7 @@ export default function FormulaireConnexion() {
             {!connectionResponse.status ?
                 connectionResponse.content
                 :
-                "Connected"
+                document.location.reload()
             }
 
         </form>

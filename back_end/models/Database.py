@@ -54,8 +54,8 @@ class Database():
             return (True, "La requête SQL s'est bien passée")
         except Exception as e:
             print(e.with_traceback(None))
-            # if e.errno == 1062:
-            #     return (False, f"'{e.msg.split(chr(39))[1]}' existe déjà dans la base de données.")
+            if e.errno == 1062:
+                return (False, f"'{e.msg.split(chr(39))[1]}' existe déjà dans la base de données.")
             # elif e.errno == 0:
             #     pass
             return (False, e.with_traceback(None))

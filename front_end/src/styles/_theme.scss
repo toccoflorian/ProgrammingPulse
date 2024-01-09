@@ -1,0 +1,25 @@
+.textAreaPrimary {
+
+    background-color: white;
+    margin: 0px;
+    font-weight: 800;
+    margin: 8px 12px;
+    padding: 6px 10px;
+    border: 2px solid var(--blue-primary);
+    border-radius: 7px;
+}
+
+.inputPrimary {
+    background-color: white;
+    margin: 0px;
+    font-weight: 800;
+    margin: 8px 12px;
+    padding: 6px 10px;
+    border: 2px solid var(--blue-primary);
+    border-radius: 7px;
+
+
+    label {
+        font-weight: 800;
+    }
+}

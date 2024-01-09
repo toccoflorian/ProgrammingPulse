@@ -1,5 +1,9 @@
 .formulaire {
     border: 1px solid white;
+
+    .errorMessage {
+        display: none;
+    }
 }
 
 .test {
