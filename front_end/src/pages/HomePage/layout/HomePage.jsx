@@ -1,6 +1,5 @@
 import HomePageH1Container from "../HomePageH1Container";
 import { Section_1_type_1, Section_1_type_2 } from "../Section_1";
-import { H1Primary, H2Primary, H3Primary } from "../../../components/Titres";
 import "./HomePage.module.scss";
 
 export default function HomePage() {

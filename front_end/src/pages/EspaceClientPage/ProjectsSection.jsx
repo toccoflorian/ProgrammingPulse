@@ -1,7 +1,6 @@
 import styles from "./ProjectsSection.module.scss";
 import { ModalEditNote } from "../../components/Modals";
 import StarsEvaluation from "../../components/StarsEvaluation";
-import { ButtonPrimary } from "../../components/Buttons";
 import propTypes from "prop-types";
 
 export default function ProjectsSection(props) {
@@ -29,10 +28,9 @@ export default function ProjectsSection(props) {
                                     <StarsEvaluation note={project.note} />}
 
                                 <div className={`d-flex`}>
-
-                                    <ButtonPrimary textContent={`Voir le devis`} />
+                                    <button className={`SubmitButton`}>Voir le devis</button>
                                     {!project.note &&
-                                        <ButtonPrimary onClick={() => { handleNote(project.id) }} textContent={`Atribuer une Note`} />}
+                                        <button onClick={() => { handleNote(project.id) }} className={`SubmitButton`}>Atribuer une Note</button>}
                                     <ModalEditNote project={project} />
                                 </div>
 

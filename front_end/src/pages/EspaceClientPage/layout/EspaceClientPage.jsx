@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-import { H1Primary, H2Primary, H3Primary } from "../../../components/Titres";
 import FormulaireInscription from "../../../components/formulaires/FormulaireInscription";
 import { FetchContext } from "../../../contexts/FetchContext";
 import styles from "./EspaceClientPage.module.scss";
@@ -28,8 +27,7 @@ export default function EspaceClientPage() {
 
 
     return (<>
-
-        <H1Primary textContent={`Espace client`} />
+        <h1 className={`H1Primary`}>Espace client</h1>
 
         <p>
             Retrouvez ici vos informations personnelles ainsi que vos projets et devis. Vous pouvez noter un projet terminé et laisser un commentaire,
@@ -46,7 +44,7 @@ export default function EspaceClientPage() {
 
                     {/* formulaire connexion */}
                     <div className={`d-flex flex-column align-center`}>
-                        <H2Primary textContent={`Connexion`} />
+                        <h2 className={`H2Primary`}>Connexion</h2>
                         <FormulaireConnexion />
                     </div>
 
@@ -54,15 +52,14 @@ export default function EspaceClientPage() {
 
                     {/* formulaire création de compte */}
                     <div className={`${styles.formulaireInscription} d-flex flex-column align-center`}>
-                        <H2Primary textContent={`Créer un compte`} />
+                        <h2 className={`H2Primary`}>Créer un compte</h2>
                         <FormulaireInscription />
                     </div>
                 </div>
 
                 {/* TEXTE 1 */}
                 <div className={`${styles.texte1} d-flex flex-column justify-center align-center width60 mrl-auto`}>
-
-                    <H3Primary textContent="Créez Votre Compte en Toute Confiance" />
+                    <h3 className={`H3Primary`}>Créez Votre Compte en Toute Confiance</h3>
 
                     <p className={`text-center`}>
                         Rejoignez Programming Pulse en toute sérénité. La création de votre compte est une démarche simple et sécurisée :

@@ -1,4 +1,3 @@
-import { ButtonNoPrimary, ButtonYesPrimary } from "../../components/Buttons";
 
 export default function ChangeUserImages(props) {
     return (<>
@@ -14,18 +13,20 @@ export default function ChangeUserImages(props) {
                         className={`inputPrimary`}
                     />
                     <div className={`d-flex`}>
-                        <ButtonNoPrimary
+                        <button
+                            className={`ButtonNoPrimary`}
                             onClick={() => { props.setChangeUserImage(!props.changeUserImage) }}
-                            textContent={`Annuler`}
-                        />
-                        <ButtonYesPrimary
+                        >
+                            Annuler
+                        </button>
+                        <button
+                            className={`ButtonYesPrimary`}
                             onClick={async () => {
                                 props.setChangeUserImage(!props.changeUserImage);
                                 await props.fetchData.upload(props.userImageFile, "user");
                                 document.location.reload();
                             }}
-                            textContent={`Valider`}
-                        />
+                        >Valider</button>
                     </div>
                 </>
             }
@@ -42,18 +43,18 @@ export default function ChangeUserImages(props) {
                         className={`inputPrimary`}
                     />
                     <div className={`d-flex`}>
-                        <ButtonNoPrimary
+                        <button
+                            className={`ButtonNoPrimary`}
                             onClick={() => { props.setChangeOrganizationImage(!props.changeOrganizationImage) }}
-                            textContent={`Annuler`}
-                        />
-                        <ButtonYesPrimary
+                        >Annuler</button>
+                        <button
+                            className={`ButtonYesPrimary`}
                             onClick={async () => {
                                 props.setChangeOrganizationImage(!props.changeOrganizationImage);
                                 await props.fetchData.upload(props.organizationImageFile, "organization");
                                 document.location.reload();
                             }}
-                            textContent={`Valider`}
-                        />
+                        >Valider</button>
                     </div>
                 </>
             }

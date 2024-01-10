@@ -56,7 +56,7 @@ def sanitise_data(data) -> any:
             clean_data[key] = bleach.clean(value)
 
         elif key == "message":
-            if 45 <= len(value) <= 3000:
+            if 45 >= len(value) >= 3000:
                 return False, f"Le champ {key} doit contenir 45 et 3000 caractères."
             clean_data[key] = bleach.clean(value)
 

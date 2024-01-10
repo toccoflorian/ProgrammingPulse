@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-import { H1Secondary } from "../../../components/Titres";
 import { FetchContext } from "../../../contexts/FetchContext";
 import StarsEvaluation from "../../../components/StarsEvaluation";
 
@@ -32,8 +31,7 @@ export default function PortfolioTemoignagePage() {
     }
 
     return (<>
-
-        <H1Secondary textContent={`Portfolio et retours clients`} />
+        <h1 className={`H1Secondary`}>Portfolio et retours clients</h1>
 
         {projects &&
             <div>

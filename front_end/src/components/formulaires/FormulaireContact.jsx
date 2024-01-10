@@ -1,7 +1,6 @@
 import styles from "./FormulaireContact.module.scss";
 import { useContext, useEffect, useState } from "react";
 import { FetchContext } from "../../contexts/FetchContext";
-import { ButtonPrimary } from "../Buttons";
 import { formIsValide } from "../../functions/formValidation";
 
 export default function FormulaireContact() {
@@ -130,8 +129,8 @@ export default function FormulaireContact() {
                 {formErrors.message && <p>{formErrors.message}</p>}
             </div>
 
+            <button className={`SubmitButton`}>Envoyer</button>
 
-            <ButtonPrimary textContent={`Envoyer`} />
             {
                 contactResponse[0] ? <p className={`debugGreen`}>{contactResponse[1]}</p> : <p className={`debugRed`}>{contactResponse[1]}</p>}
         </form>

@@ -1,5 +1,4 @@
 import { useContext, useState } from "react";
-import { ButtonNoPrimary, ButtonYesPrimary } from "./Buttons";
 import propTypes from "prop-types";
 import styles from "./Modals.module.scss";
 import { FetchContext } from "../contexts/FetchContext";
@@ -64,13 +63,15 @@ export function ModalEditNote(props) {
                 <textarea name="" id="" cols="30" rows="10"></textarea>
                 <div className={`d-flex`}>
 
-                    <ButtonNoPrimary
+                    <button
+                        className={`ButtonNoPrimary`}
                         onClick={handleQuit}
-                        textContent={`Annuler`}
-                    />
+                    >
+                        Annuler
+                    </button>
 
-                    <ButtonYesPrimary
-                        textContent={`Valider`}
+                    <button
+                        className={`ButtonYesPrimary`}
                         onClick={() => {
                             fetchData.post(
                                 "/edit_note_and_comment",
@@ -81,7 +82,9 @@ export function ModalEditNote(props) {
                                 }),
                                 "edit_note_and_comment")
                         }}
-                    />
+                    >
+                        Valider
+                    </button>
 
                     <p>{selectedNote}</p>
                 </div>

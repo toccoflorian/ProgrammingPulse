@@ -1,5 +1,3 @@
-import { ButtonNoPrimary, ButtonPrimary, ButtonYesPrimary } from "../../components/Buttons";
-import { H1Primary, H1Secondary, H2Primary, H2Secondary, H3Primary } from "../../components/Titres";
 
 export default function TarifsPage() {
 
@@ -8,13 +6,13 @@ export default function TarifsPage() {
 
         <h1>Buttons</h1>
         <p>ButtonYesPrimary</p>
-        <ButtonPrimary textContent={`button primary`} />
+        <button className={`ButtonYesPrimary`}>button yes primary</button>
 
         <p>ButtonYesPrimary</p>
-        <ButtonYesPrimary textContent={`Valider`} />
+        <button className={`ButtonNoPrimary`}>button no primary</button>
 
-        <p>ButtonNoPrimary</p>
-        <ButtonNoPrimary textContent={`Annuler`} />
+        <p>button</p>
+        <button className={`SubmitButton`}>button</button>
 
         <h1>Inputs</h1>
 
@@ -22,12 +20,15 @@ export default function TarifsPage() {
         <input type="text" className="inputPrimary" />
 
         <h1>Titres</h1>
-        <H1Primary textContent="H1Primary" />
-        <H1Secondary textContent={`H1Secondary`} />
-
-        <H2Primary textContent="H2Primary" />
-        <H2Secondary textContent={`H2Secondary`} />
-
-        <H3Primary textContent="H3Primary" />
+        <h1>H1Primary</h1>
+        <h1 className={`H1Primary`}>H1Primary</h1>
+        <h1>H1Secondary</h1>
+        <h1 className={`H1Secondary`}>H1Secondary</h1>
+        <h1>H2Primary</h1>
+        <h2 className={`H2Primary`}>H2Primary</h2>
+        <h1>H2Secondary</h1>
+        <h2 className={`H2Secondary`}>H2Secondary</h2>
+        <h1>H3Primary</h1>
+        <h3 className={`H3Primary`}>H3Primary</h3>
     </>)
 }

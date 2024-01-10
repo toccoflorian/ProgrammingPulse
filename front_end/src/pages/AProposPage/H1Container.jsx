@@ -1,4 +1,3 @@
-import { H1Primary } from "../../components/Titres";
 import styles from "./H1Container.module.scss";
 
 
@@ -6,7 +5,7 @@ import styles from "./H1Container.module.scss";
 export default function H1Container() {
     return (<>
         <div className={`${styles.container} d-flex flex-column justify-center align-center`}>
-            <H1Primary textContent={[`À Propos de`, <br key={0} />, `Programming Pulse Studio`]} />
+            <h1 className={`H1Primary`}>À Propos de<br />Programming Pulse Studio</h1>
 
             <h2>Un Engagement Personnalisé pour des Solutions Web Uniques </h2>
 

@@ -1,4 +1,3 @@
-import { H2Primary } from "../../../components/Titres";
 import H1Container from "../H1Container";
 import styles from "./AProposPage.module.scss";
 
@@ -12,7 +11,7 @@ export default function AProposPage() {
 
         <div>
             <div className={`${styles.temporary}`}>
-                <H2Primary textContent={`À Propos de Programming Pulse Studio`} />
+                <h2 className={`H2Primary`}>À Propos de Programming Pulse Studio</h2>
                 <p>
                     Chez Programming Pulse Studio, la personnalisation n&#39;est pas seulement un mot à la mode, c&#39;est la pierre angulaire
                     de
@@ -25,7 +24,7 @@ export default function AProposPage() {
 
 
             <div>
-                <H2Primary textContent={`Votre Vision, Ma Mission`} />
+                <h2 className={`H2Primary`}>Votre Vision, Ma Mission</h2>
                 <p>
                     Votre projet mérite plus qu&#39;une approche standardisée. C&#39;est pourquoi, dès le début, je m&#39;immerge dans votre
                     univers.
@@ -41,7 +40,7 @@ export default function AProposPage() {
 
 
             <div>
-                <H2Primary textContent={`Une Qualité Sans Compromis`} />
+                <h2 className={`H2Primary`}>Une Qualité Sans Compromis</h2>
                 <p>
                     La qualité n&#39;est pas un luxe, c&#39;est une nécessité. C&#39;est pourquoi je vous implique activement dans le processus, en
                     vous présentant les
@@ -52,7 +51,7 @@ export default function AProposPage() {
             </div>
 
             <div>
-                <H2Primary textContent={`Sécurité et Confiance`} />
+                <h2 className={`H2Primary`}>Sécurité et Confiance</h2>
                 <p>
                     La sécurité de votre site web est ma priorité absolue. En adhérant aux meilleures pratiques de l&#39;industrie, je
                     m&#39;assure
@@ -64,7 +63,7 @@ export default function AProposPage() {
             </div>
 
             <div>
-                <H2Primary textContent={`Proximité et Réactivité : Les Avantages d'une Micro-Entreprise`} />
+                <h2 className={`H2Primary`}>Proximité et Réactivité : Les Avantages d'une Micro-Entreprise</h2>
                 <p>
                     En tant que micro-entreprise, Programming Pulse Studio offre un avantage unique : une proximité inégalée avec ses
                     clients. Être votre unique contact signifie que vos questions, vos idées et vos préoccupations sont
@@ -75,7 +74,7 @@ export default function AProposPage() {
             </div>
 
             <div>
-                <H2Primary textContent={`Collaboration Sécurisée via Malt et Avantages Tarifaires Exclusifs`} />
+                <h2 className={`H2Primary`}>Collaboration Sécurisée via Malt et Avantages Tarifaires Exclusifs</h2>
                 <p>
                     Pour garantir une sécurité et une confiance maximales dans chaque projet, Programming Pulse Studio collabore avec
                     <strong> Malt</strong>, une plateforme reconnue pour la gestion et la sécurisation des missions freelance. En
@@ -88,7 +87,7 @@ export default function AProposPage() {
             </div>
 
             <div>
-                <H2Primary textContent={`En Conclusion`} />
+                <h2 className={`H2Primary`}>En Conclusion</h2>
                 <p>
                     Votre projet est unique, et il mérite une attention tout aussi unique. Chez Programming Pulse Studio, vous trouverez
                     un

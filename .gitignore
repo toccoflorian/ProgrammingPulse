@@ -27,7 +27,7 @@ __pycache__/
 .vite/
 .env
 MyEnv/
-node_modules
+node_modules/
 dist/
-
+test_mail.py
 contenu/

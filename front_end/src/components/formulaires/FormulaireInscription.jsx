@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import styles from './FormulaireInscription.module.scss'
 import { FetchContext } from "../../contexts/FetchContext";
-import { ButtonPrimary } from "../Buttons";
 import { formIsValide } from "../../functions/formValidation";
 
 
@@ -157,8 +156,7 @@ export default function FormulaireInscription() {       // INSCRIPTION
             </div>
 
             <div className={`d-flex justify-center`}>
-
-                <ButtonPrimary textContent={`Créer un compte`} />
+                <button className={`SubmitButton`}>Créer un compte</button>
             </div>
             {inscriptionResponse[0] ?
                 <p className={`debugGreen`}>{inscriptionResponse[1]}</p>
