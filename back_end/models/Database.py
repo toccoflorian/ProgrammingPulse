@@ -288,4 +288,4 @@ class Contact_form():
 
 # DB = Database()
 
-# DB.create_user("TOCCO", "Florian", "Programming Pulse Studio", "0554757588", "admin@admin.com", "12345")
+

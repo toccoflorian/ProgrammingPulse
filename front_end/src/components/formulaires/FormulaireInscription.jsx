@@ -2,124 +2,48 @@ import { useContext, useEffect, useState } from "react";
 import styles from './FormulaireInscription.module.scss'
 import { FetchContext } from "../../contexts/FetchContext";
 import { ButtonPrimary } from "../Buttons";
+import { formIsValide } from "../../functions/formManager";
 
 
 export default function FormulaireInscription() {       // INSCRIPTION
 
-    // const ERRORS = {
-    //     familyNameError: "Merci de renseigner un nom de famille entre 3 et 45 caractères.",
-    //     gi
-    // }
-
-    const [familyName, setFamilyName] = useState('');         //states
-    const [familyNameError, setFamilyNameError] = useState('');
-
-    const [givenName, setGivenName] = useState('');
-    const [givenNameError, setGivenNameError] = useState('');
-
-    const [organization, setOrganization] = useState('');
-
-    const [tel, setTel] = useState('');
-    const [telError, setTelError] = useState('');
-
-    const [password, setPassword] = useState('');
-    const [passwordError, setPasswordError] = useState('');
-
-    const [mail, setMail] = useState('');
-    const [mailError, setMailError] = useState('');
-
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [confirmPasswordError, setConfirmPasswordError] = useState('');
+    const [form, setForm] = useState({
+        familyname: "",
+        givenname: "",
+        organization: "",
+        tel: "",
+        mail: "",
+        password: "",
+        confirmPassword: "",
+    })
+    const [formErrors, setFormErrors] = useState({
+        familyname: "",
+        givenname: "",
+        tel: "",
+        mail: "",
+        password: "",
+        confirmPassword: "",
+    })
 
     const { fetchData, inscriptionResponse } = useContext(FetchContext)          // contexct
-
 
     useEffect(() => {
         // console.log('data', inscriptionResponse);
     }, [inscriptionResponse])        // effect
 
-
-    function inputsCheck() {
-        if (familyName.length < 3 || familyName > 45) {
-            setFamilyNameError("Le nom de famille doit contenir entre 3 et 45 caractères.")
-            return false;
-        }
-        if (givenName.length < 3 || givenName > 45) {
-            setGivenNameError("Le prénom doit contenir entre 3 et 45 caractères.")
-            return false;
-        }
-        // expression régulière pour adresse mail
-        // eslint-disable-next-line no-useless-escape
-        if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(mail.toLowerCase())) {
-            setMailError("Merci de renseigner une adresse mail valide.")
-            return false;
-        }
-        // expresssion régulière pour les numéros de téléphone
-        if (!/^((\+33\s?)|0)[1-9](\s?\d{2}){4}$/.test(tel)) {
-            setTelError("Merci de renseigner un numéro de téléphone valide.")
-            return false;
-        }
-        if (password.length < 4 || password.length > 45) {
-            setPasswordError("Le mot de passe doit contenir entre 6 et 45 caractères.")
-            return false;
-        } else if (password !== confirmPassword) {
-            setConfirmPasswordError("Merci de confirmer avec un mot de passe identique.")
-            return false;
-        }
-
-
-
-        return true;
-
+    function handleChange(e) {
+        const { name, value } = e.target;       // recupère les data
+        setForm(({ ...form, [name]: value }))           // enregistre la nouvelle valeur
+        !formErrors[name + "Errors"] &&                     // réinitialise le message d'erreur
+            setFormErrors({ ...formErrors, [name]: "" })
     }
-
-
 
     function handleSubmit(e) {           // au submit du formulaire
         e.preventDefault()
-
-
-        if (inputsCheck(e)) {          // Si pas d'erreurs de saisie
-            fetchData.post(       // fetch les datas
-                "/create_new_user",
-                {
-                    familyname: familyName,                  // recuperation des valeurs des inputs
-                    givenname: givenName,
-                    organization: organization,
-                    tel: tel,
-                    mail: mail,
-                    passwords: [password, confirmPassword],
-                },
-                "inscription"
-            )
-
-            // document.location.reload();
-        }
-
+        console.log(form);
+        formIsValide &&      // vérifie si pas d'erreurs de saisie sinon créer les messages d'erreurs
+            fetchData.post("/create_new_user", form, "inscription")       // fetch les datas
     }
-
-    // function handleChange(e) {
-    //     console.log(document.getElementById(`${e.target.name + "Error"}`));
-    //     switch (e.target.name) {
-
-    //         case "mail":
-
-
-    //         default:
-    //             if (3 <= e.target.value.length && e.target.value.length < 45) {
-    //                 console.log("salut");
-    //                 document.getElementById(`${e.target.name + "Error"}`).style.display = "none";
-    //                 setFamilyName(e.target.value)
-    //             } else {
-    //                 document.getElementById(`${e.target.name + "Error"}`).style.display = "block";
-    //                 document.getElementById(`${e.target.name + "Error"}`).style.color = "red";
-    //             }
-    //     }
-
-    // }
-
-
-
 
     return (<>
         <img className={styles.test} id="test" src="" alt="" />
@@ -129,46 +53,41 @@ export default function FormulaireInscription() {       // INSCRIPTION
 
             <div className={`d-flex justify-center`}>
 
-                {/* <button onClick={handlePhoto}>test</button> */}
-
-                {/* <input type="text" placeholder="salut" /> */}
-
-
                 <div>
                     <input       // Nom
                         type={`text`}
-                        name={`familyName`}
+                        name={`familyname`}
                         id={`familyName`}
-                        onChange={(e) => { setFamilyName(e.target.value), setFamilyNameError("") }}
+                        onChange={handleChange}
                         placeholder={`Nom`}
                         autoComplete={`family-name`}
                         className={`inputPrimary`}
                     />
-                    {familyNameError && <p>{familyNameError}</p>}
+                    {formErrors.familyname && <p>{formErrors.givenname}</p>}
                 </div>
 
                 <div>
                     <input       // Prénom
                         type={`text`}
-                        name={`givenName`}
+                        name={`givenname`}
                         id={`givenName`}
-                        onChange={(e) => { setGivenName(e.target.value), setGivenNameError("") }}
+                        onChange={handleChange}
                         placeholder={`Prénom`}
                         autoComplete={`given-name`}
                         className={`inputPrimary`}
                     />
-                    {givenNameError && <p>{givenNameError}</p>}
+                    {formErrors.givenname && <p>{formErrors.givenname}</p>}
                 </div>
 
             </div>
 
 
             <div className={`d-flex justify-center`}>
-                <input       // société
+                <input                // société
                     type={`text`}
                     name={`organization`}
                     id={`organization`}
-                    onChange={(e) => { setOrganization(e.target.value) }}
+                    onChange={handleChange}
                     placeholder={`Nom de votre société`}
                     autoComplete={`organization`}
                     className={`inputPrimary`}
@@ -179,29 +98,29 @@ export default function FormulaireInscription() {       // INSCRIPTION
 
             <div className={`d-flex justify-center`}>
                 <div>
-                    <input      // Email
+                    <input                   // Email
                         type={`email`}
                         name={`mail`}
                         id={`mail`}
-                        onChange={(e) => { setMail(e.target.value), setMailError("") }}
+                        onChange={handleChange}
                         placeholder={`E-mail`}
                         autoComplete={`email`}
                         className={`inputPrimary`}
                     />
-                    {mailError && <p>{mailError}</p>}
+                    {formErrors.mail && <p>{formErrors.mail}</p>}
                 </div>
 
                 <div>
-                    <input       // Téléphone
+                    <input                         // Téléphone
                         type={`tel`}
                         name={`tel`}
                         id={`tel`}
-                        onChange={(e) => { setTel(e.target.value), setTelError("") }}
+                        onChange={handleChange}
                         placeholder={`Téléphone`}
                         autoComplete={`tel`}
                         className={`inputPrimary`}
                     />
-                    {telError && <p>{telError}</p>}
+                    {formErrors.tel && <p>{formErrors.tel}</p>}
                 </div>
 
             </div>
@@ -210,29 +129,29 @@ export default function FormulaireInscription() {       // INSCRIPTION
             <div className={`d-flex justify-center`}>
 
                 <div>
-                    <input       // Mot de passe
+                    <input                         // Mot de passe
                         type={`password`}
                         name={`password`}
                         id={`password`}
-                        onChange={(e) => { setPassword(e.target.value), setPasswordError("") }}
+                        onChange={handleChange}
                         placeholder={`Mot de passe`}
                         autoComplete={`new-password`}
                         className={`inputPrimary`}
                     />
-                    {passwordError && <p>{passwordError}</p>}
+                    {formErrors.password && <p>{formErrors.password}</p>}
                 </div>
 
                 <div>
-                    <input       // Confirmation mot de passe
+                    <input                          // Confirmation mot de passe
                         type={`password`}
                         name={`confirmPassword`}
                         id={`confirmPassword`}
-                        onChange={(e) => { setConfirmPassword(e.target.value), setConfirmPasswordError("") }}
+                        onChange={handleChange}
                         placeholder={`Confirmation mot de passe`}
                         autoComplete={`new-password`}
                         className={`inputPrimary`}
                     />
-                    {confirmPasswordError && <p>{confirmPasswordError}</p>}
+                    {formErrors.confirmPassword && <p>{formErrors.confirmPassword}</p>}
                 </div>
 
             </div>

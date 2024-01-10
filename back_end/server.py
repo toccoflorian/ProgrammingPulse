@@ -154,7 +154,7 @@ def create_new_user():
             return json.dumps((True, "Compte créé avec succès."))
         else:
             print(response[1])
-            # réponse erreur SQL
+            # réponse erreur SQL()
             return json.dumps((response[0], response[1]))
 
     except Exception as e:
