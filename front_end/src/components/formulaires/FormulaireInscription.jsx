@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import styles from './FormulaireInscription.module.scss'
 import { FetchContext } from "../../contexts/FetchContext";
 import { ButtonPrimary } from "../Buttons";
-import { formIsValide } from "../../functions/formManager";
+import { formIsValide } from "../../functions/formValidation";
 
 
 export default function FormulaireInscription() {       // INSCRIPTION
@@ -14,7 +14,7 @@ export default function FormulaireInscription() {       // INSCRIPTION
         tel: "",
         mail: "",
         password: "",
-        confirmPassword: "",
+        confirmpassword: "",
     })
     const [formErrors, setFormErrors] = useState({
         familyname: "",
@@ -22,7 +22,7 @@ export default function FormulaireInscription() {       // INSCRIPTION
         tel: "",
         mail: "",
         password: "",
-        confirmPassword: "",
+        confirmpassword: "",
     })
 
     const { fetchData, inscriptionResponse } = useContext(FetchContext)          // contexct
@@ -41,7 +41,7 @@ export default function FormulaireInscription() {       // INSCRIPTION
     function handleSubmit(e) {           // au submit du formulaire
         e.preventDefault()
         console.log(form);
-        formIsValide &&      // vérifie si pas d'erreurs de saisie sinon créer les messages d'erreurs
+        formIsValide(form, setFormErrors) &&      // vérifie si pas d'erreurs de saisie sinon créer les messages d'erreurs
             fetchData.post("/create_new_user", form, "inscription")       // fetch les datas
     }
 
@@ -144,14 +144,14 @@ export default function FormulaireInscription() {       // INSCRIPTION
                 <div>
                     <input                          // Confirmation mot de passe
                         type={`password`}
-                        name={`confirmPassword`}
+                        name={`confirmpassword`}
                         id={`confirmPassword`}
                         onChange={handleChange}
                         placeholder={`Confirmation mot de passe`}
                         autoComplete={`new-password`}
                         className={`inputPrimary`}
                     />
-                    {formErrors.confirmPassword && <p>{formErrors.confirmPassword}</p>}
+                    {formErrors.confirmpassword && <p>{formErrors.confirmpassword}</p>}
                 </div>
 
             </div>
