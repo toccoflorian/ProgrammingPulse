@@ -1,9 +1,11 @@
 import json
 from flask import Flask, request, jsonify, g
 from flask_cors import CORS
+from datetime import datetime
 
-import functions
+import security.sanitise_data as sanitise_data
 from models.Database import Database
+from models.Contact_form import Contact_form
 
 
 app = Flask(__name__)
@@ -86,7 +88,7 @@ def save_user_image():
 def edit_note_and_comment():
     data = json.loads(request.get_json())
     print("data", data)
-    succes, clean_comment = functions.sanitise_data(
+    succes, clean_comment = sanitise_data.sanitise_data(
         {"comment": data["comment"]})
     if succes:
         DB = Database()
@@ -113,7 +115,7 @@ def login() -> any:
     }
     print("data zzzzzxxxxxxx", data)
     # nettoyer les données, retourne un bool et un dict en cas de succès sinon bool str
-    succes, result = functions.sanitise_data(data)
+    succes, result = sanitise_data.sanitise_data(data)
     if not succes:
         # réponse d'erreur de nettoyage
         return jsonify({"status": False, "content": result})
@@ -134,7 +136,7 @@ def create_new_user():
     try:
         # recuperer le body de la requête
         data = request.get_json()
-        succes, result = functions.sanitise_data(data)           # nettoyer les données
+        succes, result = sanitise_data.sanitise_data(data)           # nettoyer les données
 
         if not succes:           # si nettoyage échoué
             # réponse d'erreur de nettoyage
@@ -172,25 +174,32 @@ def get_projects():
     return json.dumps(projects)
 
 
-# reception et enregistrement
+# reception, enregistrement et envoi par mail
 # formulaire de contact
 @app.route("/send_contact_form", methods=["POST"])
 def send_contact_form():
     # recuperer le body de la requête
     data = json.loads(request.get_json())
-    succes, result = functions.sanitise_data(
+    succes, result = sanitise_data.sanitise_data(
         data)           # nettoyer les données
     if succes:           # si nettoyage ok
         clean_data = result
         print(clean_data)
-        DB = Database()             # objet Database
-        DB.save_contact_form(           # enregistrement sur la base de données
-            clean_data["familyname"],
-            clean_data["givenname"],
-            clean_data["organization"],
-            clean_data["tel"],
-            clean_data["mail"],
-            clean_data["message"])
+        form = Contact_form(
+            Database(), 
+            datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S"), 
+            "unreaded", 
+            clean_data["familyname"], 
+            clean_data["givenname"], 
+            clean_data["organization"], 
+            clean_data["tel"], 
+            clean_data["mail"], 
+            clean_data["message"], 
+            None, 
+            None
+            )
+        form.save()
+        form.send_by_mail()
         # réponse
         return json.dumps((True, "Formulaire envoyé avec succès."))
     else:
