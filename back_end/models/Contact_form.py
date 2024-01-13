@@ -18,7 +18,10 @@ class Contact_form():
 
     # enregistré un formulaire de contact sur la base de données
     def save(self):
-        self.__DB.save_contact_form(
+        self.__DB.INSERT(
+            "contact_form",
+            ["creation_date", "state","family_name","given_name","organization","tel","mail", "message"],
+            [
             self.creation_date,
             self.state,
             self.family_name, 
@@ -26,8 +29,9 @@ class Contact_form():
             self.organization, 
             self.tel, 
             self.mail, 
-            self.message)
-        
+            self.message
+            ]
+        )
 
     def send_by_mail(self):
         import smtplib, ssl

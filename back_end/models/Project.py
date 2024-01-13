@@ -1,11 +1,11 @@
-
+from .Comment import Comment
 from datetime import datetime
 import json
 
 
 class Project():
     def __init__(self, DB, id, user_id, project_name, state, start_date, end_date, description, note) -> None:
-        self.DB = DB
+        self.__DB = DB
         self.id = id
         self.user_id = user_id
         self.project_name = project_name
@@ -14,10 +14,13 @@ class Project():
         self.end_date = end_date
         self.description = description
         self.note = note
-        self.comment = DB.get_project_comment(self.id, self.user_id)
+        comment = DB.SELECT("*", "comments", f"project_id='{self.id}' AND user_id='{self.user_id}'")
+        self.comment = Comment(DB, *comment[0]) if comment else None
+
+    def edit_note(self, note):
+        self.__DB.UPDATE("projects", f"note='{note}'", f"id='{self.id}' AND user_id='{self.user_id}'")
 
     def get_json(self):
-        print("comment", self.comment)
         return json.dumps({
             "id": self.id,
             "user_id": self.user_id,

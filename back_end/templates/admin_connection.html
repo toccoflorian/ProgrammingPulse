@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion Administrateur</title>
+</head>
+
+
+
+
+<body>
+
+    <div id="authentificationContainer">
+        <h1>authentification adiministrateur</h1>
+
+        <form id="connectForm">
+            <label for="mail">mail</label>
+            <input value="admin@admin.fr" id="mail" name="mail" type="email">
+
+            <label for="password">mot de passe</label>
+            <input value="12345" id="password" name="password" type="current-password">
+
+            <button>Connexion</button>
+
+            <p id="connectOutPut"></p>
+            <p>{{message}}</p>
+
+        </form>
+        <script>
+            document.addEventListener("submit", async (e) => {
+                e.preventDefault();
+
+                const mail = document.getElementById("mail").value;
+                const password = document.getElementById("password").value;
+
+                const response = await fetch(`http://127.0.0.1:10000/login?mail=${mail}&currentpassword=${password}`, {
+                    method: "GET",
+                })
+
+                const { status, content } = await response.json();
+
+                if (status) {
+                    Object.entries(content).map(cook => {
+                        document.cookie = `${cook[0]}=${cook[1]}`;      // set les cookies d'authentification
+                    })
+                } else {
+                    document.getElementById("connectOutPut").innerText = content;
+                }
+            })
+        </script>
+    </div>
+</body>
+
+
+</html>

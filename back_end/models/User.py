@@ -1,3 +1,4 @@
+from .Project import Project
 from datetime import datetime
 import json
 import bcrypt
@@ -16,7 +17,7 @@ class User():
         self.tel = tel
         self.organization = organization
         self.__password = password
-        self.projects = DB.get_user_projects(self.id)
+        self.projects = [Project(DB, *project) for project in DB.SELECT("*", "projects", f"user_id='{self.id}'")]
 
     def get_json(self):
         projects = []
@@ -43,16 +44,18 @@ class User():
     # création d'un token de session permettant à l'utilisateur d'être connecté
     def login(self) -> dict:
 
-        cookie = bcrypt.hashpw(            # création d'un cookie pour cétifié la session
-            self.__password.encode("utf-8"), bcrypt.gensalt())
+        cookie = bcrypt.hashpw(self.__password.encode("utf-8"), bcrypt.gensalt())            # création d'un cookie pour cétifié la session
 
-        # création d'une signature pour cétifié la provenance du cookie lors de sa vérification
-        signature = bcrypt.hashpw(cookie, bcrypt.gensalt())
+        signature = bcrypt.hashpw(cookie, bcrypt.gensalt())        # création d'une signature pour cétifié la provenance du cookie lors de sa vérification
 
-        result = self.__DB.save_token(cookie, signature, self.id)
+        result = self.__DB.INSERT("sessions", ["cookie", "signature"], [cookie.decode("utf-8"), signature.decode("utf-8")])
 
-        if not result["status"]:
-            return result
+        if not result[0]:
+            return {"status": result[0], "content": result[1]}            # si la requête à échouée
+        
+        id = self.__DB.SELECT("id", "sessions", f"cookie='{cookie.decode('utf-8')}'")[0][0]
+        self.__DB.UPDATE("users", f"session_id={id}", f"id='{self.id}'" )
+        
         return {            # si requête ok
             "status": True,         # retourne les informations de session
             "content": {

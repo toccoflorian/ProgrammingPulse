@@ -101,7 +101,7 @@ button.SubmitButton {
     }
 }
 
-.H1Primary {
+h1.H1Primary {
     text-align: center;
     border-bottom: 5px solid white;
     border-radius: 9px;
@@ -112,7 +112,7 @@ button.SubmitButton {
     width: fit-content;
 }
 
-.H1Secondary {
+h1.H1Secondary {
     text-align: center;
     border-bottom: 5px solid white;
     border-radius: 9px;
@@ -123,7 +123,7 @@ button.SubmitButton {
     width: fit-content;
 }
 
-.H2Primary {
+h2.H2Primary {
     text-align: center;
     border-bottom: 5px solid var(--blue-primary);
     border-radius: 5px;
@@ -134,7 +134,7 @@ button.SubmitButton {
     width: fit-content;
 }
 
-.H2Secondary {
+h2.H2Secondary {
     text-align: center;
     border-bottom: 5px solid var(--blue-primary);
     border-radius: 5px;
@@ -145,7 +145,7 @@ button.SubmitButton {
     width: fit-content;
 }
 
-.H3Primary {
+h3.H3Primary {
     text-align: center;
     border-bottom: 5px solid var(--blue-tertiary);
     border-radius: 7px;
