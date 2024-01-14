@@ -42,8 +42,10 @@ class Contact_form():
         smtp_address = 'mail.gmx.com'
         smtp_port = 465
         email_address = mail_connection_manager.get_mail_credentials()["mail"]
-        email_password = mail_connection_manager.get_mail_credentials()["password"]  # Utilisez une méthode plus sûre pour gérer les mots de passe
+        email_password = mail_connection_manager.get_mail_credentials()["password"] 
         email_receiver = mail_connection_manager.get_mail_credentials()["mail"]
+
+        print(email_address, email_password, email_receiver)
 
         # Création du message MIME
         message = MIMEMultipart("alternative")

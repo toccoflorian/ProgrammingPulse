@@ -122,7 +122,7 @@ def get_user():
 def login() -> any:
     data = {                                        # recuperer le body de la requête
         "mail": request.args.get("mail"),
-        "currentpassword": request.args.get("currentpassword")
+        "password": request.args.get("currentpassword")
     }
     succes, result = sanitise_data.sanitise_data(data)        # nettoyer les données, retourne un bool et un dict en cas de succès sinon bool str
     if not succes:
@@ -134,7 +134,7 @@ def login() -> any:
     except Exception as e:
         print(e)
         return jsonify({"status": False, "content": "L'identifiant ne correspond à aucun utilisateur." })
-    if not current_User.check_password(clean_data["currentpassword"]):
+    if not current_User.check_password(clean_data["password"]):
         return json.dumps({"status": False, "content": "Mauvais mot de passe"})
     return jsonify(current_User.login())
 
@@ -231,5 +231,5 @@ def admin_connection(auth_message=""):           # "message"
     return render_template("admin_connection.html", auth_message=auth_message)
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=10000, debug=True)
+    app.run(host="127.0.0.1", port=10000, debug=False)
  

@@ -17,10 +17,11 @@ export function DataProvider({ children }) {
     const fetchData = {
 
         get: async function (endpoint = null, target) {
-            let url = "https://ppstudio.fr/api";
+            let url = "http://127.0.0.1:10000/api";
             endpoint && (url = url + endpoint)
             console.log(url);
             const response = await fetch(url, {
+                headers: { "Content-Type": "application/json" },
                 method: "GET",
                 credentials: 'include',
             })
@@ -36,6 +37,7 @@ export function DataProvider({ children }) {
                         user.projects = user.projects.map(project => JSON.parse(project))
                         setCurrentUser(user)
                     }
+
                     break;
 
                 case "login":
@@ -49,7 +51,7 @@ export function DataProvider({ children }) {
         },
 
         post: async function (endpoint = null, content, target) {
-            let url = "https://ppstudio.fr/api";
+            let url = "http://127.0.0.1:10000/api";
             endpoint && (url = url + endpoint)
             console.log(url);
             const response = await fetch(url, {
@@ -81,7 +83,7 @@ export function DataProvider({ children }) {
                 obj_cookies[cookie.split("=")[0].trim()] = cookie.split("=")[1].trim()
             })
             console.log(obj_cookies);
-            const url = `https://ppstudio.fr/api/save_user_image?image_of=${image_of}&user_id=${String(currentUser.id)}&cookie=${obj_cookies.cookie}&signature=${obj_cookies.signature}`
+            const url = `http://127.0.0.1:10000/api/save_user_image?image_of=${image_of}&user_id=${String(currentUser.id)}&cookie=${obj_cookies.cookie}&signature=${obj_cookies.signature}`
             const response = await fetch(url, {
                 headers: {
                     "Content-Type": String(file.type),
