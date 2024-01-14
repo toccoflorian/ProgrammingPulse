@@ -16,7 +16,7 @@ tables = {
         ("family_name", "VARCHAR(45) "),
         ("given_name", "VARCHAR(45) "),
         ("mail", "DATETIME NULL"),
-        ("tel", "DATETIME NULL"),
+        ("tel", "VARCHAR(12) NULL"),
         ("organization", "VARCHAR(45) "),
         ("password", "VARCHAR(100) "),
         ("session_id", "INT "),
