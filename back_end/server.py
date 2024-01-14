@@ -130,7 +130,7 @@ def login() -> any:
     clean_data = result
     DB = Database()
     try:
-        current_User = User(DB, *DB.SELECT("*", "users", f"mail='{clean_data['mail']}'")[0])
+        current_User = User(DB, *DB.SELECT("id ,creation_date, family_name, given_name, mail, tel, organization, password, is_admin", "users", f"mail='{clean_data['mail']}'")[0])
     except Exception as e:
         print(e)
         return jsonify({"status": False, "content": "L'identifiant ne correspond à aucun utilisateur." })
