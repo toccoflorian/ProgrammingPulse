@@ -49,7 +49,7 @@ export function DataProvider({ children }) {
         },
 
         post: async function (endpoint = null, content, target) {
-            let url = "https://ppstudio.fr/api/";
+            let url = "https://ppstudio.fr/api";
             endpoint && (url = url + endpoint)
             // console.log(url);
             const response = await fetch(url, {
