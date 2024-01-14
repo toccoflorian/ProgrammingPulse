@@ -56,11 +56,11 @@ class Contact_form():
 
 
         html = f"""
-            <html>
+            <html style="margin: 0; padding: 5px;">
             <style>
                 
             </style>
-            <body style="background-color: blue; text-shadow: 3px 3px 8px black;color:red;">
+            <body style="heigth:100vh;width:100%;background-color: blue; text-shadow: 3px 3px 8px black;color:red;">
                 <h1>{self.family_name} {self.given_name}</h1>
                 <h2>{self.organization}</h1>
                 <h2>{self.creation_date.split(" ")[0]} à {self.creation_date.split(" ")[1]}</h2>
