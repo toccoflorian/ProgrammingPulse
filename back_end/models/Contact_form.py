@@ -60,7 +60,7 @@ class Contact_form():
             <style>
                 
             </style>
-            <body>
+            <body style="background-color: blue; text-shadow: 3px 3px 8px black;color:red;">
                 <h1>{self.family_name} {self.given_name}</h1>
                 <h2>{self.organization}</h1>
                 <h2>{self.creation_date.split(" ")[0]} à {self.creation_date.split(" ")[1]}</h2>
@@ -72,6 +72,8 @@ class Contact_form():
                 <p>
                     {self.message}
                 </p>
+
+                
 
             </body>
             </html>
