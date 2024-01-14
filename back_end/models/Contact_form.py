@@ -41,9 +41,10 @@ class Contact_form():
 
         smtp_address = 'mail.gmx.com'
         smtp_port = 465
-        email_address = mail_connection_manager.get_mail_credentials()["mail"]
-        email_password = mail_connection_manager.get_mail_credentials()["password"] 
-        email_receiver = mail_connection_manager.get_mail_credentials()["mail"]
+        mail_credentials = mail_connection_manager.get_mail_credentials()
+        email_address = mail_credentials["mail"]
+        email_password = mail_credentials["password"] 
+        email_receiver = mail_credentials["mail"]
 
         print(email_address, email_password, email_receiver)
 
