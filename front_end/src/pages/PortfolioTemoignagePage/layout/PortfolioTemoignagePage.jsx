@@ -33,7 +33,7 @@ export default function PortfolioTemoignagePage() {
     return (<>
         <h1 className={`H1Secondary`}>Portfolio et retours clients</h1>
 
-        {projects &&
+        {projects.length &&
             <div>
                 <h2>{projects[projectIndex].project_name}</h2>
                 <p>{projects[projectIndex].description}</p>
