@@ -132,6 +132,7 @@ def login() -> any:
     try:
         current_User = User(DB, *DB.SELECT("*", "users", f"mail='{clean_data['mail']}'")[0])
     except Exception as e:
+        print(e)
         return jsonify({"status": False, "content": "L'identifiant ne correspond à aucun utilisateur." })
     if not current_User.check_password(clean_data["currentpassword"]):
         return json.dumps({"status": False, "content": "Mauvais mot de passe"})
