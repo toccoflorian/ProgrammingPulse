@@ -17,7 +17,7 @@ export function DataProvider({ children }) {
     const fetchData = {
 
         get: async function (endpoint = null, target) {
-            let url = "https://ppstudio.fr/api/";
+            let url = "https://ppstudio.fr/api";
             endpoint && (url = url + endpoint)
             console.log(url);
             const response = await fetch(url, {
