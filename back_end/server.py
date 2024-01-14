@@ -106,7 +106,7 @@ def edit_note_and_comment():
         ).save()
         Project(
             DB, 
-            *DB.SELECT("*", "projects", f"id='{data['project_id']}'")[0]
+            *DB.SELECT("id, user_id, project_name, state, start_date, end_date, description, note", "projects", f"id='{data['project_id']}'")[0]
         ).edit_note(data["note"])
     message_error = clean_comment
     return message_error
