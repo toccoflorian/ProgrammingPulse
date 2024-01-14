@@ -66,7 +66,7 @@ def verify_auth_token():
             if not cookie_received == token["cookie"] and signature_received == token["signature"]:
                 return jsonify({"status": False, "content": "le cookie et/ou la signature ne correspondent pas."})
             
-            user =  User(DB, *DB.SELECT("*", "users", f"id='{user_id_received}'")[0])
+            user =  User(DB, *DB.SELECT("id ,creation_date, family_name, given_name, mail, tel, organization, password, is_admin", "users", f"id='{user_id_received}'")[0])
             if request.endpoint == "admin":
                 if not user.is_admin:
                     return admin_connection("Vous n'êtes pas administrateur.")
