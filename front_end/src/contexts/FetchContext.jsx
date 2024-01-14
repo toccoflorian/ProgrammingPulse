@@ -19,7 +19,7 @@ export function DataProvider({ children }) {
         get: async function (endpoint = null, target) {
             let url = "https://ppstudio.fr/api/";
             endpoint && (url = url + endpoint)
-            // console.log(url);
+            console.log(url);
             const response = await fetch(url, {
                 method: "GET",
                 credentials: 'include',
@@ -51,7 +51,7 @@ export function DataProvider({ children }) {
         post: async function (endpoint = null, content, target) {
             let url = "https://ppstudio.fr/api";
             endpoint && (url = url + endpoint)
-            // console.log(url);
+            console.log(url);
             const response = await fetch(url, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
