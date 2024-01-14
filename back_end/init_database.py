@@ -19,7 +19,6 @@ tables = {
         ("tel", "VARCHAR(12) NULL"),
         ("organization", "VARCHAR(100) "),
         ("password", "VARCHAR(150) "),
-        ("session_id", "INT "),
         ("is_admin", "TINYINT "),
     },
     "contact_form_table": {
