@@ -54,6 +54,9 @@ class Contact_form():
 
         html = f"""
             <html>
+            <style>
+                
+            </style>
             <body>
                 <h1>{self.family_name} {self.given_name}</h1>
                 <h2>{self.organization}</h1>
