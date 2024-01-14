@@ -89,7 +89,7 @@ print("Script terminé avec succès !! \n")
 
 
 
-DB.close_connection()
+DB.close_connection(connexion, cursor)
 
 
 # import subprocess
