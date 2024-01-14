@@ -81,7 +81,7 @@ def verify_auth_token():
 
 
 
-@app.route("/save_user_image", methods=["POST"])
+@app.route("/api/save_user_image", methods=["POST"])
 def save_user_image():
     user_id = request.args.get("user_id")
     image_of = request.args.get("image_of")
@@ -90,7 +90,7 @@ def save_user_image():
     return json.dumps("Image chargée avec succès.")
 
 
-@app.route("/edit_note_and_comment", methods=["POST"])
+@app.route("/api/edit_note_and_comment", methods=["POST"])
 def edit_note_and_comment():
     data = json.loads(request.get_json())
     succes, clean_comment = sanitise_data.sanitise_data({"comment": data["comment"]})
@@ -112,13 +112,13 @@ def edit_note_and_comment():
     return message_error
 
 
-@app.route("/get_user", methods=["GET"])
+@app.route("/api/get_user", methods=["GET"])
 def get_user():
     return jsonify({"status": True, "content": g.user.get_json()})    # 'serialyse_User(g.user)' retourne l'User courant (stocké dans 'g') rendu serialisable
 
 
 # obtenir un token d'authentification
-@app.route("/login", methods=["get"])
+@app.route("/api/login", methods=["get"])
 def login() -> any:
     data = {                                        # recuperer le body de la requête
         "mail": request.args.get("mail"),
@@ -138,7 +138,7 @@ def login() -> any:
     return jsonify(current_User.login())
 
 
-@app.route("/logout", methods=["GET"])
+@app.route("/api/logout", methods=["GET"])
 def logout():
     print(g.user)
     print("okkkkkk")
@@ -152,7 +152,7 @@ def logout():
 
 # reception formulaire inscription
 # et création d'un nouvel utilisateur
-@app.route("/create_new_user", methods=["POST"])
+@app.route("/api/create_new_user", methods=["POST"])
 def create_new_user():
     # recuperer le body de la requête
     data = request.get_json()
@@ -184,7 +184,7 @@ def create_new_user():
 
 
 
-@app.route("/get_projects", methods=["GET"])
+@app.route("/api/get_projects", methods=["GET"])
 def get_projects():
     DB = Database()
     projects = []
@@ -195,7 +195,7 @@ def get_projects():
 
 # reception, enregistrement et envoi par mail
 # formulaire de contact
-@app.route("/send_contact_form", methods=["POST"])
+@app.route("/api/send_contact_form", methods=["POST"])
 def send_contact_form():
     # recuperer le body de la requête
     data = json.loads(request.get_json())
@@ -224,7 +224,7 @@ def send_contact_form():
 
 
 admin_routes.admin_routes(app, render_template, Database())
-@app.route("/admin_connection")
+@app.route("/api/admin_connection")
 def admin_connection(auth_message=""):           # "message" 
     
     return render_template("admin_connection.html", auth_message=auth_message)
