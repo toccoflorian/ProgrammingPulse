@@ -54,6 +54,12 @@ tables = {
         ("description", "MEDIUMTEXT "),
         ("note", "INT "),
     },
+    "comments": {
+        ("user_id", "INT "),
+        ("project_id", "INT "),
+        ("text", "MEDIUMTEXT "),
+        ("date", "DATETIME "),
+    },
     
 }
 
