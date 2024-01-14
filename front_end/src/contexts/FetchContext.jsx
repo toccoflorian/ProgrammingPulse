@@ -9,6 +9,7 @@ export function DataProvider({ children }) {
 
     const [contactResponse, setContactResponse] = useState(false);
     const [inscriptionResponse, setInscriptionResponse] = useState(false);
+    const [logOutResponse, setLogOutResponse] = useState(false);
     const [connectionResponse, setConnectionResponse] = useState({ status: false });
     const [currentUser, setCurrentUser] = useState(false);
     const [projects, setProjects] = useState(false);
@@ -24,16 +25,17 @@ export function DataProvider({ children }) {
                 credentials: 'include',
             })
 
-            let jsonUser;
             let user;
             let allProjects;
 
             switch (target) {
                 case "user":
-                    jsonUser = await response.json()
-                    user = JSON.parse(jsonUser.content)
-                    user.projects = user.projects.map(project => JSON.parse(project))
-                    setCurrentUser(user)
+                    user = await response.json()
+                    if (user.status) {
+                        user = JSON.parse(user.content)
+                        user.projects = user.projects.map(project => JSON.parse(project))
+                        setCurrentUser(user)
+                    }
                     break;
 
                 case "login":
@@ -65,6 +67,10 @@ export function DataProvider({ children }) {
                 case "inscription":
                     setInscriptionResponse(await response.json());
                     break;
+
+                case "logout":
+                    setLogOutResponse(await response.json());
+                    break;
             }
         },
 
@@ -91,7 +97,7 @@ export function DataProvider({ children }) {
 
 
     return (<>
-        <FetchContext.Provider value={{ fetchData, contactResponse, inscriptionResponse, currentUser, connectionResponse, projects }}>
+        <FetchContext.Provider value={{ fetchData, contactResponse, inscriptionResponse, currentUser, connectionResponse, projects, logOutResponse }}>
             {children}
         </FetchContext.Provider>
     </>)

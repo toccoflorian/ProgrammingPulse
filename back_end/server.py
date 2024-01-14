@@ -12,12 +12,14 @@ from models.Database import Database
 from models.Contact_form import Contact_form
 from models.Comment import Comment
 
+import admin_routes
 
 private_routes = [
         "get_user",
         "edit_note_and_comment",
         "save_user_image",
         "admin",
+        "logout",
     ]
 
 app = Flask(__name__)
@@ -31,43 +33,49 @@ def verify_auth_token():
     user_id_received = cookies.get("user_id")
     cookie_received = cookies.get("cookie")
     signature_received = cookies.get("signature")
+    del cookies
 
     if not user_id_received:
-        user_id_received = request.args.get("user_id")
-        cookie_received = request.args.get("cookie")
-        signature_received = request.args.get("signature")
+        header = request.headers.get("test")
+        if header:
+            cookies = {}
+            for cookie in header.split(";"):
+                cookies[cookie.split("=")[0]] = cookie.split("=")[1]
+            user_id_received = cookies["user_id"]
+            cookie_received = cookies["cookie"]
+            signature_received = cookies["signature"]
+            del cookies
 
     if request.endpoint in private_routes:          # si la route est privée
+        print("logout")
         if user_id_received:            # si un id d'user est reçu
             DB = Database()
             result = DB.SELECT(
-                "sessions.cookie, sessions.signature", 
-                "users", 
-                f"users.id='{user_id_received}'" , 
-                {"table": "sessions", "key_value": "session_id=sessions.id"}
+                "*",          # Quoi
+                "sessions",                                        # où
+                f"user_id='{user_id_received}'" ,              # condition
             )
-
             if not result:
-                return False
+                return jsonify({"status": False, "content": "pas de session enregistrée avec cette id."})
             token = {"cookie": result[0][0], "signature": result[0][1]}
 
             if not token:
-                return {"statis": False, "content": "pas de session enregistrée avec cette id."}
+                return jsonify({"status": False, "content": "pas de session enregistrée avec cette id."})
             
             
             if not cookie_received == token["cookie"] and signature_received == token["signature"]:
-                return {"status": False, "content": "le cookie et/ou la signature ne correspondent pas."}
+                return jsonify({"status": False, "content": "le cookie et/ou la signature ne correspondent pas."})
             
             user =  User(DB, *DB.SELECT("*", "users", f"id='{user_id_received}'")[0])
             if request.endpoint == "admin":
                 if not user.is_admin:
-                    return admin_connection("Mauvais mot de passe -> admin_connection")
+                    return admin_connection("Vous n'êtes pas administrateur.")
             g.user = user           # définition de l'attribut 'user' à l'objet global Flask 'g' avec un objet 'User'
 
         else:
             if request.endpoint == "admin":
                 return admin_connection()
-            return {"status": False, "content": "aucun id reçu"}
+            return jsonify({"status": False, "content": "aucun id reçu"})
 
 
 
@@ -128,6 +136,18 @@ def login() -> any:
     if not current_User.check_password(clean_data["currentpassword"]):
         return json.dumps({"status": False, "content": "Mauvais mot de passe"})
     return jsonify(current_User.login())
+
+
+@app.route("/logout", methods=["GET"])
+def logout():
+    print(g.user)
+    print("okkkkkk")
+    try:
+        Database().DELETE("sessions", f"user_id={g.user.id}")
+        return jsonify(True)
+    except Exception as e:
+        print(e)
+        return jsonify(False)
 
 
 # reception formulaire inscription
@@ -203,26 +223,12 @@ def send_contact_form():
         return json.dumps((False, result))     # réponse d'erreur
 
 
-@app.route("/admin")
-def admin():
-    
-    return render_template("admin.html")
-
+admin_routes.admin_routes(app, render_template, Database())
 @app.route("/admin_connection")
-def admin_connection(message=""):
+def admin_connection(auth_message=""):           # "message" 
     
-    return render_template("admin_connection.html", message=message)
-
-@app.route("/test", methods=["GET"])
-def test():
-    DB = Database()
-    print("tessssst")
-    DB.INSERT(
-        "contact_form", 
-        ["family_name", "given_name", "organization", "tel", "mail", "message" ], 
-        ["salut", "bonjour", "organization", "tel", "mail", "message" ]
-        )
-    return jsonify("ok")
+    return render_template("admin_connection.html", auth_message=auth_message)
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=10000)
+    app.run(host="127.0.0.1", port=10000, debug=True)
+ 

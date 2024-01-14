@@ -1,10 +1,4 @@
 import security.sql_connection_manager as connection
-from models.User import User
-from models.Project import Project
-from models.Comment import Comment
-from datetime import datetime
-import bcrypt
-
 
 class Database():
     __TABLES = {
@@ -68,17 +62,20 @@ class Database():
             else:
                 return (False, e.msg)
         
-    def SELECT(self, request, table, condition=None, join=None):
-        sql_request = f"""SELECT {request} FROM {self.__TABLES[table]} 
-                        {' JOIN ' + self.__TABLES[join['table']] + " ON " + join["key_value"] if join else ''} 
-                        {' WHERE ' + condition if condition else ''}"""
+    def SELECT(self, what, table, condition=None, join=None):
+        sql_request = f"""SELECT {what} FROM {self.__TABLES[table]} 
+                        {(' JOIN ' + self.__TABLES[join['table']] + " ON " + join["key_value"]) if join else ''} 
+                        {' WHERE ' + condition if condition else ''};"""
         return self.execute(sql_request, "get")
 
-    def DELETE(self, deleted, table, condition=None):
-        sql_request = f"DELETE {deleted} FROM {self.__TABLES[table]} {'WHERE ' + condition if condition else ''}"
+    def DELETE(self, table, condition=None):
+        sql_request = f"DELETE FROM {self.__TABLES[table]} {'WHERE ' + condition if condition else ''}"
         self.execute(sql_request)
 
     def UPDATE(self, table, new_key_value_pair, condition=None):
         sql_request = f"UPDATE {self.__TABLES[table]} SET {new_key_value_pair} {'WHERE ' + condition if condition else ''}"
         self.execute(sql_request)
 
+    def COUNT(self, what, table, condition=None):
+        sql_request = f"SELECT COUNT({what}) FROM {self.__TABLES[table]} {' WHERE ' + condition if condition else ''}"
+        return self.execute(sql_request, "get")[0][0]

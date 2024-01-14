@@ -24,10 +24,12 @@ export default function FormulaireInscription() {       // INSCRIPTION
         confirmpassword: "",
     })
 
-    const { fetchData, inscriptionResponse } = useContext(FetchContext)          // contexct
+    const { fetchData, inscriptionResponse, connectionResponse } = useContext(FetchContext)          // contexct
 
     useEffect(() => {
-        // console.log('data', inscriptionResponse);
+        if (inscriptionResponse[0]) {
+            fetchData.get(`/login?mail=${form.mail}&currentpassword=${form.password}`, "login")
+        }
     }, [inscriptionResponse])        // effect
 
     function handleChange(e) {
@@ -159,9 +161,11 @@ export default function FormulaireInscription() {       // INSCRIPTION
                 <button className={`SubmitButton`}>Créer un compte</button>
             </div>
             {inscriptionResponse[0] ?
-                <p className={`debugGreen`}>{inscriptionResponse[1]}</p>
+                connectionResponse[0] &&
+                document.location.reload()           // Si inscription et connexion réussi, recharge la page
                 :
-                <p className={`debugRed`}>{inscriptionResponse[1]}</p>}
+                <p className={`debugRed`}>{inscriptionResponse[1]}</p>  // Si inscription échouée, affiche le message
+            }
         </form>
 
     </>)

@@ -1,7 +1,7 @@
 
 
 function setCookie(name, value, days) {
-    var expires = "";
+    let expires = "";
     if (days) {
         var date = new Date();
         date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));        // convertir le nombre de jours en milisecondes
@@ -12,8 +12,6 @@ function setCookie(name, value, days) {
 
 
 export async function sessionConnection(response) {
-    // const response = await fetchData.get(`/login?mail=${inputsValues.mail}&currentpassword=${inputsValues.currentpassword}`)
-    // console.log(response);
     if (!response.status) {
         return response
     }
@@ -23,3 +21,9 @@ export async function sessionConnection(response) {
     return response;
 }
 
+export async function sessionLogOut() {
+    setCookie("cookie", "", -1)
+    setCookie("signature", "", -1)
+    setCookie("user_id", "", -1)
+    document.location.reload();
+}

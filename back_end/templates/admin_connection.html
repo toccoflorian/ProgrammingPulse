@@ -25,7 +25,7 @@
             <button>Connexion</button>
 
             <p id="connectOutPut"></p>
-            <p>{{message}}</p>
+            <p>{{auth_message}}</p>
 
         </form>
         <script>
@@ -44,7 +44,8 @@
                 if (status) {
                     Object.entries(content).map(cook => {
                         document.cookie = `${cook[0]}=${cook[1]}`;      // set les cookies d'authentification
-                    })
+                    });
+                    document.location.reload();
                 } else {
                     document.getElementById("connectOutPut").innerText = content;
                 }

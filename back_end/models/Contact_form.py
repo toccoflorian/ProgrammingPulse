@@ -55,8 +55,7 @@ class Contact_form():
         html = f"""
             <html>
             <body>
-                <h1>Contact <br/>
-                {self.family_name} {self.given_name}</h1>
+                <h1>{self.family_name} {self.given_name}</h1>
                 <h2>{self.organization}</h1>
                 <h2>{self.creation_date.split(" ")[0]} à {self.creation_date.split(" ")[1]}</h2>
                 <ul>

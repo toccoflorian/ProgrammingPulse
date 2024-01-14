@@ -6,6 +6,7 @@ import FormulaireConnexion from "../../../components/formulaires/FormulaireConne
 import ProjectsSection from "../ProjectsSection";
 
 import ChangeUserImages from "../ChangeUserImages";
+import LogOutButton from "../../../components/LogOut";
 
 
 export default function EspaceClientPage() {
@@ -118,9 +119,11 @@ export default function EspaceClientPage() {
                             <div>
                                 <p className={``}>{currentUser.family_name} {currentUser.given_name}</p>
                                 <p>{currentUser.mail}</p>
-                                <p>{currentUser.tel}05 53 54 54 54</p>
+                                <p>{currentUser.tel}</p>
                             </div>
                         </div>
+
+                        <LogOutButton />
 
                         <ChangeUserImages
                             userImageFile={userImageFile}
