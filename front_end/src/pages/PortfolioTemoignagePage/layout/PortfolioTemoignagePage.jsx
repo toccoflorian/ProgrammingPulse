@@ -9,7 +9,7 @@ export default function PortfolioTemoignagePage() {
     const [projectIndex, setProjectIndex] = useState(0);
 
     useEffect(() => {
-        fetchData.get("get_projects", "projects")
+        fetchData.get("/get_projects", "projects")
     }, [])
 
     function handlePreviousProject() {
