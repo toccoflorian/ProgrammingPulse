@@ -14,7 +14,7 @@ class Project():
         self.end_date = end_date
         self.description = description
         self.note = note
-        comment = DB.SELECT("*", "comments", f"project_id='{self.id}' AND user_id='{self.user_id}'")
+        comment = DB.SELECT("id, user_id, project_id, text, date", "comments", f"project_id='{self.id}' AND user_id='{self.user_id}'")
         self.comment = Comment(DB, *comment[0]) if comment else None
 
     def edit_note(self, note):
