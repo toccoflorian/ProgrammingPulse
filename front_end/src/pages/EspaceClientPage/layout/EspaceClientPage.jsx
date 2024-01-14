@@ -22,7 +22,7 @@ export default function EspaceClientPage() {
 
 
     useEffect(() => {
-        fetchData.get("get_user", "user");
+        fetchData.get("/get_user", "user");
         console.log(currentUser);
     }, [])
 
