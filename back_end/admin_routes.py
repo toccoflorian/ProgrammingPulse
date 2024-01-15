@@ -22,7 +22,12 @@ def admin_routes(app_, render_template, DB ):
         users = []
         for user in DB.SELECT("*", "users"):
             users.append( User( DB, * user ))
-        return render_template("users_manager.html", users=users)
+        return render_template("users/users_manager.html", users=users, display="users")
+    
+    @app.route("/show_user/<int:user_id>")
+    def show_user(user_id):
+        return render_template("users/users_manager.html", user=User(DB, *DB.SELECT("id, creation_date, family_name, given_name, mail, tel, organization, password ,is_admin", "users", f"id={user_id}")[0]), display="user")
+
     
     @app.route("/projects_manager", methods=["GET"])
     def projects_manager():

@@ -70,7 +70,7 @@ class Database():
 
     def DELETE(self, table, condition=None):
         sql_request = f"DELETE FROM {self.__TABLES[table]} {'WHERE ' + condition if condition else ''}"
-        self.execute(sql_request)
+        return self.execute(sql_request)
 
     def UPDATE(self, table, new_key_value_pair, condition=None):
         sql_request = f"UPDATE {self.__TABLES[table]} SET {new_key_value_pair} {'WHERE ' + condition if condition else ''}"

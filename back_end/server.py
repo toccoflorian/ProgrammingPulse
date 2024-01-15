@@ -12,15 +12,20 @@ from models.Database import Database
 from models.Contact_form import Contact_form
 from models.Comment import Comment
 
-import admin_routes
+import admin_routes as admin
+import admin_actions_routes as admin_actions
 
-private_routes = [
+private_routes = [                      # routes privées
         "get_user",
         "edit_note_and_comment",
         "save_user_image",
-        "admin",
         "logout",
     ]
+admin_routes = [
+    "admin",
+    "users_manager",
+    "show_user",
+]
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
@@ -46,7 +51,7 @@ def verify_auth_token():
             signature_received = cookies["signature"]
             del cookies
 
-    if request.endpoint in private_routes:          # si la route est privée
+    if request.endpoint in private_routes or request.endpoint in admin_routes:          # si la route est privée ou admin
         print("logout")
         if user_id_received:            # si un id d'user est reçu
             DB = Database()
@@ -67,13 +72,13 @@ def verify_auth_token():
                 return jsonify({"status": False, "content": "le cookie et/ou la signature ne correspondent pas."})
             
             user =  User(DB, *DB.SELECT("id ,creation_date, family_name, given_name, mail, tel, organization, password, is_admin", "users", f"id='{user_id_received}'")[0])
-            if request.endpoint == "admin":
+            if request.endpoint in admin_routes:
                 if not user.is_admin:
                     return admin_connection("Vous n'êtes pas administrateur.")
             g.user = user           # définition de l'attribut 'user' à l'objet global Flask 'g' avec un objet 'User'
 
         else:
-            if request.endpoint == "admin":
+            if request.endpoint in admin_routes:
                 return admin_connection()
             return jsonify({"status": False, "content": "aucun id reçu"})
 
@@ -224,7 +229,9 @@ def send_contact_form():
         return json.dumps((False, result))     # réponse d'erreur
 
 
-admin_routes.admin_routes(app, render_template, Database())
+admin.admin_routes(app, render_template, Database())
+admin_actions.admin_actions_routes(app, render_template, Database())
+
 @app.route("/api/admin_connection")
 def admin_connection(auth_message=""):           # "message" 
     

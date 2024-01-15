@@ -3,7 +3,7 @@ async function handleLogout() {
     const body = {}
     cookies.map(cookie => body[cookie[0].trim()] = cookie[1].trim())
     console.log(body);
-    const response = await fetch("http://127.0.0.1:10000/logout", {
+    const response = await fetch("http://127.0.0.1:10000/api/logout", {
         method: "GET",
         // body,
         headers: {

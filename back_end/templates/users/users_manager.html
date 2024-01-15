@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>users manager</title>
+    <script src="{{ url_for('static', filename='JS/users_manager.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='JS/admin_commun.js') }}" type="text/javascript"></script>
+    <style>
+        .userContainer {
+            background-color: lightblue;
+            padding: 5px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .userContainer:hover {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+
+<body>
+    {% if display == "users" %}
+    <h1>Gestion des utilisateurs</h1>
+    <div>
+        <h2>Utilisateurs:</h2>
+        <ol>
+            {%for user in users%}
+            <li onclick="handleShowUser('{{user.id}}')" id="{{user.id}}" class="userContainer">
+                <p style="margin: 0;">{{user.family_name}} {{user.given_name}} de {{user.organization}}
+                </p>
+
+                <p style="margin: 0;">Membre depuis {{user.creation_date}}</p>
+
+                <p style="margin: 0;">Nombre de projets: {{user.nb_projects}}</p>
+
+                <p style="margin: 0;">{{ "admin" if user.is_admin }}</p>
+
+                <p>
+
+                </p>
+            </li>
+            {%endfor%}
+        </ol>
+
+    </div>
+    {% endif %}
+
+    {% if display == "user" %}
+
+    <body>
+        <h1>{{user.family_name}} {{user.given_name}}</h1>
+
+        <ul>
+            <li>ID: {{user.id}}</li>
+            <li>entreprise: {{user.organization}}</li>
+            <li>mail: {{user.mail}}</li>
+            <li>tel: {{user.tel}}</li>
+            <li>Admin: {{user.is_admin}}</li>
+            <li>Membre depuis: {{user.creation_date}}</li>
+
+        </ul>
+        <button id="deleteButton">Supprimer</button>
+        <button>Modifier</button>
+        <button>Envoyer un mail</button>
+        <script>
+            document.getElementById("deleteButton").addEventListener('click', e => {
+                document.location = "/delete/user/{{user.id}}"
+            })
+        </script>
+    </body>
+    {% endif %}
+
+    {% if display == "modal" %}
+    <div>
+        {%if status:%}
+        <h2 style="color: green;">L'utilisateur {{family_name}} {{given_name}} à bien été supprimer.</h2>
+        {%else%}
+        <h2 style="color: red;">Une erreur s'est produite.</h2>
+        {%endif%}
+        <button id="goBackButton">retour</button>
+        <script>
+            document.getElementById("goBackButton").addEventListener("click", e => { document.location = "{{redirect}}" })
+        </script>
+    </div>
+    {% endif %}
+</body>
+
+</html>
