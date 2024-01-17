@@ -57,7 +57,7 @@ def verify_auth_token():
         if user_id_received:            # si un id d'user est reçu
             DB = Database()
             result = DB.SELECT(
-                "*",          # Quoi
+                "cookie, signature",          # Quoi
                 "sessions",                                        # où
                 f"user_id='{user_id_received}'" ,              # condition
             )
