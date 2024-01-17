@@ -5,15 +5,15 @@ from flask_cors import CORS
 from datetime import datetime
 
 import security.sanitise_data as sanitise_data
-import image_manager
+import managers.image_manager as image_manager
 from models.User import User
 from models.Project import Project
 from models.Database import Database
 from models.Contact_form import Contact_form
 from models.Comment import Comment
 
-import admin_routes as admin
-import admin_actions_routes as admin_actions
+import admin.admin_routes as admin
+import admin.admin_actions_routes as admin_actions
 
 private_routes = [                      # routes privées
         "get_user",
@@ -38,6 +38,7 @@ def verify_auth_token():
     user_id_received = cookies.get("user_id")
     cookie_received = cookies.get("cookie")
     signature_received = cookies.get("signature")
+    print("cookies: " ,request.cookies)
     del cookies
 
     if not user_id_received:
@@ -52,7 +53,7 @@ def verify_auth_token():
             del cookies
 
     if request.endpoint in private_routes or request.endpoint in admin_routes:          # si la route est privée ou admin
-        print("logout")
+        print("before request")
         if user_id_received:            # si un id d'user est reçu
             DB = Database()
             result = DB.SELECT(
@@ -119,6 +120,8 @@ def edit_note_and_comment():
 
 @app.route("/api/get_user", methods=["GET"])
 def get_user():
+    print("get user")
+    print(g.user)
     return jsonify({"status": True, "content": g.user.get_json()})    # 'serialyse_User(g.user)' retourne l'User courant (stocké dans 'g') rendu serialisable
 
 
@@ -144,7 +147,7 @@ def login() -> any:
     return jsonify(current_User.login())
 
 
-@app.route("/api/logout", methods=["GET"])
+@app.route("/api/logout", methods=["POST"])
 def logout():
     print(g.user)
     print("okkkkkk")
@@ -238,5 +241,5 @@ def admin_connection(auth_message=""):           # "message"
     return render_template("admin_connection.html", auth_message=auth_message)
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=10000, debug=False)
+    app.run(host="localhost", port=10000, debug=False)
  

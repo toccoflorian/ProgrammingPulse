@@ -53,31 +53,32 @@ class Contact_form():
         message["Subject"] = f"Contact de {self.family_name} {self.given_name}"
         message["From"] = email_address
         message["To"] = email_receiver
+        with open("back_end/managers/mails/templates/contact_form_response.html", "r+") as html_file:
+                html = html_file.read()
 
-
-        html = f"""
-            <html style="margin: 0; padding: 5px;">
-            <style>
+        # html = f"""
+        #     <html style="margin: 0; padding: 5px;">
+        #     <style>
                 
-            </style>
-            <body style="heigth:100vh;width:100%;background-color: blue; text-shadow: 3px 3px 8px black;color:red;">
-                <h1>{self.family_name} {self.given_name}</h1>
-                <h2>{self.organization}</h1>
-                <h2>{self.creation_date.split(" ")[0]} à {self.creation_date.split(" ")[1]}</h2>
-                <ul>
-                    <li>{self.mail}</li>
-                    <li>{self.tel}</li>
-                </ul>
+        #     </style>
+        #     <body style="heigth:100vh;width:100%;background-color: blue; text-shadow: 3px 3px 8px black;color:red;">
+        #         <h1>{self.family_name} {self.given_name}</h1>
+        #         <h2>{self.organization}</h1>
+        #         <h2>{self.creation_date.split(" ")[0]} à {self.creation_date.split(" ")[1]}</h2>
+        #         <ul>
+        #             <li>{self.mail}</li>
+        #             <li>{self.tel}</li>
+        #         </ul>
 
-                <p>
-                    {self.message}
-                </p>
+        #         <p>
+        #             {self.message}
+        #         </p>
 
                 
 
-            </body>
-            </html>
-            """
+        #     </body>
+        #     </html>
+        #     """
         
         # Ajout des parties HTML au message MIME
         message.attach(MIMEText(html, "html"))

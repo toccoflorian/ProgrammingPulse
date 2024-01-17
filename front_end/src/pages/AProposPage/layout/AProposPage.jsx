@@ -15,7 +15,7 @@ export default function AProposPage() {
                 <p>
                     Chez Programming Pulse Studio, la personnalisation n&#39;est pas seulement un mot à la mode, c&#39;est la pierre angulaire
                     de
-                    notre façon de travailler. En tant que développeur full-stack indépendant, je me consacre entièrement à la
+                    ma façon de travailler. En tant que développeur full-stack indépendant, je me consacre entièrement à la
                     transformation de vos idées en solutions web réelles et performantes. Maîtrisant chaque aspect de la chaîne de
                     production web, de la conception front-end à la programmation back-end, en passant par la gestion de serveurs,
                     je garantis des créations qui ne ressemblent à aucune autre.
@@ -63,7 +63,7 @@ export default function AProposPage() {
             </div>
 
             <div>
-                <h2 className={`H2Primary`}>Proximité et Réactivité : Les Avantages d'une Micro-Entreprise</h2>
+                <h2 className={`H2Primary`}>Proximité et Réactivité : Les Avantages d&#39;une Micro-Entreprise</h2>
                 <p>
                     En tant que micro-entreprise, Programming Pulse Studio offre un avantage unique : une proximité inégalée avec ses
                     clients. Être votre unique contact signifie que vos questions, vos idées et vos préoccupations sont
