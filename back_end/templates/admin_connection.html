@@ -35,7 +35,7 @@
                 const mail = document.getElementById("mail").value;
                 const password = document.getElementById("password").value;
 
-                const response = await fetch(`http://127.0.0.1:10000/api/login?mail=${mail}&currentpassword=${password}`, {
+                const response = await fetch(`http://localhost:10000/api/login?mail=${mail}&currentpassword=${password}`, {
                     method: "GET",
                 })
 
