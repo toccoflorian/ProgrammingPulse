@@ -31,3 +31,5 @@ node_modules/
 dist/
 test_mail.py
 contenu/
+organization_images/
+user_images/

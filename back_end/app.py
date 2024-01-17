@@ -27,7 +27,8 @@ admin_routes = [
     "show_user",
 ]
 
-app = Flask(__name__, static_folder='../front_end/dist')
+app = Flask(__name__)
+react_build_folder = '../front_end/dist'
 CORS(app, supports_credentials=True)
 
 
@@ -86,16 +87,16 @@ def verify_auth_token():
 
 @app.route('/<path:path>', methods=['GET'])             # static proxy
 def static_proxy(path):
-    return send_from_directory(app.static_folder, path)
+    return send_from_directory(react_build_folder, path)
 
 @app.route('/')             # site internet
 def index():
-    return send_from_directory(app.static_folder, 'index.html')
+    return send_from_directory(react_build_folder, 'index.html')
 
 
 @app.errorhandler(404)
 def not_found(e):
-    return send_from_directory(app.static_folder, 'index.html') 
+    return send_from_directory(react_build_folder, 'index.html') 
 
 
 @app.route("/api/save_user_image", methods=["POST"])
