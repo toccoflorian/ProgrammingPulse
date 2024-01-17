@@ -9,6 +9,7 @@ import EspaceClientPage from "./pages/EspaceClientPage/layout/EspaceClientPage";
 import TarifsPage from "./pages/TarifsPage/TarifsPage";
 import PortfolioTemoignagePage from "./pages/PortfolioTemoignagePage/layout/PortfolioTemoignagePage";
 import ServicesPage from "./pages/ServicesPage/ServicesPage";
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 
 
 
@@ -29,25 +30,29 @@ function App() {
             <Routes>
 
               {/* Accueil */}
-              <Route path="/" Component={HomePage} />
+              <Route path="/" element={<HomePage />} />
 
               {/* Services */}
-              <Route path="/ServicesPage" Component={ServicesPage} />
+              <Route path="/ServicesPage" element={<ServicesPage />} />
 
               {/* PORTFOLIO ET TEMOIGNAGES */}
-              <Route path="/PortfolioTemoignagePage" Component={PortfolioTemoignagePage} />
+              <Route path="/PortfolioTemoignagePage" element={<PortfolioTemoignagePage />} />
 
               {/* TARIFS */}
-              <Route path="/TarifsPage" Component={TarifsPage} />
+              <Route path="/TarifsPage" element={<TarifsPage />} />
 
               {/* A PROPOS */}
-              <Route path="/AProposPage" Component={AProposPage} />
+              <Route path="/AProposPage" element={<AProposPage />} />
 
               {/* ESPACE CLIENT */}
-              <Route path="/EspaceClientPage" Component={EspaceClientPage} />
+              <Route path="/EspaceClientPage" element={<EspaceClientPage />} />
 
               {/* CONTACT */}
-              <Route path="/ContactPage" Component={ContactPage} />
+              <Route path="/ContactPage" element={<ContactPage />} />
+
+              {/* 404 not found */}
+              <Route path="*" element={<NotFoundPage />} />
+
 
             </Routes>
           </div>

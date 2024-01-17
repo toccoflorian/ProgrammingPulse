@@ -94,7 +94,7 @@ def index():
     return send_from_directory(react_build_folder, 'index.html')
 
 
-@app.errorhandler(404)
+@app.errorhandler(404)          # en cas d'erreur de route
 def not_found(e):
     return send_from_directory(react_build_folder, 'index.html') 
 
