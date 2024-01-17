@@ -14,7 +14,7 @@ def save_image_to_webp(user_id, image_of, image_data):
 
     # Définir le chemin du fichier
     file_name = f"{image_of}_image_{str(user_id)}.webp"
-    file_path = f"../front_end/public/{image_of}_images/{file_name}"
+    file_path = f"{os.getcwd()}/front_end/public/{image_of}_images/{file_name}"
     print("real path:", os.getcwd())
     print("path:", file_path)
 
