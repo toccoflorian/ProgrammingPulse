@@ -89,7 +89,7 @@ def verify_auth_token():
 
 @app.route("/api/save_user_image", methods=["POST"])
 def save_user_image():
-    user_id = request.args.get("user_id")
+    user_id = g.user.id
     image_of = request.args.get("image_of")
     image_data = request.get_data()
     image_manager.save_image_to_webp(user_id, image_of, image_data)
