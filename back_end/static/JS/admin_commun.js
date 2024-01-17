@@ -4,10 +4,10 @@ async function handleLogout() {
     cookies.map(cookie => body[cookie[0].trim()] = cookie[1].trim())
     console.log(body);
     const response = await fetch("https://ppstudio.fr/api/logout", {
-        method: "GET",
+        method: "POST",
         // body,
         headers: {
-            test: `user_id=${body.user_id};cookie=${body.cookie};signature=${body.signature}`,
+            "Content-Type": "application/json",
         },
 
         credentials: "include",
