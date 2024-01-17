@@ -85,7 +85,7 @@ export function DataProvider({ children }) {
                 obj_cookies[cookie.split("=")[0].trim()] = cookie.split("=")[1].trim()
             })
             console.log(obj_cookies);
-            const url = `https://ppstudio.fr/api/save_user_image?image_of=${image_of}&user_id=${String(currentUser.id)}&cookie=${obj_cookies.cookie}&signature=${obj_cookies.signature}`
+            const url = `https://ppstudio.fr/api/save_user_image?image_of=${image_of}`
             const response = await fetch(url, {
                 headers: {
                     "Content-Type": String(file.type),
