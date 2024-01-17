@@ -1,6 +1,6 @@
 import json
 import bcrypt
-from flask import Flask, request, jsonify, render_template, g
+from flask import Flask, request, jsonify, render_template, g, send_from_directory
 from flask_cors import CORS
 from datetime import datetime
 
@@ -27,7 +27,7 @@ admin_routes = [
     "show_user",
 ]
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../front_end/dist')
 CORS(app, supports_credentials=True)
 
 
@@ -84,7 +84,18 @@ def verify_auth_token():
             return jsonify({"status": False, "content": "aucun id reçu"})
 
 
+@app.route('/<path:path>', methods=['GET'])             # static proxy
+def static_proxy(path):
+    return send_from_directory(app.static_folder, path)
 
+@app.route('/')             # site internet
+def index():
+    return send_from_directory(app.static_folder, 'index.html')
+
+
+@app.errorhandler(404)
+def not_found(e):
+    return send_from_directory(app.static_folder, 'index.html')
 
 
 @app.route("/api/save_user_image", methods=["POST"])
