@@ -71,7 +71,7 @@ ChangeUserImages.propTypes = {
     setOrganizationImage: PropTypes.func,
     setUserImageFile: PropTypes.func,
     setChangeOrganizationImage: PropTypes.func,
-    userImageFile: PropTypes.files,
-    organizationImageFile: PropTypes.files,
+    userImageFile: PropTypes.any,
+    organizationImageFile: PropTypes.any,
     fetchData: PropTypes.object,
 }

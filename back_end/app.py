@@ -92,7 +92,10 @@ def save_user_image():
     user_id = g.user.id
     image_of = request.args.get("image_of")
     image_data = request.get_data()
+    print("requête save image ok")
+    print("enregistrement de l'image")
     image_manager.save_image_to_webp(user_id, image_of, image_data)
+    print("enregistrement de l'image ok")
     return json.dumps("Image chargée avec succès.")
 
 
