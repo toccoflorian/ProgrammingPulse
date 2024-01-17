@@ -12,7 +12,7 @@ import LogOutButton from "../../../components/LogOut";
 export default function EspaceClientPage() {
 
 
-    const { fetchData, currentUser, connectionResponse } = useContext(FetchContext);
+    const { fetchData, currentUser } = useContext(FetchContext);
 
     const [userImageFile, setUserImageFile] = useState(null);
     const [changeUserImage, setChangeUserImage] = useState(false);

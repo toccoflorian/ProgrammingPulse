@@ -1,5 +1,7 @@
+import PropTypes from "prop-types";
 
 export default function ChangeUserImages(props) {
+    console.log("Change image");
     return (<>
         <div>
             {props.changeUserImage &&
@@ -33,7 +35,7 @@ export default function ChangeUserImages(props) {
 
             {props.changeOrganizationImage &&
                 <>
-                    <label htmlFor="userOrganizationImage">Choisissez l'image de votre entreprise</label>
+                    <label htmlFor="userOrganizationImage">Choisissez l&#39;image de votre entreprise</label>
                     <input
                         type="file"
                         label={`Choisissez l'image de votre entreprise`}
@@ -60,4 +62,16 @@ export default function ChangeUserImages(props) {
             }
         </div>
     </>)
+}
+
+ChangeUserImages.propTypes = {
+    changeUserImage: PropTypes.bool,
+    changeOrganizationImage: PropTypes.bool,
+    setChangeUserImage: PropTypes.func,
+    setOrganizationImage: PropTypes.func,
+    setUserImageFile: PropTypes.func,
+    setChangeOrganizationImage: PropTypes.func,
+    userImageFile: PropTypes.files,
+    organizationImageFile: PropTypes.files,
+    fetchData: PropTypes.object,
 }
