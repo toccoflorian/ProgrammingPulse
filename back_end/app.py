@@ -95,7 +95,7 @@ def index():
 
 @app.errorhandler(404)
 def not_found(e):
-    return send_from_directory(app.static_folder, 'index.html')
+    return send_from_directory(app.static_folder, 'index.html') 
 
 
 @app.route("/api/save_user_image", methods=["POST"])
