@@ -1,6 +1,7 @@
 
 
 from models.User import User
+from models.Project import Project
 
 
 def admin_routes(app_, render_template, DB ):
@@ -39,7 +40,22 @@ def admin_routes(app_, render_template, DB ):
     
     @app.route("/projects_manager", methods=["GET"])
     def projects_manager():
-        return render_template("projects_manager.html")
+        users = []
+        for user in DB.SELECT("id, creation_date, family_name, given_name, mail, tel, organization, password ,is_admin", "users"):
+            users.append( User( DB, * user ))
+        return render_template(
+            "projects_manager.html", 
+            users=users, 
+            display="projects"
+        )
+    
+    @app.route("/show_project/<int:project_id>")
+    def show_project(project_id):
+        return render_template(
+            "projects_manager.html", 
+            project=Project(DB, *DB.SELECT("id, user_id, project_name, state, start_date, end_date, description, note", "projects", f"id={project_id}")[0]), 
+            display="project"
+        )
     
     @app.route("/devis_manager", methods=["GET"])
     def devis_manager():

@@ -46,15 +46,16 @@ def sanitise_data(data) -> any:
                 return False, "Numéro de téléphone incorrect."
             clean_data[key] = value
 
-        elif key == "familyname" or key == "givenname":
+        elif key == "familyname" or key == "givenname" or key == "project_name":
             if 3 > len(value) > 45:
                 return False, f"Le champ {key} doit contenir 3 et 45 caractères."
             clean_data[key] = bleach.clean(value)
 
+
         elif key == "comment":
             clean_data[key] = bleach.clean(value)
 
-        elif key == "message":
+        elif key == "message" or key == "project_description":
             if 45 >= len(value) >= 3000:
                 return False, f"Le champ {key} doit contenir 45 et 3000 caractères."
             clean_data[key] = bleach.clean(value)

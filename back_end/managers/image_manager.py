@@ -14,7 +14,7 @@ def save_image_to_webp(user_id, image_of, image_data):
 
     # Définir le chemin du fichier
     file_name = f"{image_of}_image_{str(user_id)}.webp"
-    file_path = f"{os.getcwd()}/front_end/dist/{image_of}_images/{file_name}"
+    file_path = f"{os.getcwd()}/back_end/static/stockage_images/{image_of}_images/{file_name}"
     print("real path:", os.getcwd())
     print("path:", file_path)
 
@@ -22,10 +22,11 @@ def save_image_to_webp(user_id, image_of, image_data):
     image.save(file_path, format='webp')
 
 
-def to_base64():
-    with open("back_end/managers/mails/templates/images/logo_noir.webp", "rb") as image:
+def convert_to_base64(imagePath):
+    with open(os.getcwd() + imagePath, "rb") as image:
         base64_image = base64.b64encode(image.read()).decode()
-    with open("back_end/managers/mails/templates/images/logo_noir.py", "w+") as image64:
-        image64.write(base64_image)
+    # with open("back_end/managers/mails/templates/images/logo_noir.py", "w+") as image64:
+    #     image64.write(base64_image)
+    return base64_image
 
-to_base64()
+# convert_to_base64()

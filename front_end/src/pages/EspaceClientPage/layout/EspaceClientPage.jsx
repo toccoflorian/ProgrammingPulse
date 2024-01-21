@@ -100,7 +100,7 @@ export default function EspaceClientPage() {
             :         // Si utilisateur connecté (cookie et signature présents)
             <>
                 {/* Informations utilisateur */}
-                <div className={`${styles.container} mb10`}>
+                <div className={`${styles.container}  mb10`}>
 
                     <h2>Membre depuis le {currentUser.creation_date.split("T")[0]}</h2>
 
@@ -125,16 +125,22 @@ export default function EspaceClientPage() {
 
                         <LogOutButton />
 
-                        <ChangeUserImages
-                            userImageFile={userImageFile}
-                            setUserImageFile={setUserImageFile}
-                            changeUserImage={changeUserImage}
-                            setChangeUserImage={setChangeUserImage}
-                            fetchData={fetchData}
-                        />
+
+
+
 
                     </div>
+                    <ChangeUserImages
+                        userImageFile={userImageFile}
+                        setUserImageFile={setUserImageFile}
+                        changeUserImage={changeUserImage}
+                        setChangeUserImage={setChangeUserImage}
+                        fetchData={fetchData}
+                    />
                 </div>
+
+
+
 
                 {/* Informations entreprise de l'utilisateur */}
                 <div className={`${styles.container} mb10`}>

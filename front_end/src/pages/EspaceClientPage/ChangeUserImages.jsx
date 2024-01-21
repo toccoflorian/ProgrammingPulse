@@ -1,11 +1,12 @@
 import PropTypes from "prop-types";
+import styles from "./ChangeUserImages.module.scss";
 
 export default function ChangeUserImages(props) {
     console.log("Change image");
     return (<>
-        <div>
+        <div className={`${styles.ChangeUserImagesContainer}`}>
             {props.changeUserImage &&
-                <>
+                <div className={`${styles.changeUserProfileImageContainer}`}>
                     <label htmlFor="userImage">Choisissez votre image de profil</label>
                     <input
                         type="file"
@@ -30,7 +31,7 @@ export default function ChangeUserImages(props) {
                             }}
                         >Valider</button>
                     </div>
-                </>
+                </div>
             }
 
             {props.changeOrganizationImage &&

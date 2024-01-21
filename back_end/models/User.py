@@ -20,6 +20,7 @@ class User():
         self.projects = [Project(DB, *project) for project in DB.SELECT("id, user_id, project_name, state, start_date, end_date, description, note", "projects", f"user_id='{self.id}'")]
         self.nb_projects = len(self.projects)
 
+
     def get_json(self):
         projects = []
         if type(self.projects) != str:

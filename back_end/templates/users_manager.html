@@ -18,11 +18,29 @@
         .userContainer:hover {
             cursor: pointer;
         }
+
+        .projectContainer {
+            margin-bottom: 10px;
+            background-color: aquamarine;
+        }
+
+        .commentContainer {
+            margin-left: 25px;
+            background-color: bisque;
+        }
+
+        .createProjectContainer {
+            display: none;
+        }
     </style>
 </head>
 
 
+
 <body>
+
+    <!-- create project -->
+    <!-- #id, user_id, project_name, #state, #start_date, #end_date, description, #note -->
 
 
     {% if display == "users" %} <!-- Voir tout les utilisateurs -->
@@ -35,8 +53,8 @@
             <ol>
                 {%for user in users%}
                 <li onclick="handleShowUser('{{user.id}}')" id="{{user.id}}" class="userContainer">
-                    <p style="margin: 0;">{{user.family_name}} {{user.given_name}} de {{user.organization}}
-                    </p>
+
+                    <p style="margin: 0;">{{user.family_name}} {{user.given_name}} de {{user.organization}}</p>
 
                     <p style="margin: 0;">Membre depuis {{user.creation_date}}</p>
 
@@ -44,9 +62,34 @@
 
                     <p style="margin: 0;">{{ "admin" if user.is_admin }}</p>
 
-                    <p>
+                    <ol>
+                        <h3>Projets avec {{user.family_name}} {{user.given_name}}:</h3>
+                        {%for project in user.projects %}
+                        <li onclick="handleShowProject('{{project.id}}')" id="project{{project.id}}"
+                            class="projectContainer">
 
-                    </p>
+
+                            <ul>
+                                <h3>{{ project.project_name }}</h3>
+                                <li>Etat: {{ project.state }}</li>
+                                <li>Début: {{ project.start_date }}</li>
+                                {%if project.comment%}
+                                <li>Commentaire:</li>
+                                <ul>
+
+                                    <li>Date: {{project.comment.date}}</li>
+                                    <li>contenu: <p>{{project.comment.text}}</p>
+                                    </li>
+                                </ul>
+
+                                {%endif%}
+                            </ul>
+
+
+                        </li>
+                        {%endfor%}
+                    </ol>
+
                 </li>
                 {%endfor%}
             </ol>
@@ -73,6 +116,14 @@
 
             <h1>{{user.family_name}} {{user.given_name}}</h1>
 
+            <button id="deleteButton" action="/delete/user/{{user.id}}"
+                confirmationTitre="Supprimerrr {{user.family_name}} {{user.given_name}} ?">
+                Supprimer l'utilisateur
+            </button>
+
+            <button>Modifier l'utilisateur</button>
+            <button>Envoyer un mail</button>
+
             <ul>
                 <li>ID: {{user.id}}</li>
                 <li>entreprise: {{user.organization}}</li>
@@ -82,56 +133,164 @@
                 <li>Membre depuis: {{user.creation_date}}</li>
 
             </ul>
-            <button id="deleteButton">Supprimer</button>
-            <button>Modifier</button>
-            <button>Envoyer un mail</button>
+
+
+            <!-- Projets -->
+            <div>
+                <h2>Projets: </h2>
+
+                <!-- Créer un nouveau projet -->
+                <div>
+
+
+                    <button
+                        onclick="document.getElementById('userContainer').style.display = 'none'; document.getElementById('createProjectContainer').style.display = 'block';">Créer
+                        un nouveau projet</button> <!-- créer un nouveau projet -->
+                </div>
+
+                {%for project in user.projects %}
+                <div style="background-color: lightgray;margin-bottom: 15px;border-radius: 10px;">
+                    <h3>{{ project.project_name }}</h3>
+                    <button id="deleteButton" confirmationTitre="Supprimer le projet {{project.project_name}} ?"
+                        action="/delete/project/{{project.id}}">Supprimer le projet</button>
+                    <button>Modifier le projet</button>
+                    <button>Terminer le projet</button>
+                    <button>Ajouter une image au projet</button>
+                    <ul>
+                        <li>ID: {{project.id}}</li>
+                        <li>Etat: {{project.state}}</li>
+                        <li>Debut: {{project.start_date}}</li>
+                        {%if project.end_date%}
+                        <li>Fin: {{project.end_date}}</li>
+                        {%endif%}
+                        <li>Note: {{project.note}} / 5</li>
+                        <li>Description: <p>{{project.description}}</p>
+                        </li>
+                        <p>{{project.image64}}</p>
+                        <img style="height: 150px;width: 150px;"
+                            src="{{url_for('static', filename='project_images/project_image_'~project.id~'.webp')}}"
+                            alt="">
+                        {%if project.comment%}
+
+                        <li>
+                            Commentaire:
+
+                            <ul>
+                                <span>
+
+                                    <!-- supprimer un commentaire -->
+                                    <button id="deleteButton" action="/delete/comment/{{project.comment.id}}"
+                                        confirmationtitre="Supprimer le commentaire du projet {{project.project_name}} ?">
+                                        Supprimer le commentaire
+                                    </button>
+
+                                    <button>Modifier le commentaire</button>
+
+                                </span>
+                                <li>ID: {{project.comment.id}}</li>
+                                <li>écrit le: {{ project.comment.date }}</li>
+                                <li>Contenu: <p>{{ project.comment.text }}</p>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    {%endif%}
+                </div>
+                {%endfor%}
+            </div>
         </div>
 
-        <!-- Confirmation -->
+        <!-- Création de nouveau projet -->
+        <div class="createProjectContainer" id="createProjectContainer">
+            <form id="createProjectForm" style="display: flex;flex-direction: column;">
+
+                <div>
+                    <input id="projectName" name="projectName" type="text" placeholder="Nom du projet">
+                    <p id="projectNameError"></p>
+                </div>
+
+                <div>
+                    <textarea id="projectDescription" name="projectDescription" placeholder="Description"></textarea>
+                    <p id="projectDescriptionError"></p>
+                </div>
+
+                <input id="projectImage" name="projectImage" type="file">
+
+                <div>
+                    <button
+                        onclick="document.getElementById('userContainer').style.display = 'block'; document.getElementById('createProjectContainer').style.display = 'none';"
+                        type="button">Annuler</button>
+                    <button
+                        onclick="handleSubmitNewProject('{{user.id}}', document.getElementById('createProjectForm'))"
+                        type="button">Créer</button>
+
+                    <p id="submitError"></p>
+                    <img id="test" src="" alt="">
+                </div>
+            </form>
+        </div>
+
+
+
+        <!-- Confirmation de suppression -->
         <div id="confirmationContainer" style="display: none;">
-            <h2>Supprimer {{family_name}} {{given_name}} ?</h2>
+
+            <h2 id="confirmationTitre"></h2>
+
             <button id="confirmationNoButton">Non</button>
+
             <button id="confirmationYesButton">Oui</button>
+
+            <script>
+                // retour
+                document.getElementById("userGoBackButton").addEventListener("click", e => {
+                    document.location = "/users_manager"
+                });
+                // delete user confirmation
+                document.querySelectorAll("#deleteButton").forEach(node => {        // ajoute un evenement à chaque "#deleteButton"
+                    node.addEventListener('click', e => {
+                        document.getElementById("confirmationContainer").style.display = "block";
+                        document.getElementById("userContainer").style.display = "none";
+                        document.getElementById("confirmationYesButton").attributes.action = e.target.attributes.action.textContent;
+                        console.log(e.target.attributes.action.textContent);
+                        console.log(e.target.attributes.confirmationtitre.textContent);
+                        document.getElementById("confirmationTitre").innerText = e.target.attributes.confirmationtitre.textContent;
+                    })
+                });
+                // annulation
+                document.getElementById("confirmationNoButton").addEventListener("click", e => {
+                    document.getElementById("confirmationContainer").style.display = "none";
+                    document.getElementById("userContainer").style.display = "block";
+                });
+                // confimation
+                document.getElementById("confirmationYesButton").addEventListener("click", e => {
+                    console.log(e.target.attributes.action);
+                    document.location = e.target.attributes.action;
+                });
+            </script>
         </div>
-
-    </div>
-
-    <script>
-        document.getElementById("userGoBackButton").addEventListener("click", e => {
-            document.location = "/users_manager"
-        });
-        document.getElementById("deleteButton").addEventListener('click', e => {
-            document.getElementById("confirmationContainer").style.display = "block";
-            document.getElementById("userContainer").style.display = "none";
-        });
-        // confimation
-        document.getElementById("confirmationNoButton").addEventListener("click", e => {
-            document.getElementById("confirmationContainer").style.display = "none";
-            document.getElementById("userContainer").style.display = "block";
-        });
-        document.getElementById("confirmationYesButton").addEventListener("click", e => {
-            document.location = "/delete/user/{{user.id}}"
-        });
-    </script>
-    {% endif %}
+        {% endif %}
 
 
 
 
-    {% if display == "response" %} <!-- Réponse suppression utilisateur  -->
-    <div>
-        {%if status:%}
-        <h2 style="color: green;">L'utilisateur {{family_name}} {{given_name}} à bien été supprimer.</h2>
-        {%else%}
-        <h2 style="color: red;">Une erreur s'est produite: {{error}}</h2>
-        {%endif%}
-        <button id="goBackButton">retour</button>
+        {% if display == "response" %} <!-- Réponse suppression utilisateur  -->
+        <div>
+            {%if status:%}
+            <h2 style="color: green;">L'utilisateur {{family_name}} {{given_name}} à bien été supprimer.</h2>
+            {%else%}
+            <h2 style="color: red;">Une erreur s'est produite: {{message}}</h2>
+            {%endif%}
+            <button id="goBackButton">retour</button>
 
-    </div>
-    <script>
-        document.getElementById("goBackButton").addEventListener("click", e => { document.location = "/users_manager" })
-    </script>
-    {% endif %}
+        </div>
+        <script>
+            document.getElementById("goBackButton").addEventListener("click", e => { document.location = "/users_manager" })
+        </script>
+        {% endif %}
+
+
+
 </body>
 
 </html>

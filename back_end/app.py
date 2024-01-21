@@ -25,6 +25,10 @@ admin_routes = [
     "admin",
     "users_manager",
     "show_user",
+    "delete_user",
+    "delete_project",
+    "delete_comment",
+    "create_new_project",
 ]
 
 app = Flask(__name__)
@@ -35,11 +39,11 @@ CORS(app, supports_credentials=True)
 
 @app.before_request
 def verify_auth_token():
+
     cookies = request.cookies
     user_id_received = cookies.get("user_id")
     cookie_received = cookies.get("cookie")
     signature_received = cookies.get("signature")
-    print("cookies: " ,request.cookies)
     del cookies
 
     if not user_id_received:
@@ -54,7 +58,6 @@ def verify_auth_token():
             del cookies
 
     if request.endpoint in private_routes or request.endpoint in admin_routes:          # si la route est privée ou admin
-        print("before request")
         if user_id_received:            # si un id d'user est reçu
             DB = Database()
             result = DB.SELECT(
@@ -76,7 +79,7 @@ def verify_auth_token():
             user =  User(DB, *DB.SELECT("id ,creation_date, family_name, given_name, mail, tel, organization, password, is_admin", "users", f"id='{user_id_received}'")[0])
             if request.endpoint in admin_routes:
                 if not user.is_admin:
-                    return admin_connection("Vous n'êtes pas administrateur.")
+                    return not_found("")
             g.user = user           # définition de l'attribut 'user' à l'objet global Flask 'g' avec un objet 'User'
 
         else:
@@ -98,16 +101,20 @@ def index():
 def not_found(e):
     return send_from_directory(react_build_folder, 'index.html') 
 
+admin.admin_routes(app, render_template, Database())                        # routes administration
+admin_actions.admin_actions_routes(app, render_template, request, Database())            # routes actions administration
+
+@app.route("/api/admin_connection")
+def admin_connection(auth_message=""):           # "message" 
+    
+    return render_template("admin_connection.html", auth_message=auth_message)
 
 @app.route("/api/save_user_image", methods=["POST"])
 def save_user_image():
     user_id = g.user.id
     image_of = request.args.get("image_of")
     image_data = request.get_data()
-    print("requête save image ok")
-    print("enregistrement de l'image")
     image_manager.save_image_to_webp(user_id, image_of, image_data)
-    print("enregistrement de l'image ok")
     return json.dumps("Image chargée avec succès.")
 
 
@@ -135,8 +142,6 @@ def edit_note_and_comment():
 
 @app.route("/api/get_user", methods=["GET"])
 def get_user():
-    print("get user")
-    print(g.user)
     return jsonify({"status": True, "content": g.user.get_json()})    # 'serialyse_User(g.user)' retourne l'User courant (stocké dans 'g') rendu serialisable
 
 
@@ -247,14 +252,8 @@ def send_contact_form():
         return json.dumps((False, result))     # réponse d'erreur
 
 
-admin.admin_routes(app, render_template, Database())
-admin_actions.admin_actions_routes(app, render_template, Database())
 
-@app.route("/api/admin_connection")
-def admin_connection(auth_message=""):           # "message" 
-    
-    return render_template("admin_connection.html", auth_message=auth_message)
 
 if __name__ == "__main__":
-    app.run(host="localhost", port=10000, debug=False)
- 
+    app.run(host="localhost", port=10000, debug=True)
+  

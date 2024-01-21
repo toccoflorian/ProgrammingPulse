@@ -1,12 +1,15 @@
 import HomePageH1Container from "../HomePageH1Container";
 import { Section_1_type_1, Section_1_type_2 } from "../Section_1";
 import "./HomePage.module.scss";
+// import { Helmet } from 'react-helmet';
 
 export default function HomePage() {
 
     return (<>
 
-
+        {/* <Helmet>
+            <link rel="canonical" href="https://www.ppstudio.fr" />
+        </Helmet> */}
 
         <HomePageH1Container />
 

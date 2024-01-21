@@ -5,7 +5,7 @@ import { FetchContext } from "../contexts/FetchContext";
 
 let defaultHoverValue = "transparent-gray-star.png%".repeat(5).split("%");
 
-export function ModalEditNote(props) {
+export default function ModalEditNote(props) {
 
     const { fetchData } = useContext(FetchContext);
 
@@ -45,7 +45,7 @@ export function ModalEditNote(props) {
 
 
     return (<>
-        <div onClick={handleQuit} id="modalEditNote" className={`${styles.modalContainer} justify-center align-center`}>
+        <div onClick={handleQuit} id={props.id} className={`${styles.modalContainer} justify-center align-center`}>
             <div onClick={(e) => { e.stopPropagation() }}>
                 <h2>Quelle note souhaitez vous attribuer au projet {props.project.project_name} ?</h2>
 
@@ -60,7 +60,7 @@ export function ModalEditNote(props) {
                 </div>
 
                 <h2>Merci de laisser un commentaire.</h2>
-                <textarea name="" id="" cols="30" rows="10"></textarea>
+                <textarea id={`commentText${props.id}`} cols="30" rows="10"></textarea>
                 <div className={`d-flex`}>
 
                     <button
@@ -78,7 +78,7 @@ export function ModalEditNote(props) {
                                 JSON.stringify({
                                     project_id: props.project.id,
                                     note: selectedNote,
-                                    comment: "mon commentaire"
+                                    comment: document.getElementById(`commentText${props.id}`).value
                                 }),
                                 "edit_note_and_comment")
                         }}
@@ -95,6 +95,7 @@ export function ModalEditNote(props) {
 }
 
 ModalEditNote.propTypes = {
+    id: propTypes.string,
     project: propTypes.object,
     fetchData: propTypes.object,
 }

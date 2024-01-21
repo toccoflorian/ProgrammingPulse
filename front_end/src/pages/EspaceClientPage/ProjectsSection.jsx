@@ -1,13 +1,14 @@
 import styles from "./ProjectsSection.module.scss";
-import { ModalEditNote } from "../../components/Modals";
+import ModalEditNote from "../../components/ModalEditNote";
 import StarsEvaluation from "../../components/StarsEvaluation";
 import propTypes from "prop-types";
 
 export default function ProjectsSection(props) {
 
 
-    function handleNote() {
-        document.getElementById("modalEditNote").style.display = "flex";
+    function handleNote(editNoteId) {
+        console.log(document.getElementById(editNoteId));
+        document.getElementById(editNoteId).style.display = "flex";
     }
 
     return (<>
@@ -30,8 +31,8 @@ export default function ProjectsSection(props) {
                                 <div className={`d-flex`}>
                                     <button className={`SubmitButton`}>Voir le devis</button>
                                     {!project.note &&
-                                        <button onClick={() => { handleNote(project.id) }} className={`SubmitButton`}>Atribuer une Note</button>}
-                                    <ModalEditNote project={project} />
+                                        <button onClick={() => { handleNote(`editNote${index}`) }} className={`SubmitButton`}>Atribuer une Note</button>}
+                                    <ModalEditNote id={`editNote${index}`} project={project} />
                                 </div>
 
                             </div>

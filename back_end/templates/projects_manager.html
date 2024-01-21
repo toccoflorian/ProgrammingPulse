@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>projects manager</title>
+    <script src="{{ url_for('static', filename='JS/projects_manager.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='JS/admin_commun.js') }}" type="text/javascript"></script>
+    <style>
+        .userContainer {
+            background-color: lightblue;
+            padding: 5px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .projectContainer:hover {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+
+<body>
+
+
+    {% if display == "projects" %} <!-- Voir tout les utilisateurs -->
+    <div>
+        <button id="usersGoBackButton">Retour</button>
+
+        <h1>Gestion des projets</h1>
+        <div>
+            <h2>Projets:</h2>
+            <ol>
+                {%for user in users%}
+                <li id="user{{user.id}}" class="userContainer">
+                    <h3 style="margin: 0;">Projets avec {{user.family_name}} {{user.given_name}} de
+                        {{user.organisation}}:</h3>
+
+                    <ol>
+                        {%for project in user.projects %}
+                        <li onclick="handleShowProject('{{project.id}}')" id="project{{project.id}}"
+                            class="projectContainer">
+                            {{ project.project_name }}
+                        </li>
+                        {%endfor%}
+                    </ol>
+
+
+                </li>
+                {%endfor%}
+            </ol>
+
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("usersGoBackButton").addEventListener("click", e => {
+            document.location = "/admin"
+        })
+    </script>
+    {% endif %}
+
+
+
+
+
+    {% if display == "project" %} <!-- Voir un utilisateur -->
+    <div>
+
+
+        <div id="projectContainer">
+
+            <button id="projectGoBackButton">Retour</button>
+
+            <h1>{{project.project_name}}</h1>
+
+            <ul>
+                <li>ID: {{project.id}}</li>
+                <li>Nom du projet: {{project.project_name}}</li>
+                <li>state: {{project.state}}</li>
+                <li>start_date: {{project.start_date}}</li>
+                <li>end_date: {{project.end_date}}</li>
+                <li>description: {{project.description}}</li>
+                <li>note: {{project.note}}</li>
+
+            </ul>
+            <button id="deleteButton">Supprimer</button>
+            <button>Modifier</button>
+            <button>Ajouter une image</button>
+        </div>
+
+        <!-- Confirmation -->
+
+        <div id="confirmationContainer" style="display: none;">
+            <h2>Supprimer {{family_name}} {{given_name}} ?</h2>
+            <button id="confirmationNoButton">Non</button>
+            <button id="confirmationYesButton">Oui</button>
+        </div>
+
+    </div>
+
+    <script>
+        // retour
+        document.getElementById("projectGoBackButton").addEventListener("click", e => {
+            document.location = "/projects_manager"
+        });
+        // demande de confirmation
+        document.getElementById("deleteButton").addEventListener('click', e => {
+            document.getElementById("confirmationContainer").style.display = "block";
+            document.getElementById("projectContainer").style.display = "none";
+        });
+        // annulation
+        document.getElementById("confirmationNoButton").addEventListener("click", e => {
+            document.getElementById("confirmationContainer").style.display = "none";
+            document.getElementById("projectContainer").style.display = "block";
+        });
+        // confimation
+        document.getElementById("confirmationYesButton").addEventListener("click", e => {
+            document.location = "/delete/project/{{project.id}}"
+        });
+    </script>
+    {% endif %}
+
+
+
+
+    {% if display == "response" %} <!-- Réponse suppression utilisateur  -->
+    <div>
+        {%if status:%}
+        <h2 style="color: green;">L'utilisateur {{family_name}} {{given_name}} à bien été supprimer.</h2>
+        {%else%}
+        <h2 style="color: red;">Une erreur s'est produite: {{error}}</h2>
+        {%endif%}
+        <button id="goBackButton">retour</button>
+
+    </div>
+    <script>
+        document.getElementById("goBackButton").addEventListener("click", e => { document.location = "/projects_manager" })
+    </script>
+    {% endif %}
+</body>
+
+</html>
