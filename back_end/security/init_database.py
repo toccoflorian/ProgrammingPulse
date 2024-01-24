@@ -189,7 +189,7 @@ print("Sécurisation de MySQL...")
 # Les commandes suivantes sont des exemples et peuvent nécessiter des ajustements
 # Vous devriez remplacer 'your_root_password' avec le mot de passe root souhaité
 commands = [
-    "sudo mysql_secure_installation",
+    "sudo mysql_secure_installation;",
     f"sudo mysql -e \"ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '{os.getenv('PASSWORD')}';\"",
     "sudo mysql -e \"FLUSH PRIVILEGES;\"",
     "exit;"
