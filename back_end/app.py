@@ -98,7 +98,7 @@ def index():
 
 @app.route('/robots.txt')             # robots.txt
 def robots():
-    return send_from_directory("robots.txt")
+    return send_from_directory("static", "robots.txt")
 
 
 @app.errorhandler(404)          # en cas d'erreur de route
