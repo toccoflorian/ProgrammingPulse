@@ -97,7 +97,15 @@ export default function EspaceClientPage() {
                     </p>
                 </div>
             </>
-            :         // Si utilisateur connecté (cookie et signature présents)
+
+
+
+            :
+
+
+
+            // Si utilisateur connecté (cookie et signature présents)
+
             <>
                 {/* Informations utilisateur */}
                 <div className={`${styles.container}  mb10`}>
@@ -111,7 +119,7 @@ export default function EspaceClientPage() {
 
                             <img
                                 onClick={() => { setChangeUserImage(!changeUserImage) }}
-                                src={"/user_images/user_image_" + String(currentUser.id) + ".webp"}
+                                src={"/static/stockage_images/user_images/user_image_" + String(currentUser.id) + ".webp"}
                                 alt="Image de profil"
                                 className={``}
                             />
