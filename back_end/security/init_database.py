@@ -48,7 +48,7 @@ if stderr:
 # Créer une base de données 'programmingpulsestudio'
 print("Création de la base de données 'programmingpulsestudio'...")
 stdout, stderr = run_command("sudo mysql -u root -p")
-stdout, stderr = run_command(f"{os.getenv('PASSWORD')}")
+
 stdout, stderr = run_command(f"CREATE SCHEMA {os.getenv('DB_NAME')};")
 stdout, stderr = run_command("exit;")
 if stderr:
