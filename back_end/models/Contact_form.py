@@ -46,7 +46,7 @@ class Contact_form():
         email_password = mail_credentials["password"] 
         email_receiver = mail_credentials["mail"]
 
-        print(email_address, email_password, email_receiver)
+        
 
         # Création du message MIME
         message = MIMEMultipart("alternative")
