@@ -44,12 +44,5 @@ if stderr:
     print(f"Erreur lors de la modification du mot de passe root: {stderr}")
     exit(1)
 
-# Création de la base de données
-db_name = os.getenv('DB_NAME')
-print(f"Création de la base de données '{db_name}'...")
-stdout, stderr = run_command(f"sudo mysql -u root -p{os.getenv('PASSWORD')} -e \"CREATE DATABASE {db_name};\"")
-if stderr:
-    print(f"Erreur lors de la création de la base de données: {stderr}")
-    exit(1)
 
 print("Script terminé avec succès.")
