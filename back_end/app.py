@@ -96,8 +96,8 @@ def static_proxy(path):
 def index():
     return send_from_directory(react_build_folder, 'index.html')
 
-@app.route('/')             # robots.txt
-def index():
+@app.route('/robots.txt')             # robots.txt
+def robots():
     return send_from_directory("robots.txt")
 
 
