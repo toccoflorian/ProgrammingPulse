@@ -191,7 +191,8 @@ print("Sécurisation de MySQL...")
 commands = [
     "sudo mysql_secure_installation",
     f"sudo mysql -e \"ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '{os.getenv('PASSWORD')}';\"",
-    "sudo mysql -e \"FLUSH PRIVILEGES;\""
+    "sudo mysql -e \"FLUSH PRIVILEGES;\"",
+    "exit;"
 ]
 
 for command in commands:
@@ -202,7 +203,7 @@ for command in commands:
 
 # Créer une base de données 'programmingpulsestudio'
 print("Création de la base de données 'programmingpulsestudio'...")
-stdout, stderr, exitcode = run_command(f"sudo mysql -u root -p {os.getenv('PASSWORD')} -e \"CREATE DATABASE {os.getenv('DB_NAME')};\"")
+stdout, stderr, exitcode = run_command(f"sudo mysql -u root -p {os.getenv('PASSWORD')} -e \"CREATE DATABASE {os.getenv('DB_NAME')};exit;\"")
 
 if exitcode != 0:
     print(f"Erreur lors de la création de la base de données: {stderr}")
