@@ -197,7 +197,7 @@ y
 y
 y
 y
-""".format(password=os.getenv('MYSQL_ROOT_PASSWORD'))
+""".format(password=os.getenv('PASSWORD'))
 
 stdout, stderr = run_command("sudo mysql_secure_installation", input=secure_mysql_script)
 if stderr:
@@ -205,7 +205,7 @@ if stderr:
     exit(1)
 
 # Modification du mot de passe root et sécurisation
-root_password_change = "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '{password}'; FLUSH PRIVILEGES;".format(password=os.getenv('MYSQL_ROOT_PASSWORD'))
+root_password_change = "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '{password}'; FLUSH PRIVILEGES;".format(password=os.getenv('PASSWORD'))
 stdout, stderr = run_command(f"sudo mysql -e \"{root_password_change}\"")
 if stderr:
     print(f"Erreur lors de la modification du mot de passe root: {stderr}")
@@ -214,7 +214,7 @@ if stderr:
 # Création de la base de données
 db_name = os.getenv('DB_NAME')
 print(f"Création de la base de données '{db_name}'...")
-stdout, stderr = run_command(f"sudo mysql -u root -p{os.getenv('MYSQL_ROOT_PASSWORD')} -e \"CREATE DATABASE {db_name};\"")
+stdout, stderr = run_command(f"sudo mysql -u root -p{os.getenv('PASSWORD')} -e \"CREATE DATABASE {db_name};\"")
 if stderr:
     print(f"Erreur lors de la création de la base de données: {stderr}")
     exit(1)
