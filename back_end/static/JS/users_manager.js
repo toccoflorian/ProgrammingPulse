@@ -29,7 +29,7 @@ function validateNewProject(form) {
 async function handleSubmitNewProject(userId, form) {        // envoie du formulaire de création de projet
     if (validateNewProject(form)) {
 
-        const response = await fetch(`http://localhost:10000/create_new_project/${userId}`, {
+        const response = await fetch(`https://ppstudio.fr/create_new_project/${userId}`, {
             method: "POST",
             credentials: "include",
             body: new FormData(form),

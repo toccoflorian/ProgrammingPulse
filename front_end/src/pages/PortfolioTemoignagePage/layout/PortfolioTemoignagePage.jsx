@@ -42,8 +42,8 @@ export default function PortfolioTemoignagePage() {
                     {projects[projectIndex].comment &&
                         JSON.parse(projects[projectIndex].comment).text}
                 </p>
-                <img src="http://localhost:10000/static/project_images/project_image_8.webp" alt="" />
-                <a href="http://localhost:10000/static/project_images/project_image_8.webp">image</a>
+                <img src="https://ppstudio.fr/static/project_images/project_image_8.webp" alt="" />
+                <a href="https://ppstudio.fr/static/project_images/project_image_8.webp">image</a>
                 <button onClick={handlePreviousProject}>precedent</button>
                 <button onClick={handleNextProject}>Suivant</button>
             </div>

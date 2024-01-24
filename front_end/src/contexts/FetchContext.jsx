@@ -17,7 +17,7 @@ export function DataProvider({ children }) {
     const fetchData = {
 
         get: async function (endpoint = null, target) {
-            let url = "http://localhost:10000/api";
+            let url = "https://ppstudio.fr/api";
             endpoint && (url = url + endpoint)
             console.log(url);
             const response = await fetch(url, {
@@ -53,7 +53,7 @@ export function DataProvider({ children }) {
         },
 
         post: async function (endpoint = null, content, target) {
-            let url = "http://localhost:10000/api";
+            let url = "https://ppstudio.fr/api";
             endpoint && (url = url + endpoint)
             console.log(url);
             const response = await fetch(url, {
@@ -85,7 +85,7 @@ export function DataProvider({ children }) {
                 obj_cookies[cookie.split("=")[0].trim()] = cookie.split("=")[1].trim()
             })
             console.log(obj_cookies);
-            const url = `http://localhost:10000/api/save_user_image?image_of=${image_of}`
+            const url = `https://ppstudio.fr/api/save_user_image?image_of=${image_of}`
             const response = await fetch(url, {
                 headers: {
                     "Content-Type": String(file.type),
