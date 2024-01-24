@@ -100,6 +100,10 @@ def index():
 def robots():
     return send_from_directory("static", "robots.txt")
 
+@app.route('/favicon.ico')             # favicon.ico
+def favicon():
+    return send_from_directory("static", "favicon.ico")
+
 
 @app.errorhandler(404)          # en cas d'erreur de route
 def not_found(e):
