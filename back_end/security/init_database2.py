@@ -166,57 +166,5 @@ def create_tables(tables):
     DB.close_connection(connexion, cursor)
 
 
-
-import subprocess
-import os
-import dotenv
-
-dotenv.load_dotenv()
-
-def run_command(command, input=None, check=True, text=True):
-    try:
-        result = subprocess.run(command, shell=True, input=input, text=text, 
-                                stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=check)
-        return result.stdout, None
-    except subprocess.CalledProcessError as e:
-        return e.stdout, e.stderr
-
-# Installation de MySQL Server
-print("Installation de MySQL Server...")
-stdout, stderr = run_command("sudo apt-get update && sudo apt-get install -y mysql-server")
-if stderr:
-    print(f"Erreur lors de l'installation de MySQL: {stderr}")
-    exit(1)
-
-# Interaction avec mysql_secure_installation
-print("Sécurisation de MySQL...")
-secure_mysql_script = """
-{password}
-n
-y
-y
-y
-y
-""".format(password=os.getenv('PASSWORD'))
-
-stdout, stderr = run_command("sudo mysql_secure_installation", input=secure_mysql_script)
-if stderr:
-    print(f"Erreur lors de la sécurisation de MySQL: {stderr}")
-    exit(1)
-
-# Modification du mot de passe root et sécurisation
-root_password_change = "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '{password}'; FLUSH PRIVILEGES;".format(password=os.getenv('PASSWORD'))
-stdout, stderr = run_command(f"sudo mysql -e \"{root_password_change}\"")
-if stderr:
-    print(f"Erreur lors de la modification du mot de passe root: {stderr}")
-    exit(1)
-
-# Création de la base de données
-db_name = os.getenv('DB_NAME')
-print(f"Création de la base de données '{db_name}'...")
-stdout, stderr = run_command(f"sudo mysql -u root -p{os.getenv('PASSWORD')} -e \"CREATE DATABASE {db_name};\"")
-if stderr:
-    print(f"Erreur lors de la création de la base de données: {stderr}")
-    exit(1)
 create_tables(tables)
 print("Script terminé avec succès.")
