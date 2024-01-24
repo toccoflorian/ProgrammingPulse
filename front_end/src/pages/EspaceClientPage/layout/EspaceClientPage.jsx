@@ -157,7 +157,7 @@ export default function EspaceClientPage() {
                     <img
                         onClick={() => { setChangeOrganizationImage(!changeOrganizationImage) }}
                         src={"/static/stockage_images/organization_images/organization_image_" + String(currentUser.id) + ".webp"}
-                        alt="Image de profil"
+                        alt="Image de l'entrprise"
                         className=""
                     />
 
