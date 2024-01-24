@@ -196,7 +196,9 @@ commands = [
 ]
 
 for command in commands:
+    print("exécution:", command)
     stdout, stderr, exitcode = run_command(command)
+    print(command, " - OK")
     if exitcode != 0:
         print(f"Erreur lors de la sécurisation de MySQL: {stderr}")
         exit(1)
