@@ -83,9 +83,7 @@ class Database():
         return self.execute(sql_request, "get")[0][0]
 
 
-DB = Database()
 
-connexion, cursor = DB.open_connection()
 
 # ("id", "INT NOT NULL AUTO_INCREMENT, PRIMARY KEY (id)"),
 
@@ -143,6 +141,9 @@ tables = {
 }
 
 def create_tables(tables):
+    DB = Database()
+
+    connexion, cursor = DB.open_connection()
     print()
     for table_name in tables:
         print("\ncréation de la table " + table_name)
@@ -161,12 +162,8 @@ def create_tables(tables):
             cursor.execute(str(sql_request))
         
         print("Table " + table_name + " terminée !\n")
-    
 
-
-
-
-DB.close_connection(connexion, cursor)
+    DB.close_connection(connexion, cursor)
 
 
 import subprocess
