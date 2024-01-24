@@ -53,7 +53,7 @@ class Contact_form():
         message["Subject"] = f"Contact de {self.family_name} {self.given_name}"
         message["From"] = email_address
         message["To"] = email_receiver
-        with open(os.getcwd() + "/back_end/managers/mails/templates/contact_form_response.html", "r+") as html_file:
+        with open(os.getcwd() + "/back_end/managers/mails/templates/contact_form_response.html", "r") as html_file:
                 html = html_file.read()
 
         # html = f"""

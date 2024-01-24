@@ -1,7 +1,7 @@
 import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-import mail_connection_manager
+import back_end.security.mail_connection_manager as mail_connection_manager
 
 
 
