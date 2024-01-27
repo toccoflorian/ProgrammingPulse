@@ -41,5 +41,7 @@ organization_images/*
 user_images/
 user_images/*
 test.js
-static/images/
-static/images/*
+static/images/organization_images/*
+static/images/project_images/*
+static/images/project_logos/*
+static/images/user_images/*
