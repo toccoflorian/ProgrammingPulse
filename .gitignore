@@ -24,15 +24,15 @@ dist-ssr
 *.sw?
 
 __pycache__/
-.vite/*
+.vite/
 .env
-MyEnv/*
-node_modules/*
-dist/*
+MyEnv/
+node_modules/
+dist/
 test_mail.py
-contenu/*
+contenu/
 test.js
-static/images/organization_images/*
-static/images/project_images/*
-static/images/project_logos/*
-static/images/user_images/*
+static/images/organization_images/
+static/images/project_images/
+static/images/project_logos/
+static/images/user_images/
