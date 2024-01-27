@@ -242,7 +242,7 @@ def create_new_user():
 def get_projects():
     DB = Database()
     projects = []
-    for project in DB.SELECT("*", "projects"):
+    for project in DB.SELECT("id, user_id, project_name, state, start_date, end_date, description, note", "projects"):
         projects.append(Project(DB, *project).get_json())
     return json.dumps(projects)
 
