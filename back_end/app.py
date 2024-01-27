@@ -37,6 +37,9 @@ CORS(app, supports_credentials=True)
 
 
 
+
+
+
 @app.before_request
 def verify_auth_token():
 
@@ -88,6 +91,12 @@ def verify_auth_token():
             return jsonify({"status": False, "content": "aucun id reçu"})
 
 
+
+
+
+
+
+
 @app.route('/<path:path>', methods=['GET'])             # static proxy
 def static_proxy(path):
     return send_from_directory(react_build_folder, path)
@@ -116,6 +125,14 @@ admin_actions.admin_actions_routes(app, render_template, request, Database())   
 def admin_connection(auth_message=""):           # "message" 
     
     return render_template("admin_connection.html", auth_message=auth_message)
+
+
+
+
+
+
+
+
 
 @app.route("/api/save_user_image", methods=["POST"])
 def save_user_image():
@@ -262,6 +279,9 @@ def send_contact_form():
 
 
 
+
+# RUN
+
 if __name__ == "__main__":
-    app.run(host="localhost", port=10000, debug=True)
+    app.run(host="localhost", port=10000, debug=True) 
   

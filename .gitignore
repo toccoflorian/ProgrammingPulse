@@ -25,13 +25,21 @@ dist-ssr
 
 __pycache__/
 .vite/
+.vite/*
 .env
 MyEnv/
+MyEnv/*
 node_modules/
+node_modules/*
 dist/
+dist/*
 test_mail.py
 contenu/
+contenu/*
 organization_images/
+organization_images/*
 user_images/
+user_images/*
 test.js
-stockage_images/
+static/images/
+static/images/*

@@ -29,7 +29,9 @@ function validateNewProject(form) {
 async function handleSubmitNewProject(userId, form) {        // envoie du formulaire de création de projet
     if (validateNewProject(form)) {
 
-        const response = await fetch(`https://ppstudio.fr/create_new_project/${userId}`, {
+        console.log(form);
+
+        const response = await fetch(`http://localhost:10000/create_new_project/${userId}`, {
             method: "POST",
             credentials: "include",
             body: new FormData(form),
@@ -38,5 +40,29 @@ async function handleSubmitNewProject(userId, form) {        // envoie du formul
         document.getElementById("submitError").innerText = await response.json();
     }
 
+
+}
+
+async function handleAddProjectImage(form, projectId, projectUserId) {
+    const response = await fetch(`http://localhost:10000/add_project_image/${projectId}/${projectUserId}`, {
+        method: "POST",
+        credentials: "include",
+        body: new FormData(form),
+    })
+    console.log(response);
+}
+
+
+
+async function handleUpdateProjectLogo(form, projectId, projectUserId) {
+    console.log();
+    // console.log(data.files[0]);
+    console.log();
+    const response = await fetch(`http://localhost:10000/change_project_logo/${projectId}/${projectUserId}`, {
+        method: "POST",
+        credentials: "include",
+        body: new FormData(form),
+    })
+    console.log(response);
 
 }

@@ -39,11 +39,11 @@
 
 <body>
 
-    <!-- create project -->
-    <!-- #id, user_id, project_name, #state, #start_date, #end_date, description, #note -->
 
 
-    {% if display == "users" %} <!-- Voir tout les utilisateurs -->
+    <!-- Voir tout les utilisateurs -->
+
+    {% if display == "users" %}
     <div>
         <button id="usersGoBackButton">Retour</button>
 
@@ -106,9 +106,9 @@
 
 
 
+    <!-- Pour chaque utilisateur -->
 
-
-    {% if display == "user" %} <!-- Voir un utilisateur -->
+    {% if display == "user" %}
     <div>
         <div id="userContainer">
 
@@ -135,27 +135,64 @@
             </ul>
 
 
-            <!-- Projets -->
+
+
+
+            <!-- Projets de l'utilisateur-->
             <div>
                 <h2>Projets: </h2>
 
-                <!-- Créer un nouveau projet -->
-                <div>
 
+
+                <div>
+                    <!-- Créer un nouveau projet -->
 
                     <button
                         onclick="document.getElementById('userContainer').style.display = 'none'; document.getElementById('createProjectContainer').style.display = 'block';">Créer
                         un nouveau projet</button> <!-- créer un nouveau projet -->
                 </div>
 
+
+                <!-- Pour chaque projet: -->
+
                 {%for project in user.projects %}
-                <div style="background-color: lightgray;margin-bottom: 15px;border-radius: 10px;">
+                <div id="projectContainer{{project.id}}"
+                    style="background-color: lightgray;margin-bottom: 15px;border-radius: 10px;">
+
                     <h3>{{ project.project_name }}</h3>
-                    <button id="deleteButton" confirmationTitre="Supprimer le projet {{project.project_name}} ?"
-                        action="/delete/project/{{project.id}}">Supprimer le projet</button>
-                    <button>Modifier le projet</button>
-                    <button>Terminer le projet</button>
-                    <button>Ajouter une image au projet</button>
+
+                    <!-- Boutons projet -->
+                    <div>
+                        <script>
+                            function handleClickAddProjectImageButton(projectId) {
+                                document.getElementById(`projectContainer${projectId}`).style.display = "none";
+                                document.getElementById(`addProjectImageContainer${projectId}`).style.display = "block";
+                            }
+                            function handleClickUpdateProjectLogoButton(projectId) {
+                                document.getElementById(`projectContainer${projectId}`).style.display = "none";
+                                document.getElementById(`updateProjectLogoContainer${projectId}`).style.display = "block";
+                            }
+                        </script>
+
+                        <button id="deleteButton" confirmationTitre="Supprimer le projet {{project.project_name}} ?"
+                            action="/delete/project/{{project.id}}">Supprimer le projet</button>
+
+                        <button>Modifier le projet</button>
+                        <button>Terminer le projet</button>
+
+
+
+                        <button onclick="handleClickAddProjectImageButton('{{project.id}}')">Ajouter une image au
+                            projet</button>
+
+
+
+                        <!-- Modifier le logo du projet -->
+
+                        <button onclick="handleClickUpdateProjectLogoButton('{{project.id}}')">Modifier le logo
+                            du projet</button>
+                    </div>
+
                     <ul>
                         <li>ID: {{project.id}}</li>
                         <li>Etat: {{project.state}}</li>
@@ -166,19 +203,35 @@
                         <li>Note: {{project.note}} / 5</li>
                         <li>Description: <p>{{project.description}}</p>
                         </li>
-                        <p>{{project.image64}}</p>
-                        <img style="height: 150px;width: 150px;"
-                            src="{{url_for('static', filename='project_images/project_image_'~project.id~'.webp')}}"
-                            alt="">
-                        {%if project.comment%}
 
+                        <div>
+                            <h4>Logo:</h4>
+                            <img id="projectLogo{{project.id}}"
+                                src="{{url_for('static', filename='images/project_logos/project_logo_'~project.id~'.webp')}}"
+                                alt="">
+
+                        </div>
+
+                        <h4>Images:</h4>
+                        {% for i in range(1, 4) %}
+
+                        <img style="height: 150px;width: 150px;"
+                            src="{{url_for('static', filename='images/project_images/project_image_'~project.id~'_'~i~'.webp')}}"
+                            alt="" loading="lazy">
+                        {% endfor %}
+
+
+
+                        <!-- Commentaire du projet -->
+
+                        {%if project.comment%}
                         <li>
                             Commentaire:
 
                             <ul>
                                 <span>
 
-                                    <!-- supprimer un commentaire -->
+                                    <!-- supprimer le commentaire -->
                                     <button id="deleteButton" action="/delete/comment/{{project.comment.id}}"
                                         confirmationtitre="Supprimer le commentaire du projet {{project.project_name}} ?">
                                         Supprimer le commentaire
@@ -196,11 +249,55 @@
                     </ul>
                     {%endif%}
                 </div>
+
+
+                <!-- Ajouter une image au projet -->
+                <div id="addProjectImageContainer{{project.id}}" style="display: none;">
+                    <h2>Ajouter une image au projet {{project.project_name}}</h2>
+                    <form id="addProjectImageForm{{project.id}}">
+                        <input type="file" id="addProjectImage{{project.id}}" name="projectImage">
+                        <button onclick="document.location.reload()">Annuler</button>
+                        <button>Valider</button>
+                    </form>
+
+                    <script>
+                        document.getElementById("addProjectImageForm{{project.id}}").addEventListener("submit", async e => {
+                            e.preventDefault();
+                            await handleAddProjectImage(e.target, "{{project.id}}", '{{user.id}}');
+
+                            document.location.reload();
+                        })
+                    </script>
+                </div>
+
+
+                <!-- Modification du logo du projet -->
+
+                <div id="updateProjectLogoContainer{{project.id}}" style="display: none;">
+                    <h2>Modifier le logo du projet {{project.project_name}}</h2>
+                    <form id="updateProjectLogoForm{{project.id}}">
+                        <input id="UpdateProjectLogo" name="projectLogo" type="file" accept="image/*">
+                        <button onclick="document.location.reload()">Annuler</button>
+                        <button>Valider</button>
+                    </form>
+                    <script>
+                        document.getElementById("updateProjectLogoForm{{project.id}}").addEventListener("submit", async e => {
+                            e.preventDefault();
+                            await handleUpdateProjectLogo(e.target, "{{project.id}}", '{{user.id}}');
+
+                            document.location.reload();
+                        })
+                    </script>
+                </div>
+
                 {%endfor%}
             </div>
         </div>
 
+
+
         <!-- Création de nouveau projet -->
+
         <div class="createProjectContainer" id="createProjectContainer">
             <form id="createProjectForm" style="display: flex;flex-direction: column;">
 
@@ -214,7 +311,8 @@
                     <p id="projectDescriptionError"></p>
                 </div>
 
-                <input id="projectImage" name="projectImage" type="file">
+                <input id="projectLogo" name="projectLogo" type="file" accept="image/*">
+
 
                 <div>
                     <button
@@ -233,6 +331,7 @@
 
 
         <!-- Confirmation de suppression -->
+
         <div id="confirmationContainer" style="display: none;">
 
             <h2 id="confirmationTitre"></h2>
@@ -242,12 +341,16 @@
             <button id="confirmationYesButton">Oui</button>
 
             <script>
+
                 // retour
+
                 document.getElementById("userGoBackButton").addEventListener("click", e => {
                     document.location = "/users_manager"
                 });
+
                 // delete user confirmation
-                document.querySelectorAll("#deleteButton").forEach(node => {        // ajoute un evenement à chaque "#deleteButton"
+
+                document.querySelectorAll("#deleteButton").forEach(node => {        // ajoute un ecouteur d'evenement à chaque "#deleteButton"
                     node.addEventListener('click', e => {
                         document.getElementById("confirmationContainer").style.display = "block";
                         document.getElementById("userContainer").style.display = "none";
@@ -257,12 +360,16 @@
                         document.getElementById("confirmationTitre").innerText = e.target.attributes.confirmationtitre.textContent;
                     })
                 });
+
                 // annulation
+
                 document.getElementById("confirmationNoButton").addEventListener("click", e => {
                     document.getElementById("confirmationContainer").style.display = "none";
                     document.getElementById("userContainer").style.display = "block";
                 });
+
                 // confimation
+
                 document.getElementById("confirmationYesButton").addEventListener("click", e => {
                     console.log(e.target.attributes.action);
                     document.location = e.target.attributes.action;
@@ -274,10 +381,14 @@
 
 
 
-        {% if display == "response" %} <!-- Réponse suppression utilisateur  -->
+
+
+        <!-- Réponse suppression utilisateur  -->
+
+        {% if display == "response" %}
         <div>
             {%if status:%}
-            <h2 style="color: green;">L'utilisateur {{family_name}} {{given_name}} à bien été supprimer.</h2>
+            <h2 style="color: green;">{{message}}</h2>
             {%else%}
             <h2 style="color: red;">Une erreur s'est produite: {{message}}</h2>
             {%endif%}

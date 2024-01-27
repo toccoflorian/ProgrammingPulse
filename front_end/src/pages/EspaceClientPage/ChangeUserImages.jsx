@@ -26,7 +26,7 @@ export default function ChangeUserImages(props) {
                             className={`ButtonYesPrimary`}
                             onClick={async () => {
                                 props.setChangeUserImage(!props.changeUserImage);
-                                await props.fetchData.upload(props.userImageFile, "user");
+                                await props.fetchData.upload(props.userImageFile, "user_image");
                                 document.location.reload();
                             }}
                         >Valider</button>
@@ -54,7 +54,7 @@ export default function ChangeUserImages(props) {
                             className={`ButtonYesPrimary`}
                             onClick={async () => {
                                 props.setChangeOrganizationImage(!props.changeOrganizationImage);
-                                await props.fetchData.upload(props.organizationImageFile, "organization");
+                                await props.fetchData.upload(props.organizationImageFile, "organization_image");
                                 document.location.reload();
                             }}
                         >Valider</button>

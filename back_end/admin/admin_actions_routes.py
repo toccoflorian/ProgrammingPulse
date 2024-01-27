@@ -58,10 +58,9 @@ def admin_actions_routes(app_, render_template, request, DB ):
     def create_new_project(project_user_id):
         request_data = request.form
         
-        
         project_name = request_data.get("projectName")
         project_description = request_data.get("projectDescription")
-        project_image = request.files.get("projectImage")
+        project_logo = request.files.get("projectLogo")
         result, clean_data = sanitise_data.sanitise_data({"project_name": project_name, "project_description": project_description})
         if not result:
             return jsonify(clean_data)
@@ -69,13 +68,35 @@ def admin_actions_routes(app_, render_template, request, DB ):
         print(clean_data["project_name"])
         print(clean_data["project_description"])
         print("image:")
-        print(project_image)
+        print(project_logo)
         print()
         DB.INSERT(
             "projects", 
             ("user_id" ,"project_name", "state", "start_date", "description"), 
             (project_user_id, clean_data["project_name"], "en cours", datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S"), clean_data["project_description"]))
-        image_manager.save_image_to_webp(DB.SELECT("id", "projects", f"user_id='{project_user_id}' AND project_name='{clean_data['project_name']}'")[0][0], "project", project_image.read())
-        return jsonify('render_template( "users_manager.html" )')
+        image_manager.save_image_to_webp(
+            DB.SELECT("id", "projects", f"user_id='{project_user_id}' AND project_name='{clean_data['project_name']}'")[0][0], 
+            "project_logo", 
+            project_logo.read())
+        return 'render_template( "users_manager.html" )'
     
+
+    @app.route("/add_project_image/<int:project_id>/<int:project_user_id>", methods=["POST"])
+    def add_project_image(project_id, project_user_id):
+        data = request.files.get("projectImage")
+        image_manager.save_image_to_webp(
+            DB.SELECT("id", "projects", f"id='{project_id}' AND user_id='{project_user_id}'")[0][0], 
+            "project_image", 
+            data.read(),
+            True)
+        return 'render_template( "users_manager.html" )' 
     
+
+    @app.route("/change_project_logo/<int:project_id>/<int:project_user_id>", methods=["POST"])
+    def change_project_logo(project_id, project_user_id): 
+        data = request.files.get("projectLogo")
+        image_manager.save_image_to_webp(
+            DB.SELECT("id", "projects", f"id='{project_id}' AND user_id='{project_user_id}'")[0][0], 
+            "project_logo", 
+            data.read())
+        return 'render_template( "users_manager.html" )' 

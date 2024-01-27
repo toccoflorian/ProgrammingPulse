@@ -119,7 +119,7 @@ export default function EspaceClientPage() {
 
                             <img
                                 onClick={() => { setChangeUserImage(!changeUserImage) }}
-                                src={"/static/stockage_images/user_images/user_image_" + String(currentUser.id) + ".webp"}
+                                src={"/static/images/user_images/user_image_" + String(currentUser.id) + ".webp"}
                                 alt="Image de profil"
                                 className={``}
                             />
@@ -156,7 +156,7 @@ export default function EspaceClientPage() {
 
                     <img
                         onClick={() => { setChangeOrganizationImage(!changeOrganizationImage) }}
-                        src={"/static/stockage_images/organization_images/organization_image_" + String(currentUser.id) + ".webp"}
+                        src={"/static/images/organization_images/organization_image_" + String(currentUser.id) + ".webp"}
                         alt="Image de l'entrprise"
                         className=""
                     />
