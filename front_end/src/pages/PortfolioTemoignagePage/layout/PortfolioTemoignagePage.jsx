@@ -54,51 +54,9 @@ export default function PortfolioTemoignagePage() {
         <h1 className={`${styles.h1} H1Secondary`}>Portfolio et retours clients</h1>
 
         {projects.length &&
-            <div className={`${styles.projectContainer}`}>
-
-                <div className={`${styles.projectLogoContainer}`}>
-
-                    <img className={`${styles.projectLogo}`} src={`http://localhost:10000/static/images/project_logos/project_logo_${projects[projectIndex].id}.webp`} alt="" />
-                </div>
-
-                <div className={`${styles.nameAndNoteContainer}`}>
-                    <h2>{projects[projectIndex].project_name}</h2>
-
-                    <div className={`${styles.starsContainer}`}>
-                        <StarsEvaluation note={projects[projectIndex].note} />
-
-                    </div>
-                </div>
+            <div className={`${styles.projectContainer}`} style={{ backgroundImage: `url("https://ppstudio.fr/static/images/project_logos/project_logo_${projects[projectIndex].id}.webp")` }}>
 
 
-                <div className={`${styles.descriptionContainer}`}>
-                    <p>{projects[projectIndex].description}</p>
-                </div>
-
-
-
-                {/* <h4>Commentaire:</h4>
-                <p>
-                    {projects[projectIndex].comment &&
-                        JSON.parse(projects[projectIndex].comment).text}
-                </p> */}
-
-                <div className={`${styles.projectImageContainer}`}>
-
-                    <div>
-                        <button onClick={() => { handlePreviousProjectImage(projects[projectIndex].nb_of_images) }}>precedent</button>
-                    </div>
-
-                    <div className={`${styles.imageContainer}`}>
-                        <img id="projectImage" src={`http://localhost:10000/static/images/project_images/project_image_${projects[projectIndex].id}_${projectImageIndex}.webp`} alt="" loading="lazy" />
-                    </div>
-
-                    <div>
-                        <button onClick={() => { handleNextProjectImage(projects[projectIndex].nb_of_images) }}>Suivant</button>
-                    </div>
-
-
-                </div>
 
 
                 <div className={`${styles.projectNav}`}>

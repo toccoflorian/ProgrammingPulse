@@ -315,12 +315,19 @@
 
 
                 <div>
-                    <button
-                        onclick="document.getElementById('userContainer').style.display = 'block'; document.getElementById('createProjectContainer').style.display = 'none';"
-                        type="button">Annuler</button>
-                    <button
-                        onclick="handleSubmitNewProject('{{user.id}}', document.getElementById('createProjectForm'))"
-                        type="button">Créer</button>
+                    <button onclick="
+                        document.getElementById('userContainer').style.display = 'block'; 
+                        document.getElementById('createProjectContainer').style.display = 'none';
+                        " type="button">
+                        Annuler
+                    </button>
+
+                    <button onclick="
+                        handleSubmitNewProject('{{user.id}}', document.getElementById('createProjectForm')); 
+                        
+                        " type="button">
+                        Créer test
+                    </button>
 
                     <p id="submitError"></p>
                     <img id="test" src="" alt="">

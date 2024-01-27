@@ -18,7 +18,7 @@ def file_exist(file):
 
 
 
-def create_file_path(image_of, id, image_number):
+def create_file_path(image_of, id, image_number=False):
     # Définir le chemin du fichier
     file_name = f"{image_of}_{str(id)}.webp"
     if image_number:
@@ -31,32 +31,43 @@ def create_file_path(image_of, id, image_number):
 
 
 def save_image_to_webp(user_id, image_of, image_data, image_number=False):
-    if not image_data: 
-        return
-    # Créer un objet Image à partir des données de la requête
-    image = Image.open(BytesIO(image_data))
+    try:
+        if not image_data: 
+            return {"status": False, "content": "L'image ne contient rien ( image_manager - save_image_to_webp() )."}
+        # Créer un objet Image à partir des données de la requête
+        image = Image.open(BytesIO(image_data))
 
-    # Redimensionner l'image en conservant le ratio d'aspect
-    max_size = 300, 300
-    if image_of == "project_image":
-        max_size = 800, 600
-    image.thumbnail(max_size, Image.Resampling.LANCZOS)
+        # Redimensionner l'image en conservant le ratio d'aspect
+        max_size = 300, 300
+        if image_of == "project_image":
+            max_size = 800, 600
+        if image_of == "project_logo":
+            max_size = 600, 400
+        image.thumbnail(max_size, Image.Resampling.LANCZOS)
 
-    if image_number:
-        image_number = 1
-        file_path = create_file_path(image_of, user_id, image_number)
-
-        while file_exist(file_path):
-            image_number += 1
-            if image_number > NB_MAX_OF_IMAGES_BY_PROJECT:
-                return
+        if image_number:
+            image_number = 1
             file_path = create_file_path(image_of, user_id, image_number)
-    
-    print("real path:", os.getcwd())
-    print("path:", file_path)
 
-    # Enregistrer l'image au format WebP
-    image.save(file_path, format='webp')
+            while file_exist(file_path):
+                image_number += 1
+                if image_number > NB_MAX_OF_IMAGES_BY_PROJECT:
+                    return
+                file_path = create_file_path(image_of, user_id, image_number)
+        else:
+            file_path = create_file_path(image_of, user_id)
+        
+        print("real path:", os.getcwd())
+        print("path:", file_path)
+
+        # Enregistrer l'image au format WebP
+        image.save(file_path, format='webp')
+
+        return {"status": True}
+
+    except Exception as e:
+        print(e)
+        return {"status": False, "content": "Erreur lors de l'enregistrement de l'image ( image_manager - save_image_to_webp() )."}
 
 
 

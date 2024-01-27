@@ -74,22 +74,22 @@ def admin_actions_routes(app_, render_template, request, DB ):
             "projects", 
             ("user_id" ,"project_name", "state", "start_date", "description"), 
             (project_user_id, clean_data["project_name"], "en cours", datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S"), clean_data["project_description"]))
-        image_manager.save_image_to_webp(
+        result = image_manager.save_image_to_webp(
             DB.SELECT("id", "projects", f"user_id='{project_user_id}' AND project_name='{clean_data['project_name']}'")[0][0], 
             "project_logo", 
             project_logo.read())
-        return 'render_template( "users_manager.html" )'
+        return jsonify(result)
     
 
     @app.route("/add_project_image/<int:project_id>/<int:project_user_id>", methods=["POST"])
     def add_project_image(project_id, project_user_id):
         data = request.files.get("projectImage")
-        image_manager.save_image_to_webp(
+        result = image_manager.save_image_to_webp(
             DB.SELECT("id", "projects", f"id='{project_id}' AND user_id='{project_user_id}'")[0][0], 
             "project_image", 
             data.read(),
             True)
-        return 'render_template( "users_manager.html" )' 
+        return jsonify(result)
     
 
     @app.route("/change_project_logo/<int:project_id>/<int:project_user_id>", methods=["POST"])

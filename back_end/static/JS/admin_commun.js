@@ -3,7 +3,7 @@ async function handleLogout() {
     const body = {}
     cookies.map(cookie => body[cookie[0].trim()] = cookie[1].trim())
     console.log(body);
-    const response = await fetch("http://localhost:10000/api/logout", {
+    const response = await fetch("https://ppstudio.fr/api/logout", {
         method: "POST",
         // body,
         headers: {
